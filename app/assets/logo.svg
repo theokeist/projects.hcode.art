@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e0a14"/>
+      <stop offset="50%" stop-color="#0f1123"/>
+      <stop offset="100%" stop-color="#060913"/>
+    </linearGradient>
+
+    <!-- Neon Cyber Border Gradient -->
+    <linearGradient id="neonCyanPurple" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00ffcc"/>
+      <stop offset="50%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#c084fc"/>
+    </linearGradient>
+
+    <!-- Gold Accent Gradient -->
+    <linearGradient id="imperialGold" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#f59e0b"/>
+      <stop offset="50%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#fef08a"/>
+    </linearGradient>
+
+    <!-- Crimson Cinnabar Gradient -->
+    <linearGradient id="cinnabarSeal" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e11d48"/>
+      <stop offset="100%" stop-color="#9f1239"/>
+    </linearGradient>
+
+    <!-- Glow Filter -->
+    <filter id="cyberGlow" x="-25%" y="-25%" width="150%" height="150%">
+      <feGaussianBlur stdDeviation="3.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Outer Ambient Glow Backplate -->
+  <rect x="10" y="10" width="100" height="100" rx="24" fill="url(#bgGrad)" stroke="url(#neonCyanPurple)" stroke-width="2.5" filter="url(#cyberGlow)"/>
+
+  <!-- Inner Traditional Chinese Seal Inset -->
+  <rect x="18" y="18" width="84" height="84" rx="16" fill="none" stroke="rgba(0, 255, 204, 0.3)" stroke-width="1.2" stroke-dasharray="6 3"/>
+
+  <!-- Four Traditional Corner Knot Accents -->
+  <path d="M 22 28 L 22 22 L 28 22" fill="none" stroke="#00ffcc" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M 98 28 L 98 22 L 92 22" fill="none" stroke="#00ffcc" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M 22 92 L 22 98 L 28 98" fill="none" stroke="#00ffcc" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M 98 92 L 98 98 L 92 98" fill="none" stroke="#00ffcc" stroke-width="1.8" stroke-linecap="round"/>
+
+  <!-- Center Traditional Cinnabar Seal Disc -->
+  <circle cx="60" cy="54" r="30" fill="url(#cinnabarSeal)" opacity="0.88"/>
+  <circle cx="60" cy="54" r="30" fill="none" stroke="url(#imperialGold)" stroke-width="1.5" opacity="0.95"/>
+  <circle cx="60" cy="54" r="26" fill="none" stroke="rgba(255, 255, 255, 0.25)" stroke-width="0.8" stroke-dasharray="3 2"/>
+
+  <!-- Central Majestic Han Character (漢) -->
+  <text x="60" y="65" 
+        font-family="'Noto Serif SC', 'Songti SC', 'STSong', 'KaiTi', 'SimSun', 'Microsoft YaHei', serif" 
+        font-size="36" 
+        font-weight="900" 
+        fill="#ffffff" 
+        text-anchor="middle" 
+        dominant-baseline="alphabetic"
+        style="filter: drop-shadow(0 2px 5px rgba(0,0,0,0.7)); letter-spacing: 0;">漢</text>
+
+  <!-- Bottom Cyber Tagline / Badge -->
+  <g transform="translate(60, 99)">
+    <!-- Pill background -->
+    <rect x="-35" y="-7" width="70" height="13" rx="6.5" fill="#0b0f19" stroke="url(#neonCyanPurple)" stroke-width="1"/>
+    <!-- Micro Text -->
+    <text x="0" y="2.5" 
+          font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, monospace" 
+          font-size="7.5" 
+          font-weight="800" 
+          fill="#00ffcc" 
+          text-anchor="middle" 
+          dominant-baseline="middle" 
+          letter-spacing="1.8">CHINESE</text>
+  </g>
+</svg>

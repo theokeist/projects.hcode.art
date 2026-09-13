@@ -1,0 +1,2180 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HCODE.ART - V14 Web &amp; Aplikace</title>
+<style>
+  :root,
+  body[data-theme="cyber"] {
+    --bg: #0b0f19;
+    --bg-trans: rgba(11, 15, 25, 0.92);
+    --bg-surface: rgba(7, 10, 18, 0.95);
+    --card-bg: rgba(11, 15, 25, 0.75);
+    --text: #ffffff;
+    --accent: #00ffcc;
+    --accent-secondary: #ff00ff;
+    --accent-tertiary: #ffe600;
+    --accent-rgb: 0, 255, 204;
+    --accent-glow: rgba(0, 255, 204, 0.25);
+    --accent-gradient: linear-gradient(135deg, #00ffcc 0%, #ff00ff 100%);
+  }
+
+  /* Black Noir (Dvojbarví: Čerň & Bílý chrom) */
+  body[data-theme="noir"] {
+    --bg: #030303;
+    --bg-trans: rgba(5, 5, 5, 0.94);
+    --bg-surface: rgba(12, 12, 12, 0.96);
+    --card-bg: rgba(14, 14, 14, 0.88);
+    --text: #ffffff;
+    --accent: #ffffff;
+    --accent-secondary: #a1a1aa;
+    --accent-tertiary: #52525b;
+    --accent-rgb: 255, 255, 255;
+    --accent-glow: rgba(255, 255, 255, 0.35);
+    --accent-gradient: linear-gradient(135deg, #ffffff 0%, #71717a 100%);
+  }
+
+  /* Mingská imperiální (Dvojbarví: Císařské zlato & Rumělka) */
+  body[data-theme="ming"] {
+    --bg: #12070b;
+    --bg-trans: rgba(18, 7, 11, 0.92);
+    --bg-surface: rgba(24, 9, 15, 0.95);
+    --card-bg: rgba(20, 8, 14, 0.82);
+    --text: #fff6ea;
+    --accent: #f59e0b;
+    --accent-secondary: #dc2626;
+    --accent-tertiary: #fbbf24;
+    --accent-rgb: 245, 158, 11;
+    --accent-glow: rgba(245, 158, 11, 0.28);
+    --accent-gradient: linear-gradient(135deg, #f59e0b 0%, #dc2626 100%);
+  }
+
+  /* Mingský porcelán (Dvojbarví: Kobalt & Azur) */
+  body[data-theme="qinghua"] {
+    --bg: #060d19;
+    --bg-trans: rgba(6, 13, 25, 0.92);
+    --bg-surface: rgba(10, 20, 38, 0.95);
+    --card-bg: rgba(8, 18, 36, 0.82);
+    --text: #f0f7ff;
+    --accent: #38bdf8;
+    --accent-secondary: #1d4ed8;
+    --accent-tertiary: #93c5fd;
+    --accent-rgb: 56, 189, 248;
+    --accent-glow: rgba(56, 189, 248, 0.28);
+    --accent-gradient: linear-gradient(135deg, #38bdf8 0%, #1d4ed8 100%);
+  }
+
+  /* Císařský nefrit (Dvojbarví: Smaragd & Nefrit) */
+  body[data-theme="jade"] {
+    --bg: #05140e;
+    --bg-trans: rgba(5, 20, 14, 0.92);
+    --bg-surface: rgba(8, 28, 20, 0.95);
+    --card-bg: rgba(7, 24, 17, 0.82);
+    --text: #f0fdf4;
+    --accent: #10b981;
+    --accent-secondary: #34d399;
+    --accent-tertiary: #059669;
+    --accent-rgb: 16, 185, 129;
+    --accent-glow: rgba(16, 185, 129, 0.28);
+    --accent-gradient: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+  }
+
+  /* Tokijský západ (Dvojbarví: Neon Růže & Fialová) */
+  body[data-theme="tokyo"] {
+    --bg: #0e0817;
+    --bg-trans: rgba(14, 8, 23, 0.92);
+    --bg-surface: rgba(22, 12, 36, 0.95);
+    --card-bg: rgba(18, 10, 30, 0.82);
+    --text: #fdf4ff;
+    --accent: #f43f5e;
+    --accent-secondary: #a855f7;
+    --accent-tertiary: #ec4899;
+    --accent-rgb: 244, 63, 94;
+    --accent-glow: rgba(244, 63, 94, 0.28);
+    --accent-gradient: linear-gradient(135deg, #f43f5e 0%, #a855f7 100%);
+  }
+
+  /* Krvavý měsíc (Dvojbarví: Karmín & Temný rubín) */
+  body[data-theme="bloodmoon"] {
+    --bg: #140507;
+    --bg-trans: rgba(20, 5, 7, 0.92);
+    --bg-surface: rgba(28, 8, 12, 0.95);
+    --card-bg: rgba(22, 6, 9, 0.82);
+    --text: #fff1f2;
+    --accent: #ff1744;
+    --accent-secondary: #991b1b;
+    --accent-tertiary: #f43f5e;
+    --accent-rgb: 255, 23, 68;
+    --accent-glow: rgba(255, 23, 68, 0.32);
+    --accent-gradient: linear-gradient(135deg, #ff1744 0%, #991b1b 100%);
+  }
+
+  /* Solární fúze (Dvojbarví: Ambra & Sluneční zlato) */
+  body[data-theme="solarpunk"] {
+    --bg: #130800;
+    --bg-trans: rgba(19, 8, 0, 0.92);
+    --bg-surface: rgba(30, 14, 0, 0.95);
+    --card-bg: rgba(24, 10, 0, 0.82);
+    --text: #fffbeb;
+    --accent: #ff7a00;
+    --accent-secondary: #eab308;
+    --accent-tertiary: #fde047;
+    --accent-rgb: 255, 122, 0;
+    --accent-glow: rgba(255, 122, 0, 0.32);
+    --accent-gradient: linear-gradient(135deg, #ff7a00 0%, #eab308 100%);
+  }
+
+  /* Hlubina propasti (Dvojbarví: Aqua Tyrkys & Safír) */
+  body[data-theme="abyss"] {
+    --bg: #020817;
+    --bg-trans: rgba(2, 8, 23, 0.92);
+    --bg-surface: rgba(5, 15, 38, 0.95);
+    --card-bg: rgba(4, 12, 32, 0.82);
+    --text: #f0fdfa;
+    --accent: #06b6d4;
+    --accent-secondary: #1d4ed8;
+    --accent-tertiary: #38bdf8;
+    --accent-rgb: 6, 182, 212;
+    --accent-glow: rgba(6, 182, 212, 0.32);
+    --accent-gradient: linear-gradient(135deg, #06b6d4 0%, #1d4ed8 100%);
+  }
+
+  /* RGB Cyberpunk (Trojbarví: Neon Tyrkys, Cyber Purpur & Sluneční žluť) */
+  body[data-theme="rgb"] {
+    --bg: #0a0e1a;
+    --bg-trans: rgba(10, 14, 26, 0.92);
+    --bg-surface: rgba(6, 9, 18, 0.96);
+    --card-bg: rgba(12, 18, 32, 0.82);
+    --text: #ffffff;
+    --accent: #00ffcc;
+    --accent-secondary: #ff007f;
+    --accent-tertiary: #ffe600;
+    --accent-rgb: 0, 255, 204;
+    --accent-glow: rgba(0, 255, 204, 0.35);
+    --accent-gradient: linear-gradient(135deg, #00ffcc 0%, #ff007f 50%, #ffe600 100%);
+  }
+
+  /* Mingské Sancai (Trojbarví: Císařské zlato, Kobalt & Smaragd) */
+  body[data-theme="sancai"] {
+    --bg: #0e0d14;
+    --bg-trans: rgba(14, 13, 20, 0.92);
+    --bg-surface: rgba(20, 18, 28, 0.96);
+    --card-bg: rgba(18, 16, 26, 0.82);
+    --text: #fffaf0;
+    --accent: #f59e0b;
+    --accent-secondary: #1d4ed8;
+    --accent-tertiary: #10b981;
+    --accent-rgb: 245, 158, 11;
+    --accent-glow: rgba(245, 158, 11, 0.32);
+    --accent-gradient: linear-gradient(135deg, #f59e0b 0%, #1d4ed8 50%, #10b981 100%);
+  }
+
+  /* Synthwave Sunset (Trojbarví: Neon Růže, Ultra Fialová & Azur) */
+  body[data-theme="synthwave"] {
+    --bg: #0f051d;
+    --bg-trans: rgba(15, 5, 29, 0.92);
+    --bg-surface: rgba(22, 8, 42, 0.95);
+    --card-bg: rgba(18, 6, 36, 0.82);
+    --text: #fdf2f8;
+    --accent: #ff2a85;
+    --accent-secondary: #8b5cf6;
+    --accent-tertiary: #00f0ff;
+    --accent-rgb: 255, 42, 133;
+    --accent-glow: rgba(255, 42, 133, 0.35);
+    --accent-gradient: linear-gradient(135deg, #ff2a85 0%, #8b5cf6 50%, #00f0ff 100%);
+  }
+
+  /* Polární záře (Trojbarví: Smaragd, Ledový tyrkys & Ametyst) */
+  body[data-theme="aurora"] {
+    --bg: #041014;
+    --bg-trans: rgba(4, 16, 20, 0.92);
+    --bg-surface: rgba(6, 24, 30, 0.95);
+    --card-bg: rgba(5, 20, 26, 0.82);
+    --text: #f0fdf4;
+    --accent: #00ff87;
+    --accent-secondary: #60efff;
+    --accent-tertiary: #a855f7;
+    --accent-rgb: 0, 255, 135;
+    --accent-glow: rgba(0, 255, 135, 0.32);
+    --accent-gradient: linear-gradient(135deg, #00ff87 0%, #60efff 50%, #a855f7 100%);
+  }
+
+  /* Trojitý plamen (Trojbarví: Magma karmín, Zlatá ambra & Platinová záře) */
+  body[data-theme="inferno"] {
+    --bg: #140502;
+    --bg-trans: rgba(20, 5, 2, 0.92);
+    --bg-surface: rgba(28, 8, 4, 0.95);
+    --card-bg: rgba(24, 7, 3, 0.82);
+    --text: #fff7ed;
+    --accent: #ff3b30;
+    --accent-secondary: #f59e0b;
+    --accent-tertiary: #ffffff;
+    --accent-rgb: 255, 59, 48;
+    --accent-glow: rgba(255, 59, 48, 0.35);
+    --accent-gradient: linear-gradient(135deg, #ff3b30 0%, #f59e0b 50%, #ffffff 100%);
+  }
+
+  /* DART.H FORCED (Trojbarví: Sithská červeň, Elektrické indigo & Bílý blesk) */
+  body[data-theme="darkforce"] {
+    --bg: #050002;
+    --bg-trans: rgba(5, 0, 2, 0.95);
+    --bg-surface: rgba(14, 2, 6, 0.96);
+    --card-bg: rgba(18, 2, 8, 0.88);
+    --text: #ffffff;
+    --accent: #ff0033;
+    --accent-secondary: #7c3aed;
+    --accent-tertiary: #ffffff;
+    --accent-rgb: 255, 0, 51;
+    --accent-glow: rgba(255, 0, 51, 0.42);
+    --accent-gradient: linear-gradient(135deg, #ff0033 0%, #7c3aed 50%, #ffffff 100%);
+  }
+  
+  body, html {
+    margin: 0; padding: 0; width: 100%; 
+    background-color: var(--bg); color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    overflow-x: hidden;
+    cursor: none; 
+    scroll-behavior: smooth;
+    transition: background-color 0.5s ease, color 0.5s ease;
+  }
+  
+  /* Background Canvas */
+  #canvas-container {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: 1;
+    pointer-events: none; 
+    transform: translateZ(0); 
+    will-change: transform;
+  }
+
+  /* Cyber Cursor */
+  #cyber-cursor {
+    position: fixed; top: 0; left: 0; width: 40px; height: 40px;
+    border: 1px solid var(--accent); border-radius: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none; z-index: 9999;
+    transition: width 0.2s, height 0.2s, background 0.2s;
+    mix-blend-mode: exclusion;
+  }
+  #cyber-cursor::after {
+    content: ''; position: absolute; top: 50%; left: 50%;
+    width: 4px; height: 4px; background: var(--accent); border-radius: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  /* Global Top Navigation */
+  #main-menu {
+    position: fixed; top: 0; left: 0; width: 100%; padding: 1.5rem 4rem;
+    display: flex; justify-content: space-between; align-items: center;
+    z-index: 100; box-sizing: border-box;
+    background: linear-gradient(to bottom, var(--bg-trans) 0%, rgba(0, 0, 0, 0) 100%);
+    transition: background 0.4s ease, padding 0.3s ease;
+  }
+  .logo { font-size: 1.5rem; font-weight: 900; letter-spacing: 2px; cursor: pointer; flex-shrink: 0; }
+
+  .nav-right-group {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  /* Single Morphing Theme Circle (Positioned next to START) */
+  .theme-morph-circle {
+    position: relative;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: rgba(var(--accent-rgb), 0.08);
+    border: 1px solid rgba(var(--accent-rgb), 0.35);
+    padding: 0;
+    margin: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    outline: none;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4), inset 0 0 8px rgba(var(--accent-rgb), 0.06);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 0.35s ease,
+                box-shadow 0.35s ease,
+                background 0.35s ease;
+    flex-shrink: 0;
+    user-select: none;
+    pointer-events: auto;
+  }
+  .theme-morph-circle:hover {
+    transform: scale(1.15);
+    border-color: rgba(var(--accent-rgb), 0.85);
+    box-shadow: 0 0 20px var(--accent-glow), inset 0 0 10px rgba(var(--accent-rgb), 0.18);
+  }
+  .theme-morph-circle:active {
+    transform: scale(0.95);
+  }
+
+  /* Rotating cyber orbit dashed ring around the core */
+  .morph-orbit {
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    border: 1.5px dashed rgba(var(--accent-rgb), 0.65);
+    pointer-events: none;
+    animation: morphOrbitSpin 14s linear infinite;
+    transition: border-color 0.4s ease;
+  }
+  .theme-morph-circle:hover .morph-orbit {
+    animation-duration: 4s;
+    border-color: var(--accent);
+  }
+  @keyframes morphOrbitSpin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  /* Inner Morph Core - Dynamic Dual Gradient */
+  .morph-core {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255, 255, 255, 0.8);
+    pointer-events: none;
+    background: linear-gradient(135deg, #00ffcc 50%, #ff00ff 50%);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+    transition: background 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 0.4s ease,
+                box-shadow 0.45s ease,
+                transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .morph-core::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 4px;
+    height: 4px;
+    background: #ffffff;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.85);
+  }
+
+  /* Dual-gradient & Tri-gradient colorways for morph core matching body[data-theme] */
+  body[data-theme="cyber"] .morph-core {
+    background: linear-gradient(135deg, #00ffcc 50%, #ff00ff 50%);
+    box-shadow: 0 0 12px rgba(0, 255, 204, 0.65);
+  }
+  body[data-theme="noir"] .morph-core {
+    background: linear-gradient(135deg, #050505 50%, #ffffff 50%);
+    border-color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.5);
+  }
+  body[data-theme="ming"] .morph-core {
+    background: linear-gradient(135deg, #dc2626 50%, #f59e0b 50%);
+    box-shadow: 0 0 12px rgba(245, 158, 11, 0.65);
+  }
+  body[data-theme="qinghua"] .morph-core {
+    background: linear-gradient(135deg, #1d4ed8 50%, #38bdf8 50%);
+    box-shadow: 0 0 12px rgba(56, 189, 248, 0.65);
+  }
+  body[data-theme="jade"] .morph-core {
+    background: linear-gradient(135deg, #059669 50%, #34d399 50%);
+    box-shadow: 0 0 12px rgba(16, 185, 129, 0.65);
+  }
+  body[data-theme="tokyo"] .morph-core {
+    background: linear-gradient(135deg, #f43f5e 50%, #a855f7 50%);
+    box-shadow: 0 0 12px rgba(244, 63, 94, 0.65);
+  }
+  body[data-theme="bloodmoon"] .morph-core {
+    background: linear-gradient(135deg, #ff1744 50%, #991b1b 50%);
+    box-shadow: 0 0 12px rgba(255, 23, 68, 0.65);
+  }
+  body[data-theme="solarpunk"] .morph-core {
+    background: linear-gradient(135deg, #ff7a00 50%, #eab308 50%);
+    box-shadow: 0 0 12px rgba(255, 122, 0, 0.65);
+  }
+  body[data-theme="abyss"] .morph-core {
+    background: linear-gradient(135deg, #06b6d4 50%, #1d4ed8 50%);
+    box-shadow: 0 0 12px rgba(6, 182, 212, 0.65);
+  }
+
+  /* Trojbarví (3-color reactor cores with conic segments) */
+  body[data-theme="rgb"] .morph-core {
+    background: conic-gradient(from -60deg, #00ffcc 0deg 120deg, #ff007f 120deg 240deg, #ffe600 240deg 360deg);
+    box-shadow: 0 0 14px rgba(0, 255, 204, 0.7);
+  }
+  body[data-theme="sancai"] .morph-core {
+    background: conic-gradient(from -60deg, #f59e0b 0deg 120deg, #1d4ed8 120deg 240deg, #10b981 240deg 360deg);
+    box-shadow: 0 0 14px rgba(245, 158, 11, 0.7);
+  }
+  body[data-theme="synthwave"] .morph-core {
+    background: conic-gradient(from -60deg, #ff2a85 0deg 120deg, #8b5cf6 120deg 240deg, #00f0ff 240deg 360deg);
+    box-shadow: 0 0 14px rgba(255, 42, 133, 0.7);
+  }
+  body[data-theme="aurora"] .morph-core {
+    background: conic-gradient(from -60deg, #00ff87 0deg 120deg, #60efff 120deg 240deg, #a855f7 240deg 360deg);
+    box-shadow: 0 0 14px rgba(0, 255, 135, 0.7);
+  }
+  body[data-theme="inferno"] .morph-core {
+    background: conic-gradient(from -60deg, #ff3b30 0deg 120deg, #f59e0b 120deg 240deg, #ffffff 240deg 360deg);
+    box-shadow: 0 0 14px rgba(255, 59, 48, 0.7);
+  }
+  body[data-theme="darkforce"] .morph-core {
+    background: conic-gradient(from -60deg, #ff0033 0deg 120deg, #7c3aed 120deg 240deg, #ffffff 240deg 360deg);
+    border-color: rgba(255, 0, 51, 0.95);
+    box-shadow: 0 0 16px rgba(255, 0, 51, 0.8);
+  }
+
+  /* On-click spring rotation animation */
+  .theme-morph-circle.spinning {
+    animation: morphSpin 0.65s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  @keyframes morphSpin {
+    0% { transform: rotate(0deg) scale(0.9); }
+    50% { transform: rotate(180deg) scale(1.24); }
+    100% { transform: rotate(360deg) scale(1); }
+  }
+
+  .nav-links { display: flex; gap: 3rem; }
+  .nav-links a { 
+    color: #fff; text-decoration: none; font-size: 0.8rem; font-weight: 600; 
+    letter-spacing: 4px; position: relative; cursor: pointer;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -5px; left: 0; width: 0%; height: 2px;
+    background: var(--accent-gradient, var(--accent)); transition: width 0.3s;
+  }
+  .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+
+  /* Side Timeline Scroll Tracker */
+  #side-timeline {
+    position: fixed; right: 3vw; top: 50%; transform: translateY(-50%);
+    display: flex; flex-direction: column; gap: 50px;
+    z-index: 50; text-align: right;
+  }
+  .timeline-node {
+    color: rgba(255,255,255,0.3); font-family: monospace; font-size: 0.8rem;
+    cursor: pointer; transition: color 0.3s, transform 0.3s;
+    position: relative;
+    padding-right: 20px;
+  }
+  .timeline-node:hover { color: #fff; transform: translateX(-5px); }
+  .timeline-node.active { color: var(--accent); transform: translateX(-5px); font-weight: bold;}
+  
+  /* The vertical track line */
+  .timeline-line {
+    position: absolute; right: 0; top: 5px; width: 1px; height: calc(100% - 10px); 
+    background: rgba(255,255,255,0.1);
+  }
+  /* The glowing fill line */
+  .timeline-progress {
+    position: absolute; right: 0; top: 5px; width: 1px; height: 0%; 
+    background: var(--accent-gradient, var(--accent)); box-shadow: 0 0 10px var(--accent);
+  }
+
+  /* Page Sections Layout */
+  .scroll-container { position: relative; z-index: 10; }
+  
+  .page-section {
+    min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    position: relative;
+    padding: 100px 10vw;
+    box-sizing: border-box;
+  }
+
+  /* Shared Content Blocks */
+  .content-block {
+    max-width: 800px;
+    background: var(--bg-surface); padding: 4rem;
+    border: 1px solid rgba(var(--accent-rgb), 0.18); box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+    transform: translateY(50px); opacity: 0;
+    transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform, opacity;
+  }
+  .content-block.visible { transform: translateY(0); opacity: 1; }
+  
+  h2 { font-size: clamp(2rem, 5vw, 4rem); font-weight: 800; letter-spacing: -0.04em; margin: 0 0 1.5rem 0; cursor: crosshair; }
+  p { font-size: 1.2rem; line-height: 1.8; color: rgba(255,255,255,0.7); margin: 0; }
+  .accent-text {
+    background: var(--accent-gradient, var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+  }
+
+  /* Hero Page */
+  #hero h1 {
+    font-size: clamp(4rem, 15vw, 15rem); font-weight: 900; letter-spacing: -0.06em; 
+    margin: 0; color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,0.15);
+    text-shadow: 0 0 40px var(--accent-glow); position: relative;
+  }
+  #hero h1::after {
+    content: 'HCODE'; position: absolute; left: 0; top: 0; color: #fff;
+    clip-path: polygon(0 0, 100% 0, 100% 30%, 0 30%);
+    animation: scanline 4s infinite cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  @keyframes scanline {
+    0%, 100% { clip-path: polygon(0 0, 100% 0, 100% 0, 0 0); }
+    50% { clip-path: polygon(0 100%, 100% 100%, 100% 80%, 0 80%); }
+  }
+  #hero .subtitle {
+    font-size: 1rem; font-weight: 600; color: var(--accent); letter-spacing: 0.5em; text-transform: uppercase; 
+    margin-top: -15px; background: rgba(var(--accent-rgb), 0.06); padding: 5px 20px; border-radius: 4px;
+    border: 1px solid rgba(var(--accent-rgb), 0.25);
+  }
+
+  /* Evolution Roadmap Grid */
+  .roadmap-grid {
+    display: grid; grid-template-columns: 1fr; gap: 20px; margin-top: 2rem;
+  }
+  .roadmap-item {
+    border-left: 2px solid rgba(255,255,255,0.1); padding-left: 20px;
+    transition: border-color 0.3s;
+  }
+  .roadmap-item:hover { border-color: var(--accent); }
+  .roadmap-item h3 { margin: 0 0 10px 0; font-size: 1.5rem; color: #fff; }
+  .roadmap-item p { font-size: 1rem; }
+
+  /* Button CTA */
+  button {
+    background: var(--bg-trans); color: var(--accent); border: 1px solid var(--accent);
+    padding: 20px 60px; font-size: 1.1rem; font-weight: 700; cursor: none;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); letter-spacing: 4px; text-transform: uppercase;
+    box-shadow: 0 0 20px var(--accent-glow), inset 0 0 10px rgba(var(--accent-rgb), 0.1); pointer-events: auto;
+  }
+  button:hover { background: var(--accent); color: #000; transform: translateY(-4px) scale(1.02); box-shadow: 0 15px 40px var(--accent-glow); }
+  button:active { transform: translateY(2px) scale(0.98); }
+
+  /* Web Apps Section & Cards */
+  .apps-container {
+    max-width: 1050px;
+    width: 100%;
+  }
+  .apps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+    margin-top: 2.2rem;
+    width: 100%;
+  }
+  .app-card {
+    background: var(--card-bg);
+    border: 1px solid rgba(var(--accent-rgb), 0.2);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+    padding: 2.2rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    backdrop-filter: blur(10px);
+  }
+  .app-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px; height: 100%;
+    background: var(--accent-gradient, var(--accent));
+    opacity: 0.85;
+    transition: opacity 0.3s, box-shadow 0.3s;
+  }
+  .app-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-6px);
+    box-shadow: 0 20px 45px var(--accent-glow);
+  }
+  .app-card:hover::before {
+    opacity: 1;
+    box-shadow: 0 0 15px var(--accent);
+  }
+  .app-card.future-card {
+    border: 1px dashed rgba(255, 255, 255, 0.25);
+    background: rgba(11, 15, 25, 0.45);
+  }
+  .app-card.future-card:hover {
+    border-color: rgba(var(--accent-rgb), 0.6);
+    box-shadow: 0 15px 35px var(--accent-glow);
+  }
+  .app-card.future-card::before {
+    background: rgba(255, 255, 255, 0.25);
+  }
+  .app-card.future-card:hover::before {
+    background: var(--accent);
+  }
+  .app-header-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 1.2rem;
+  }
+  .app-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .app-badge {
+    font-size: 0.68rem;
+    font-family: monospace;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--accent);
+    background: rgba(var(--accent-rgb), 0.08);
+    border: 1px solid rgba(var(--accent-rgb), 0.25);
+    padding: 4px 10px;
+    border-radius: 4px;
+    text-transform: uppercase;
+  }
+  .app-badge.future {
+    color: rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+  .app-badge.magenta {
+    color: #ff00ff;
+    background: rgba(255, 0, 255, 0.08);
+    border-color: rgba(255, 0, 255, 0.25);
+  }
+  .app-card h3 {
+    margin: 0 0 12px 0;
+    font-size: 1.55rem;
+    color: #fff;
+    letter-spacing: -0.02em;
+    line-height: 1.3;
+  }
+  .app-card p {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.72);
+    margin: 0 0 1.6rem 0;
+  }
+  /* Chinese Web App Card Custom Styling */
+  .app-card.chinese-app-card {
+    background: linear-gradient(145deg, rgba(var(--accent-rgb), 0.1) 0%, var(--card-bg) 100%);
+    border: 1px solid rgba(var(--accent-rgb), 0.3);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7), 0 0 30px rgba(var(--accent-rgb), 0.08);
+  }
+  .app-card.chinese-app-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-8px);
+    box-shadow: 0 25px 55px rgba(0, 0, 0, 0.85), 0 0 45px var(--accent-glow);
+  }
+  .chinese-logo-header {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 1.5rem;
+  }
+  .chinese-logo-box {
+    width: 82px;
+    height: 82px;
+    flex-shrink: 0;
+    filter: drop-shadow(0 0 16px rgba(var(--accent-rgb), 0.35));
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s ease;
+  }
+  .app-card.chinese-app-card:hover .chinese-logo-box {
+    transform: scale(1.06) rotate(-1deg);
+    filter: drop-shadow(0 0 26px var(--accent-glow)) drop-shadow(0 0 12px rgba(225, 29, 72, 0.5));
+  }
+  .chinese-title-group h3 {
+    margin: 0 0 4px 0;
+    font-size: 1.65rem;
+    color: #fff;
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+  }
+  .chinese-subtitle {
+    font-family: monospace;
+    font-size: 0.78rem;
+    color: var(--accent);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+  .chinese-app-desc {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.82);
+    margin: 0 0 2rem 0;
+  }
+  /* Future Apps Card Custom Styling - Entire Card Frosted Blur & Status Badge */
+  .app-card.future-app-card {
+    background: radial-gradient(circle at 50% 50%, rgba(192, 132, 252, 0.18) 0%, rgba(20, 15, 42, 0.58) 55%, rgba(12, 9, 25, 0.75) 100%);
+    backdrop-filter: blur(30px) saturate(180%);
+    -webkit-backdrop-filter: blur(30px) saturate(180%);
+    border: 1px dashed rgba(192, 132, 252, 0.45);
+    box-shadow: inset 0 0 50px rgba(192, 132, 252, 0.1), 0 20px 50px rgba(0, 0, 0, 0.65);
+    position: relative;
+    overflow: hidden;
+    cursor: default;
+  }
+  .app-card.future-app-card::before {
+    background: linear-gradient(to bottom, #c084fc, #38bdf8, #00ffcc);
+    opacity: 0.75;
+  }
+  /* Rozprostřený ambientní blur efekt přes celou plochu karty */
+  .app-card.future-app-card::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 85%;
+    height: 75%;
+    background: radial-gradient(ellipse at center, rgba(192, 132, 252, 0.22) 0%, rgba(56, 189, 248, 0.08) 50%, transparent 75%);
+    filter: blur(35px);
+    pointer-events: none;
+    z-index: 0;
+    transition: all 0.4s ease;
+  }
+  .app-card.future-app-card:hover {
+    background: radial-gradient(circle at 50% 50%, rgba(192, 132, 252, 0.26) 0%, rgba(26, 18, 54, 0.68) 55%, rgba(14, 10, 30, 0.85) 100%);
+    border-color: rgba(192, 132, 252, 0.85);
+    transform: translateY(-8px);
+    box-shadow: inset 0 0 60px rgba(192, 132, 252, 0.18), 0 25px 60px rgba(0, 0, 0, 0.75), 0 0 45px rgba(192, 132, 252, 0.28);
+  }
+  .app-card.future-app-card:hover::before {
+    opacity: 1;
+    box-shadow: 0 0 16px #c084fc;
+  }
+  .app-card.future-app-card:hover::after {
+    width: 95%;
+    height: 85%;
+    background: radial-gradient(ellipse at center, rgba(192, 132, 252, 0.32) 0%, rgba(56, 189, 248, 0.14) 50%, transparent 75%);
+    filter: blur(40px);
+  }
+
+  .app-card.future-app-card > * {
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Status Badge (Non-button informative chip) */
+  .future-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #c084fc;
+    background: rgba(192, 132, 252, 0.12);
+    border: 1px solid rgba(192, 132, 252, 0.35);
+    padding: 4px 12px;
+    border-radius: 20px;
+    box-shadow: 0 0 15px rgba(192, 132, 252, 0.1);
+    user-select: none;
+    pointer-events: none;
+    width: fit-content;
+    margin-top: 6px;
+  }
+
+  /* Centered Clean Hero Question Mark on Blurred Card */
+  .future-qmark-stage {
+    position: relative;
+    min-height: 190px;
+    margin: 1.2rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+  }
+
+  .clean-hero-qmark {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Arial Black", sans-serif;
+    font-size: clamp(4.8rem, 10vw, 6.8rem);
+    font-weight: 900;
+    line-height: 1;
+    color: #ffffff;
+    text-shadow: 0 0 22px #c084fc, 0 0 45px rgba(56, 189, 248, 0.75);
+    filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.8));
+    user-select: none;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), text-shadow 0.4s ease;
+  }
+  .app-card.future-app-card:hover .clean-hero-qmark {
+    transform: scale(1.12);
+    text-shadow: 0 0 32px #c084fc, 0 0 65px #38bdf8;
+  }
+
+  .future-card-desc {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.65);
+    margin: 0;
+  }
+  .app-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .app-btn {
+    flex: 1;
+    min-width: 140px;
+    background: var(--bg-trans);
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    padding: 14px 18px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    text-align: center;
+    box-shadow: 0 0 15px rgba(var(--accent-rgb), 0.15);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-sizing: border-box;
+  }
+  .app-btn:hover {
+    background: var(--accent);
+    color: #000;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px var(--accent-glow);
+  }
+  .app-btn-open {
+    font-size: 0.95rem;
+    font-weight: 800;
+    padding: 16px 28px;
+    letter-spacing: 2.5px;
+    background: rgba(var(--accent-rgb), 0.12);
+    box-shadow: 0 0 25px var(--accent-glow);
+  }
+  .app-btn.secondary {
+    background: transparent;
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.25);
+    box-shadow: none;
+  }
+  .app-btn.secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: #fff;
+    color: #fff;
+    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.15);
+  }
+  .app-btn.info-tag {
+    opacity: 0.6;
+    pointer-events: none;
+    border-color: rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.5);
+    box-shadow: none;
+  }
+
+  /* Cyber Modal Overlay (Subpage Live Preview) */
+  .cyber-modal {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(7, 10, 18, 0.88);
+    backdrop-filter: blur(12px);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    box-sizing: border-box;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+  }
+  .cyber-modal.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .cyber-modal-container {
+    width: 100%;
+    max-width: 1360px;
+    height: 90vh;
+    background: var(--bg);
+    border: 1px solid var(--accent);
+    box-shadow: 0 0 50px var(--accent-glow);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transform: scale(0.96);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .cyber-modal.active .cyber-modal-container {
+    transform: scale(1);
+  }
+  .cyber-modal-header {
+    background: var(--bg-trans);
+    padding: 14px 24px;
+    border-bottom: 1px solid rgba(var(--accent-rgb), 0.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .cyber-modal-title {
+    font-family: monospace;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 2px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .cyber-modal-title .pulse-dot {
+    width: 8px; height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--accent);
+    animation: pulse 1.5s infinite;
+  }
+  @keyframes pulse {
+    0% { opacity: 0.4; transform: scale(0.8); }
+    50% { opacity: 1; transform: scale(1.2); }
+    100% { opacity: 0.4; transform: scale(0.8); }
+  }
+  .cyber-modal-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .cyber-modal-btn {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: #fff;
+    padding: 8px 16px;
+    font-size: 0.75rem;
+    font-family: monospace;
+    letter-spacing: 1px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .cyber-modal-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(var(--accent-rgb), 0.08);
+  }
+  .cyber-modal-close {
+    background: transparent;
+    border: 1px solid rgba(255, 50, 100, 0.4);
+    color: #ff3366;
+    padding: 8px 16px;
+    font-size: 0.8rem;
+    font-family: monospace;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .cyber-modal-close:hover {
+    background: #ff3366;
+    color: #fff;
+    box-shadow: 0 0 15px rgba(255, 51, 102, 0.4);
+  }
+  .cyber-modal-body {
+    flex: 1;
+    position: relative;
+    background: #000;
+  }
+  .cyber-modal-body iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  /* Responsive Rules */
+  @media (max-width: 1100px) {
+    #main-menu { padding: 1.3rem 2.5rem; }
+    .nav-right-group { gap: 1.8rem; }
+    .nav-links { gap: 1.8rem; }
+  }
+  @media (max-width: 900px) {
+    #main-menu { padding: 1.2rem 1.8rem; }
+    .nav-right-group { gap: 1.2rem; }
+    .nav-links { gap: 1.2rem; }
+    .nav-links a { font-size: 0.72rem; letter-spacing: 2px; }
+    #side-timeline { display: none; }
+    .content-block { padding: 2.2rem; }
+    .apps-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 760px) {
+    #main-menu {
+      padding: 0.9rem 1.2rem;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .nav-right-group {
+      flex-direction: row;
+      gap: 1.2rem;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .nav-links {
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .cyber-modal { padding: 8px; }
+    .cyber-modal-container { height: 95vh; }
+  }
+
+  /* ==========================================================================
+     HIGH-BLUR REFINED FOOTER WITH SIMPLE SITEMAP
+     ========================================================================== */
+  #main-footer {
+    position: relative;
+    z-index: 20;
+    min-height: 290px;
+    background: rgba(7, 10, 18, 0.72);
+    backdrop-filter: blur(36px) saturate(190%);
+    -webkit-backdrop-filter: blur(36px) saturate(190%);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 -25px 60px rgba(0, 0, 0, 0.6);
+    padding: 4.8rem 10vw 4rem;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  #main-footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 8vw;
+    right: 8vw;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, var(--accent) 30%, var(--accent-secondary) 70%, transparent 100%);
+    opacity: 0.5;
+  }
+
+  .footer-simple-wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.6fr 1.2fr 0.85fr;
+    gap: 3.5rem;
+    align-items: flex-start;
+  }
+
+  .footer-col-header {
+    font-family: monospace;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .footer-col-header::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .footer-left {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .footer-logo {
+    font-size: 1.35rem;
+    font-weight: 800;
+    letter-spacing: 2.5px;
+    color: #ffffff;
+    cursor: pointer;
+    transition: text-shadow 0.3s ease;
+  }
+
+  .footer-logo:hover {
+    text-shadow: 0 0 15px var(--accent-glow);
+  }
+
+  .footer-tagline {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.5);
+    line-height: 1.6;
+    max-width: 320px;
+  }
+
+  .footer-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: monospace;
+    font-size: 0.72rem;
+    letter-spacing: 1.5px;
+    color: rgba(255, 255, 255, 0.65);
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 5px 12px;
+    border-radius: 999px;
+    width: fit-content;
+    margin-top: 0.3rem;
+  }
+
+  .footer-status .pulse-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--accent);
+    animation: pulse 1.5s infinite;
+  }
+
+  .footer-copy {
+    font-size: 0.78rem;
+    color: rgba(255, 255, 255, 0.35);
+    font-family: monospace;
+    letter-spacing: 0.5px;
+    margin-top: 0.6rem;
+  }
+
+  /* Sitemap list */
+  .footer-sitemap-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+
+  .footer-sitemap-link {
+    color: rgba(255, 255, 255, 0.55);
+    text-decoration: none;
+    font-family: monospace;
+    font-size: 0.82rem;
+    letter-spacing: 1.2px;
+    transition: color 0.25s ease, transform 0.25s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+  }
+
+  .footer-sitemap-link .sitemap-num {
+    color: var(--accent);
+    opacity: 0.7;
+    font-size: 0.72rem;
+  }
+
+  .footer-sitemap-link:hover {
+    color: #ffffff;
+    transform: translateX(4px);
+  }
+
+  .footer-sitemap-link:hover .sitemap-num {
+    opacity: 1;
+  }
+
+  .footer-sitemap-link.app-link {
+    color: rgba(255, 255, 255, 0.75);
+    margin-top: 0.3rem;
+  }
+
+  .footer-sitemap-link.app-link:hover {
+    color: var(--accent);
+  }
+
+  /* Vertikální kontakty */
+  .footer-social-vertical {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.55rem;
+  }
+
+  .footer-link {
+    color: rgba(255, 255, 255, 0.55);
+    text-decoration: none;
+    font-family: monospace;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: color 0.25s ease, transform 0.25s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .footer-link::before {
+    content: '';
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--accent);
+    opacity: 0;
+    transform: scale(0);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+
+  .footer-link:hover {
+    color: #ffffff;
+    transform: translateX(4px);
+  }
+
+  .footer-link:hover::before {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  @media (max-width: 880px) {
+    .footer-simple-wrap {
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+    }
+    .footer-left {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .apps-grid {
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+    .app-card {
+      padding: 1.5rem 1.2rem;
+    }
+    #main-footer {
+      padding: 3.5rem 1.5rem 2.8rem;
+    }
+    .footer-simple-wrap {
+      grid-template-columns: 1fr;
+      gap: 2.2rem;
+    }
+  }
+
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+<body>
+  
+  <div id="cyber-cursor"></div>
+  <div id="canvas-container"></div>
+
+  <!-- Hlavní navigace -->
+  <nav id="main-menu">
+    <div class="logo glitch-hover">HCODE.ART</div>
+    
+    <div class="nav-right-group">
+      <!-- Single Morphing Theme Switcher directly next to START -->
+      <button type="button" class="theme-morph-circle" id="themeMorphBtn" title="Barevný motiv: Cyber Matrix — Kliknutím přepnete" aria-label="Přepnout barevný motiv">
+        <span class="morph-orbit"></span>
+        <span class="morph-core"></span>
+      </button>
+
+      <div class="nav-links">
+        <a href="#hero" class="glitch-hover nav-link active" data-index="0">START</a>
+        <a href="#architecture" class="glitch-hover nav-link" data-index="1">ARCHITEKTURA</a>
+        <a href="#evolution" class="glitch-hover nav-link" data-index="2">EVOLUCE</a>
+        <a href="#apps" class="glitch-hover nav-link" data-index="3">APLIKACE</a>
+        <a href="#terminal" class="glitch-hover nav-link" data-index="4">TERMINÁL</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Boční časová osa -->
+  <div id="side-timeline">
+    <div class="timeline-line"></div>
+    <div class="timeline-progress" id="progress-bar"></div>
+    <div class="timeline-node active" data-target="#hero">01</div>
+    <div class="timeline-node" data-target="#architecture">02</div>
+    <div class="timeline-node" data-target="#evolution">03</div>
+    <div class="timeline-node" data-target="#apps">04</div>
+    <div class="timeline-node" data-target="#terminal">05</div>
+  </div>
+
+  <div class="scroll-container">
+    
+    <!-- STRANA 01: ÚVOD -->
+    <section id="hero" class="page-section">
+      <h1 class="glitch-hover">HCODE</h1>
+      <div class="subtitle glitch-hover">HACKER_5 Full-Stack Web &amp; Aplikace</div>
+    </section>
+
+    <!-- STRANA 02: ARCHITEKTURA -->
+    <section id="architecture" class="page-section">
+      <div class="content-block intersect-target" style="margin-right: auto;">
+        <h2 class="glitch-hover">ARCHITEKTURA <span class="accent-text">EKOSYSTÉMU</span></h2>
+        <p>Stavíme na čistém webovém jádru bez bloatwaru a zbytečných knihoven. Projekt vyrostl z prvních experimentů v čistém HTML přes otevřené verzování na GitHubu až po samostatný ekosystém aplikací běžících v reálném čase přímo na stránce v prohlížeči. Každý modul nabízí bleskovou sub-milisekundovou odezvu, responzivní ergonomii a nulovou nutnost cokoliv instalovat.</p>
+      </div>
+    </section>
+
+    <!-- STRANA 03: ČASOVÁ OSA EVOLUCE -->
+    <section id="evolution" class="page-section">
+      <div class="content-block intersect-target" style="margin-left: auto;">
+        <h2 class="glitch-hover">EVOLUCE <span class="accent-text">PROJEKTŮ</span></h2>
+        <div class="roadmap-grid">
+          <div class="roadmap-item">
+            <h3 class="glitch-hover">Základ v prázdnotě</h3>
+            <p>Na počátku jsem vše redukoval na samotnou podstatu. Zvolil jsem čisté HTML a CSS na doméně HCODE.ART. Odstranil jsem veškerý balast i externí závislosti, které by mě mohly brzdit. Zůstal jen čistý, nezávislý základ, který reaguje s milisekundovou, neochvějnou jistotou.</p>
+          </div>
+          <div class="roadmap-item">
+            <h3 class="glitch-hover">Řád za oponou</h3>
+            <p>Aby mohl systém nepozorovaně růst, potřeboval dokonalou strukturu. Architekturu jsem uložil na GitHub, rozřezal do nezávislých modulů a zavedl striktní verzování. Vznikl tak chladně propočítaný mechanismus, který s absolutní lehkostí a v tichosti pohlcuje stále masivnější datové sady.</p>
+          </div>
+          <div class="roadmap-item">
+            <h3 class="glitch-hover">Anomálie v síti: Protokol ve výstavbě</h3>
+            <p>Na temných okrajích federativní sítě se formuje něco, o čem se zatím jen tiše šušká. Rozhraní, které tam někdo právě teď zaživa kóduje, je osekané na kost a naprosto imunní vůči všem zavedeným trendům. Jeho architekturu nediktují platformy, ale chladná kognitivní věda. S děsivou analytickou přesností se tam momentálně dekonstruuje všech 204 moderních radikálů. Každý pixel a logická vazba v těch neustále přibývajících commitech funguje jako exaktní nosič významu. Žádný balast, žádný jasný autor – jen čistá, úderná informační struktura, jejíž plný rozsah se teprve rýsuje.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STRANA 04: WEBOVÉ APLIKACE (SUBPAGES HUB) -->
+    <section id="apps" class="page-section">
+      <div class="content-block intersect-target apps-container" style="margin-right: auto;">
+        <h2 class="glitch-hover">WEBOVÉ <span class="accent-text">APLIKACE</span></h2>
+        <p>Katalog nezávislých webových aplikací a interaktivních modulů. Každá aplikace funguje samostatně jako blesková podstránka (SPA) s přímým spuštěním, bez zbytečného balastu a bez nutnosti cokoliv instalovat.</p>
+        
+        <div class="apps-grid">
+          <!-- Aplikace 1: Čínština -->
+          <div class="app-card chinese-app-card">
+            <div>
+              <!-- Nice Chinese Logo + Title -->
+              <div class="chinese-logo-header">
+                <div class="chinese-logo-box">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="100%" height="100%">
+                    <defs>
+                      <linearGradient id="appBgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#220a17"/>
+                        <stop offset="50%" stop-color="#0f1124"/>
+                        <stop offset="100%" stop-color="#060913"/>
+                      </linearGradient>
+                      <linearGradient id="appNeonBorder" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#00ffcc"/>
+                        <stop offset="50%" stop-color="#38bdf8"/>
+                        <stop offset="100%" stop-color="#c084fc"/>
+                      </linearGradient>
+                      <linearGradient id="appGoldBorder" x1="0%" y1="100%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#f59e0b"/>
+                        <stop offset="50%" stop-color="#fbbf24"/>
+                        <stop offset="100%" stop-color="#fef08a"/>
+                      </linearGradient>
+                      <linearGradient id="appSealGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#e11d48"/>
+                        <stop offset="100%" stop-color="#9f1239"/>
+                      </linearGradient>
+                      <filter id="appGlow" x="-25%" y="-25%" width="150%" height="150%">
+                        <feGaussianBlur stdDeviation="3.5" result="blur"/>
+                        <feMerge>
+                          <feMergeNode in="blur"/>
+                          <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                      </filter>
+                    </defs>
+                    <rect x="10" y="10" width="100" height="100" rx="24" fill="url(#appBgGrad)" stroke="url(#appNeonBorder)" stroke-width="2.5" filter="url(#appGlow)"/>
+                    <rect x="18" y="18" width="84" height="84" rx="16" fill="none" stroke="rgba(0, 255, 204, 0.35)" stroke-width="1.2" stroke-dasharray="6 3"/>
+                    <path d="M 22 28 L 22 22 L 28 22" fill="none" stroke="#00ffcc" stroke-width="1.8" stroke-linecap="round"/>
+                    <path d="M 98 28 L 98 22 L 92 22" fill="none" stroke="#00ffcc" stroke-width="1.8" stroke-linecap="round"/>
+                    <path d="M 22 92 L 22 98 L 28 98" fill="none" stroke="#00ffcc" stroke-width="1.8" stroke-linecap="round"/>
+                    <path d="M 98 92 L 98 98 L 92 98" fill="none" stroke="#00ffcc" stroke-width="1.8" stroke-linecap="round"/>
+                    <circle cx="60" cy="60" r="32" fill="url(#appSealGrad)" opacity="0.9"/>
+                    <circle cx="60" cy="60" r="32" fill="none" stroke="url(#appGoldBorder)" stroke-width="1.5"/>
+                    <circle cx="60" cy="60" r="27" fill="none" stroke="rgba(255, 255, 255, 0.25)" stroke-width="0.8" stroke-dasharray="3 2"/>
+                    <text x="60" y="72" font-family="'Noto Serif SC', 'Songti SC', 'STSong', 'KaiTi', 'SimSun', 'Microsoft YaHei', serif" font-size="38" font-weight="900" fill="#ffffff" text-anchor="middle" dominant-baseline="alphabetic" style="filter: drop-shadow(0 2px 5px rgba(0,0,0,0.7));">漢</text>
+                  </svg>
+                </div>
+                <div class="chinese-title-group">
+                  <h3 class="glitch-hover">Čínština: Vztahová síť znaků</h3>
+                </div>
+              </div>
+
+              <!-- Description -->
+              <p class="chinese-app-desc">
+                Kompletní interaktivní webová aplikace pro studium a rozbor čínštiny. Zahrnuje propojenou síť znaků Hanzi, všech 204 moderních radikálů se slovní zásobou, vizuální paměťové emoji kotvy, doplňování vět z oficiálních zdrojů a krokového průvodce s bleskovým vyhledáváním.
+              </p>
+            </div>
+
+            <!-- Open Button -->
+            <div class="app-actions">
+              <a href="app/index.html" class="app-btn app-btn-open glitch-hover" target="_blank">
+                <span>Otevřít aplikaci</span> <span>➔</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Karta 2: Budoucí aplikace & nástroje (celá karta s frosted blur efektem) -->
+          <div class="app-card future-app-card">
+            <div>
+              <div class="chinese-title-group" style="margin-bottom: 0.8rem;">
+                <h3 class="glitch-hover" style="margin: 0 0 4px 0;">Budoucí aplikace &amp; nástroje</h3>
+                <span class="future-status-badge">✦ Ve vývoji</span>
+              </div>
+
+              <!-- Čistý otazník na blured kartě -->
+              <div class="future-qmark-stage">
+                <span class="clean-hero-qmark">?</span>
+              </div>
+            </div>
+
+            <p class="future-card-desc">
+              Nové samostatné webové nástroje a experimentální moduly jsou ve vývoji.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- STRANA 05: TERMINÁL (CTA) -->
+    <section id="terminal" class="page-section">
+      <div class="content-block intersect-target" style="background: transparent; border: none; box-shadow: none; text-align: center;">
+        <h2 class="glitch-hover" style="margin-bottom: 2rem;">DART.H <span class="accent-text">FORCED</span></h2>
+        <button id="morphBtn" class="glitch-hover">MAY THE CLICK BE WITH YOU</button>
+      </div>
+    </section>
+    
+    <!-- HIGH-BLUR REFINED FOOTER WITH SIMPLE SITEMAP -->
+    <footer id="main-footer">
+      <div class="footer-simple-wrap">
+        
+        <!-- Left: Brand & System Status -->
+        <div class="footer-left">
+          <div class="footer-logo glitch-hover" id="footerLogo">HCODE.ART</div>
+          <div class="footer-tagline">Nezávislá full-stack architektura &amp; sub-milisekundové webové aplikace bez balastu.</div>
+          <div class="footer-status">
+            <span class="pulse-dot"></span>
+            <span>SYSTEM ONLINE // ZERO-DEP</span>
+          </div>
+          <div class="footer-copy">&copy; <span id="footerYear">2026</span> HCODE.ART &bull; Všechna práva vyhrazena</div>
+        </div>
+
+        <!-- Center: Simple Sitemap -->
+        <div class="footer-sitemap">
+          <div class="footer-col-header">SITEMAP</div>
+          <nav class="footer-sitemap-list" aria-label="Mapa webu">
+            <a href="#hero" class="footer-sitemap-link"><span class="sitemap-num">01</span> Start // Úvod</a>
+            <a href="#architecture" class="footer-sitemap-link"><span class="sitemap-num">02</span> Architektura</a>
+            <a href="#evolution" class="footer-sitemap-link"><span class="sitemap-num">03</span> Evoluce projektů</a>
+            <a href="#apps" class="footer-sitemap-link"><span class="sitemap-num">04</span> Webové aplikace</a>
+            <a href="#terminal" class="footer-sitemap-link"><span class="sitemap-num">05</span> Terminál // CTA</a>
+            <a href="app/index.html" target="_blank" class="footer-sitemap-link app-link"><span class="sitemap-num">↗</span> Čínština: Vztahová síť</a>
+          </nav>
+        </div>
+
+        <!-- Right: Vertical Social Contacts -->
+        <div class="footer-social-col">
+          <div class="footer-col-header">CONNECT</div>
+          <div class="footer-social-vertical">
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="footer-link glitch-hover">IG</a>
+            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="footer-link glitch-hover">FB</a>
+            <a href="https://mastodon.social" target="_blank" rel="noopener noreferrer" class="footer-link glitch-hover">MASTODON</a>
+            <a href="https://discord.com" target="_blank" rel="noopener noreferrer" class="footer-link glitch-hover">DISCORD</a>
+          </div>
+        </div>
+
+      </div>
+    </footer>
+    
+  </div>
+
+  <!-- Cyber Modal Overlay pro živý náhled aplikace -->
+  <div id="cyberAppModal" class="cyber-modal">
+    <div class="cyber-modal-container">
+      <div class="cyber-modal-header">
+        <div class="cyber-modal-title">
+          <span class="pulse-dot"></span>
+          <span id="modalAppTitle">Aplikace</span>
+        </div>
+        <div class="cyber-modal-actions">
+          <a id="modalDirectLink" href="app/index.html" target="_blank" class="cyber-modal-btn">
+            <span>Otevřít samostatně</span> <span>↗</span>
+          </a>
+          <button type="button" class="cyber-modal-close" onclick="closeAppModal()" title="Zavřít okno (Esc)">✕ Zavřít</button>
+        </div>
+      </div>
+      <div class="cyber-modal-body">
+        <iframe id="appModalIframe" src="" title="Náhled aplikace"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Globální reference na Three.js objekty pro dynamické přepínání témat
+    let scene, cyanLight, magentaLight, tertiaryLight, particleMat, gridHelper;
+
+    // --- BAREVNÁ TÉMATA (THEME CONTROLLER - DVOJBARVÍ & TROJBARVÍ) ---
+    const themes = {
+      cyber: {
+        name: 'Cyber Matrix (Dvojbarví)',
+        accentRgb: '0, 255, 204',
+        primaryLight: 0x00ffcc,  // Matrix Cyan
+        secondaryLight: 0xff00ff,// Cyber Magenta
+        tertiaryLight: 0xffe600, // Solar Yellow Accent
+        emissive: 0x00ffcc,
+        fog: 0x0b0f19
+      },
+      noir: {
+        name: 'Black Noir (Dvojbarví)',
+        accentRgb: '255, 255, 255',
+        primaryLight: 0xffffff,  // Stark Crisp White
+        secondaryLight: 0x475569,// Charcoal Slate Rim Light
+        tertiaryLight: 0x94a3b8, // Platinum White
+        emissive: 0xffffff,       // White / Silver Emissive
+        fog: 0x030303
+      },
+      ming: {
+        name: 'Mingská dynastie (Dvojbarví)',
+        accentRgb: '245, 158, 11',
+        primaryLight: 0xf59e0b,  // Imperial 24K Gold
+        secondaryLight: 0xdc2626,// Forbidden Palace Vermilion
+        tertiaryLight: 0xfbbf24, // Warm Amber
+        emissive: 0xf59e0b,
+        fog: 0x12070b
+      },
+      qinghua: {
+        name: 'Mingský porcelán (Dvojbarví)',
+        accentRgb: '56, 189, 248',
+        primaryLight: 0x38bdf8,  // Glaze Azure
+        secondaryLight: 0x1d4ed8,// Cobalt Blue
+        tertiaryLight: 0x93c5fd, // Light Porcelain
+        emissive: 0x38bdf8,
+        fog: 0x060d19
+      },
+      jade: {
+        name: 'Císařský nefrit (Dvojbarví)',
+        accentRgb: '16, 185, 129',
+        primaryLight: 0x10b981,  // Jade Emerald
+        secondaryLight: 0x059669,// Deep Forest Jade
+        tertiaryLight: 0x34d399, // Bright Jade
+        emissive: 0x34d399,
+        fog: 0x05140e
+      },
+      tokyo: {
+        name: 'Tokijský západ (Dvojbarví)',
+        accentRgb: '244, 63, 94',
+        primaryLight: 0xf43f5e,  // Cyber Rose
+        secondaryLight: 0xa855f7,// Electric Violet
+        tertiaryLight: 0xec4899, // Sunset Pink
+        emissive: 0xf43f5e,
+        fog: 0x0e0817
+      },
+      bloodmoon: {
+        name: 'Krvavý měsíc (Dvojbarví)',
+        accentRgb: '255, 23, 68',
+        primaryLight: 0xff1744,  // Crimson Flare
+        secondaryLight: 0x991b1b,// Blood Vermilion
+        tertiaryLight: 0xf43f5e, // Ruby Rim
+        emissive: 0xff1744,
+        fog: 0x140507
+      },
+      solarpunk: {
+        name: 'Solární fúze (Dvojbarví)',
+        accentRgb: '255, 122, 0',
+        primaryLight: 0xff7a00,  // Solar Flare Orange
+        secondaryLight: 0xeab308,// Sun Gold
+        tertiaryLight: 0xfde047, // Radiant Core
+        emissive: 0xff7a00,
+        fog: 0x130800
+      },
+      abyss: {
+        name: 'Hlubina propasti (Dvojbarví)',
+        accentRgb: '6, 182, 212',
+        primaryLight: 0x06b6d4,  // Aqua Neon
+        secondaryLight: 0x1d4ed8,// Deep Sea Sapphire
+        tertiaryLight: 0x38bdf8, // Bioluminescent Cyan
+        emissive: 0x06b6d4,
+        fog: 0x020817
+      },
+      rgb: {
+        name: 'RGB Cyberpunk (Trojbarví)',
+        accentRgb: '0, 255, 204',
+        primaryLight: 0x00ffcc,  // Matrix Cyan
+        secondaryLight: 0xff007f,// Hot Magenta
+        tertiaryLight: 0xffe600, // Electric Yellow
+        emissive: 0x00ffcc,
+        fog: 0x0a0e1a
+      },
+      sancai: {
+        name: 'Mingské Sancai (Trojbarví)',
+        accentRgb: '245, 158, 11',
+        primaryLight: 0xf59e0b,  // Imperial Gold
+        secondaryLight: 0x1d4ed8,// Cobalt Blue
+        tertiaryLight: 0x10b981, // Jade Emerald
+        emissive: 0xf59e0b,
+        fog: 0x0e0d14
+      },
+      synthwave: {
+        name: 'Synthwave Sunset (Trojbarví)',
+        accentRgb: '255, 42, 133',
+        primaryLight: 0xff2a85,  // Neon Pink
+        secondaryLight: 0x8b5cf6,// Electric Violet
+        tertiaryLight: 0x00f0ff, // Vapor Cyan
+        emissive: 0xff2a85,
+        fog: 0x0f051d
+      },
+      aurora: {
+        name: 'Polární záře (Trojbarví)',
+        accentRgb: '0, 255, 135',
+        primaryLight: 0x00ff87,  // Aurora Emerald
+        secondaryLight: 0x60efff,// Arctic Ice Cyan
+        tertiaryLight: 0xa855f7, // Cosmic Purple
+        emissive: 0x00ff87,
+        fog: 0x041014
+      },
+      inferno: {
+        name: 'Trojitý plamen (Trojbarví)',
+        accentRgb: '255, 59, 48',
+        primaryLight: 0xff3b30,  // Magma Red
+        secondaryLight: 0xf59e0b,// Solar Amber
+        tertiaryLight: 0xffffff, // White Hot Core
+        emissive: 0xff3b30,
+        fog: 0x140502
+      },
+      darkforce: {
+        name: 'DART.H FORCED (Trojbarví)',
+        accentRgb: '255, 0, 51',
+        primaryLight: 0xff0033,  // Sith Crimson Blade
+        secondaryLight: 0x7c3aed,// Dark Force Violet
+        tertiaryLight: 0xffffff, // Lightning White
+        emissive: 0xff0033,
+        fog: 0x050002
+      }
+    };
+
+    const themeKeys = [
+      'cyber', 'noir', 'ming', 'qinghua', 'jade', 'tokyo', 'bloodmoon', 'solarpunk', 'abyss',
+      'rgb', 'sancai', 'synthwave', 'aurora', 'inferno', 'darkforce'
+    ];
+
+    let currentThemeId = 'cyber';
+    try {
+      const savedTheme = localStorage.getItem('hcode_theme');
+      if (savedTheme && themes[savedTheme]) {
+        currentThemeId = savedTheme;
+      }
+    } catch(e) {}
+
+    function updateMorphButtonTooltip(themeId) {
+      const morphBtn = document.getElementById('themeMorphBtn');
+      if (!morphBtn) return;
+      const selected = themes[themeId] || themes.cyber;
+      const currentIndex = themeKeys.indexOf(themeId);
+      const nextIndex = (currentIndex + 1) % themeKeys.length;
+      const nextTheme = themes[themeKeys[nextIndex]];
+      morphBtn.setAttribute('title', `Barevný motiv: ${selected.name} — Kliknutím přepnete (další: ${nextTheme.name})`);
+      morphBtn.setAttribute('aria-label', `Barevný motiv: ${selected.name}, kliknutím přepnete na ${nextTheme.name}`);
+    }
+
+    function applyTheme(themeId, animate = true) {
+      const selected = themes[themeId] || themes.cyber;
+      currentThemeId = themeId;
+      document.body.setAttribute('data-theme', themeId);
+      try {
+        localStorage.setItem('hcode_theme', themeId);
+      } catch (err) {}
+
+      updateMorphButtonTooltip(themeId);
+
+      // Plynulá změna Three.js 3D světel, částic a atmosféry
+      if (cyanLight && magentaLight && particleMat) {
+        const targetPrimary = new THREE.Color(selected.primaryLight);
+        const targetSecondary = new THREE.Color(selected.secondaryLight);
+        const targetTertiary = new THREE.Color(selected.tertiaryLight || selected.secondaryLight);
+        const targetEmissive = new THREE.Color(selected.emissive);
+        const targetFog = new THREE.Color(selected.fog);
+
+        if (animate && window.gsap) {
+          gsap.to(cyanLight.color, { r: targetPrimary.r, g: targetPrimary.g, b: targetPrimary.b, duration: 0.85, ease: "power2.out" });
+          gsap.to(magentaLight.color, { r: targetSecondary.r, g: targetSecondary.g, b: targetSecondary.b, duration: 0.85, ease: "power2.out" });
+          if (tertiaryLight) {
+            gsap.to(tertiaryLight.color, { r: targetTertiary.r, g: targetTertiary.g, b: targetTertiary.b, duration: 0.85, ease: "power2.out" });
+          }
+          gsap.to(particleMat.emissive, { r: targetEmissive.r, g: targetEmissive.g, b: targetEmissive.b, duration: 0.85, ease: "power2.out" });
+          if (scene && scene.fog) {
+            gsap.to(scene.fog.color, { r: targetFog.r, g: targetFog.g, b: targetFog.b, duration: 0.85, ease: "power2.out" });
+          }
+          if (gridHelper && gridHelper.material) {
+            gsap.to(gridHelper.material.color, { r: targetPrimary.r, g: targetPrimary.g, b: targetPrimary.b, duration: 0.85, ease: "power2.out" });
+          }
+        } else {
+          cyanLight.color.copy(targetPrimary);
+          magentaLight.color.copy(targetSecondary);
+          if (tertiaryLight) tertiaryLight.color.copy(targetTertiary);
+          particleMat.emissive.copy(targetEmissive);
+          if (scene && scene.fog) scene.fog.color.copy(targetFog);
+          if (gridHelper && gridHelper.material) gridHelper.material.color.copy(targetPrimary);
+        }
+      }
+    }
+
+    function cycleToNextTheme() {
+      const currentIndex = themeKeys.indexOf(currentThemeId);
+      const nextIndex = (currentIndex + 1) % themeKeys.length;
+      const nextThemeId = themeKeys[nextIndex];
+
+      const morphBtn = document.getElementById('themeMorphBtn');
+      if (morphBtn) {
+        morphBtn.classList.remove('spinning');
+        void morphBtn.offsetWidth; // Reflow reset for animation
+        morphBtn.classList.add('spinning');
+      }
+
+      applyTheme(nextThemeId, true);
+    }
+    window.cycleToNextTheme = cycleToNextTheme;
+
+    // Nastavit počáteční data-theme na body a inicializovat morph tlačítko
+    document.body.setAttribute('data-theme', currentThemeId);
+    updateMorphButtonTooltip(currentThemeId);
+
+    // Dynamický rok ve footeru
+    const footerYearEl = document.getElementById('footerYear');
+    if (footerYearEl) footerYearEl.textContent = new Date().getFullYear();
+
+    const morphBtn = document.getElementById('themeMorphBtn');
+    if (morphBtn) {
+      morphBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        cycleToNextTheme();
+      });
+      morphBtn.addEventListener('animationend', () => {
+        morphBtn.classList.remove('spinning');
+      });
+      morphBtn.addEventListener('mouseenter', () => {
+        cursor.style.width = '48px';
+        cursor.style.height = '48px';
+        cursor.style.background = 'rgba(var(--accent-rgb), 0.2)';
+      });
+      morphBtn.addEventListener('mouseleave', () => {
+        cursor.style.width = '40px';
+        cursor.style.height = '40px';
+        cursor.style.background = 'transparent';
+      });
+    }
+
+    // --- CYBER CURSOR ---
+    const cursor = document.getElementById('cyber-cursor');
+    document.addEventListener('mousemove', (e) => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+    });
+
+    const bindCursorHover = (elements) => {
+      elements.forEach(el => {
+        el.addEventListener('mouseenter', () => {
+          cursor.style.width = '80px'; cursor.style.height = '80px';
+          cursor.style.background = 'rgba(var(--accent-rgb), 0.12)';
+        });
+        el.addEventListener('mouseleave', () => {
+          cursor.style.width = '40px'; cursor.style.height = '40px';
+          cursor.style.background = 'transparent';
+        });
+      });
+    };
+    bindCursorHover(document.querySelectorAll('button:not(.theme-morph-circle), a, .timeline-node, .glitch-hover, .app-card'));
+
+    // --- CYBER MODAL OVLÁDÁNÍ ---
+    function openAppModal(url, title) {
+      const modal = document.getElementById('cyberAppModal');
+      const iframe = document.getElementById('appModalIframe');
+      const titleEl = document.getElementById('modalAppTitle');
+      const directLink = document.getElementById('modalDirectLink');
+      
+      if (title) titleEl.innerText = title;
+      if (directLink) directLink.href = url;
+      iframe.src = url;
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      cursor.style.opacity = '0';
+    }
+
+    function closeAppModal() {
+      const modal = document.getElementById('cyberAppModal');
+      const iframe = document.getElementById('appModalIframe');
+      modal.classList.remove('active');
+      iframe.src = '';
+      document.body.style.overflow = '';
+      cursor.style.opacity = '1';
+    }
+
+    // Zavření modalu klávesou Escape nebo kliknutím mimo okno
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeAppModal();
+    });
+    document.getElementById('cyberAppModal').addEventListener('click', (e) => {
+      if (e.target.id === 'cyberAppModal') closeAppModal();
+    });
+
+    // --- KRYPTOGRAFICKÝ HOVER EFEKT ---
+    const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*";
+    document.querySelectorAll('.glitch-hover').forEach(el => {
+      let glitchInterval = null;
+      el.addEventListener('mouseover', () => {
+        if (el.children.length > 0) return; // Pouze čisté textové uzly
+        if (!el.dataset.value) el.dataset.value = el.innerText;
+        let iterations = 0;
+        clearInterval(glitchInterval);
+        glitchInterval = setInterval(() => {
+          el.innerText = el.innerText.split("")
+            .map((letter, index) => {
+              if (index < iterations) return el.dataset.value[index];
+              return letters[Math.floor(Math.random() * letters.length)];
+            }).join("");
+          if (iterations >= el.dataset.value.length) {
+            clearInterval(glitchInterval);
+            el.innerText = el.dataset.value;
+          }
+          iterations += 1;
+        }, 25);
+      });
+    });
+
+    // --- INTERSECTION OBSERVER PRO POSTUPNÉ STMÍVÁNÍ OBSAHU ---
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.2 });
+    document.querySelectorAll('.intersect-target').forEach(el => observer.observe(el));
+
+    // --- NAVIGACE & SLEDOVÁNÍ ČASOVÉ OSY ---
+    const sections = document.querySelectorAll('.page-section');
+    const nodes = document.querySelectorAll('.timeline-node');
+    const navLinks = document.querySelectorAll('.nav-link');
+    const progressBar = document.getElementById('progress-bar');
+    
+    // Plynulé scrollování pro kliknutí
+    const scrollToTarget = (targetId) => {
+      document.querySelector(targetId).scrollIntoView({ behavior: 'smooth' });
+    };
+    nodes.forEach(node => node.addEventListener('click', () => scrollToTarget(node.dataset.target)));
+    navLinks.forEach(link => link.addEventListener('click', (e) => {
+      e.preventDefault();
+      scrollToTarget(link.getAttribute('href'));
+    }));
+    document.querySelectorAll('.footer-sitemap-link[href^="#"]').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        scrollToTarget(link.getAttribute('href'));
+      });
+    });
+    const footerLogo = document.getElementById('footerLogo');
+    if (footerLogo) {
+      footerLogo.addEventListener('click', () => scrollToTarget('#hero'));
+    }
+
+    // Aktualizace aktivních stavů při scrollu
+    let scrollProgress = 0;
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const scrollY = window.scrollY;
+          const scrollMax = document.documentElement.scrollHeight - window.innerHeight;
+          scrollProgress = scrollY / (scrollMax || 1); 
+          
+          // Vyplnění lišty postupu
+          progressBar.style.height = (scrollProgress * 100) + '%';
+          
+          // Zjištění aktuální sekce na obrazovce
+          let currentIdx = 0;
+          sections.forEach((sec, idx) => {
+            const rect = sec.getBoundingClientRect();
+            if(rect.top <= window.innerHeight * 0.5 && rect.bottom >= window.innerHeight * 0.5) {
+              currentIdx = idx;
+            }
+          });
+          if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 30) {
+            currentIdx = sections.length - 1;
+          }
+          
+          // Aktualizace tříd pro boční uzly i horní menu
+          nodes.forEach((node, idx) => {
+            if(idx === currentIdx) node.classList.add('active');
+            else node.classList.remove('active');
+          });
+          navLinks.forEach((link, idx) => {
+            if(idx === currentIdx) link.classList.add('active');
+            else link.classList.remove('active');
+          });
+
+          ticking = false;
+        });
+        ticking = true;
+      }
+    });
+
+    // --- HACKER_5 GOD MODE 3D ENGINE ---
+    const container = document.getElementById('canvas-container');
+    scene = new THREE.Scene();
+    scene.fog = new THREE.FogExp2(0x0b0f19, 0.012);
+    
+    const camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.set(0, 10, 35);
+    
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: false, powerPreference: "high-performance" });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); 
+    container.appendChild(renderer.domElement);
+
+    cyanLight = new THREE.SpotLight(0x00ffcc, 5);
+    cyanLight.position.set(15, 25, 10);
+    scene.add(cyanLight);
+    
+    magentaLight = new THREE.SpotLight(0xff00ff, 4);
+    magentaLight.position.set(-15, -5, -15);
+    scene.add(magentaLight);
+
+    tertiaryLight = new THREE.PointLight(0xffe600, 3.5, 60);
+    tertiaryLight.position.set(0, 20, -10);
+    scene.add(tertiaryLight);
+
+    const dancerGroup = new THREE.Group();
+    scene.add(dancerGroup);
+
+    particleMat = new THREE.MeshPhysicalMaterial({
+      color: 0xffffff, emissive: 0x00ffcc, emissiveIntensity: 0.6,
+      roughness: 0.3, metalness: 0.8, wireframe: true
+    });
+
+    function createShardCloud(radius, length, density) {
+      const group = new THREE.Group();
+      const geo = new THREE.TetrahedronGeometry(0.35, 0); 
+      const count = Math.floor(length * radius * (density * 0.3)); 
+      const instancedMesh = new THREE.InstancedMesh(geo, particleMat, count);
+      
+      const dummy = new THREE.Object3D();
+      const originalMatrices = new Float32Array(count * 16);
+      const randomVectors = new Float32Array(count * 3); 
+      const phaseOffsets = new Float32Array(count * 2); 
+
+      for(let i=0; i<count; i++) {
+        const theta = Math.random() * Math.PI * 2;
+        const r = Math.sqrt(Math.random()) * radius;
+        const y = (Math.random() - 0.5) * length;
+        
+        dummy.position.set(r * Math.cos(theta), y, r * Math.sin(theta));
+        dummy.rotation.set(Math.random()*Math.PI, Math.random()*Math.PI, Math.random()*Math.PI);
+        dummy.scale.setScalar(Math.random() * 0.8 + 0.2);
+        dummy.updateMatrix();
+        
+        instancedMesh.setMatrixAt(i, dummy.matrix);
+        dummy.matrix.toArray(originalMatrices, i * 16);
+        
+        randomVectors[i*3 + 0] = (Math.sin(i * 12.34) * 30);
+        randomVectors[i*3 + 1] = (Math.cos(i * 34.56) * 30);
+        randomVectors[i*3 + 2] = (Math.sin(i * 56.78) * 30);
+        
+        phaseOffsets[i*2 + 0] = i; 
+        phaseOffsets[i*2 + 1] = i + 1.5; 
+      }
+      
+      instancedMesh.userData = { originalMatrices, randomVectors, phaseOffsets };
+      instancedMesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+      instancedMesh.position.y = -length/2;
+      group.add(instancedMesh);
+      return { group, instancedMesh, count };
+    }
+
+    const shards = [];
+
+    const pelvis = new THREE.Group();
+    pelvis.position.y = 12;
+    dancerGroup.add(pelvis);
+    
+    shards.push(createShardCloud(1.8, 2.5, 40));
+    shards[0].group.position.y = 1.25; 
+    pelvis.add(shards[0].group);
+
+    const spine = new THREE.Group();
+    spine.position.y = 1.25;
+    pelvis.add(spine);
+    const chest = createShardCloud(2.2, 3.5, 50);
+    spine.add(chest.group);
+    shards.push(chest);
+
+    const head = new THREE.Group();
+    head.position.y = 1.75;
+    spine.add(head);
+    const headCloud = createShardCloud(1.2, 1.5, 60);
+    headCloud.group.position.y = 0.75; 
+    head.add(headCloud.group);
+    shards.push(headCloud);
+
+    const buildLimb = (parent, r, l, d, py, px) => {
+      const bone = new THREE.Group();
+      if(px) bone.position.set(px, py, 0);
+      else bone.position.y = py;
+      parent.add(bone);
+      const cloud = createShardCloud(r, l, d);
+      bone.add(cloud.group);
+      shards.push(cloud);
+      return bone;
+    };
+
+    const lShoulder = buildLimb(spine, 0.6, 3.0, 30, 0, -2.5);
+    const lElbow = buildLimb(lShoulder, 0.5, 2.8, 30, -3.0, 0);
+    const rShoulder = buildLimb(spine, 0.6, 3.0, 30, 0, 2.5);
+    const rElbow = buildLimb(rShoulder, 0.5, 2.8, 30, -3.0, 0);
+
+    const lHip = buildLimb(pelvis, 0.8, 3.8, 35, -1.25, -1.2);
+    const lKnee = buildLimb(lHip, 0.6, 3.8, 30, -3.8, 0);
+    const rHip = buildLimb(pelvis, 0.8, 3.8, 35, -1.25, 1.2);
+    const rKnee = buildLimb(rHip, 0.6, 3.8, 30, -3.8, 0);
+
+    gridHelper = new THREE.GridHelper(100, 25, 0x00ffcc, 0x111122);
+    gridHelper.position.y = -2;
+    scene.add(gridHelper);
+
+    // Synchronizovat 3D scénu podle aktivního tématu
+    applyTheme(currentThemeId, false);
+
+    // --- EXPLOSION LOGIC ---
+    let isDancing = false;
+    let explosionFactor = { val: 0 };
+    
+    const poses = [
+      { p: {y: 6.5}, s: {x: 0.5}, ls: {z: 1, x: 0.5}, rs: {z: -1, x: 0.5}, lh: {x: -1, z: 0.5}, rh: {x: -1, z: -0.5}, lk: {x: 1.5}, rk: {x: 1.5}, le: {x: -1}, re: {x: -1} },
+      { p: {y: 16}, s: {x: -0.2, y: 0.5}, ls: {z: -0.5, x: -2.5}, rs: {z: 0.5, x: -2.5}, lh: {x: 0.2, z: -0.2}, rh: {x: 0.5, z: 0.5}, lk: {x: 0.2}, rk: {x: 1.2}, le: {x: -0.2}, re: {x: -0.5} },
+      { p: {y: 9}, s: {y: -1.5}, ls: {x: -1.5, y: -1.5}, rs: {x: -1.5, z: 1.5}, lh: {x: -0.5, z: -0.8}, rh: {x: -0.8, z: 0.5}, lk: {x: 0.5}, rk: {x: 1.5}, le: {x: -0.1}, re: {x: -2.0} }
+    ];
+    let poseIndex = 0;
+
+    function playRoutine() {
+      if (isDancing) return;
+      isDancing = true;
+      const pose = poses[poseIndex];
+      poseIndex = (poseIndex + 1) % poses.length;
+      
+      const tl = gsap.timeline({ onComplete: () => { isDancing = false; } });
+      tl.to(explosionFactor, { val: 2.0, duration: 0.2, ease: "power4.out" }, 0);
+      tl.set(pelvis.position, pose.p, 0.2);
+      tl.set(spine.rotation, pose.s || {x:0,y:0,z:0}, 0.2);
+      tl.set(lShoulder.rotation, pose.ls || {x:0,y:0,z:0}, 0.2);
+      tl.set(rShoulder.rotation, pose.rs || {x:0,y:0,z:0}, 0.2);
+      tl.set(lHip.rotation, pose.lh || {x:0,y:0,z:0}, 0.2);
+      tl.set(rHip.rotation, pose.rh || {x:0,y:0,z:0}, 0.2);
+      tl.set(lKnee.rotation, pose.lk || {x:0,y:0,z:0}, 0.2);
+      tl.set(rKnee.rotation, pose.rk || {x:0,y:0,z:0}, 0.2);
+      tl.set(lElbow.rotation, pose.le || {x:0,y:0,z:0}, 0.2);
+      tl.set(rElbow.rotation, pose.re || {x:0,y:0,z:0}, 0.2);
+      tl.to(explosionFactor, { val: 0, duration: 1.2, ease: "elastic.out(1, 0.2)" }, 0.2);
+    }
+    document.getElementById('morphBtn').addEventListener('click', playRoutine);
+
+    // --- RAYCAST MAGNETIC PHYSICS ---
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2(-9999, -9999);
+    const planeZ = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
+    const mouse3D = new THREE.Vector3();
+
+    window.addEventListener('mousemove', (event) => {
+      mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+      mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    });
+    window.addEventListener('mouseleave', () => { mouse.x = -9999; mouse.y = -9999; });
+
+    const clock = new THREE.Clock();
+    let time = 0;
+    const dummy = new THREE.Object3D();
+    const tempMat = new THREE.Matrix4();
+    const pos = new THREE.Vector3();
+    const rot = new THREE.Quaternion();
+    const scl = new THREE.Vector3();
+
+    function animate() {
+      requestAnimationFrame(animate);
+      const delta = clock.getDelta();
+      time += delta;
+      
+      if (explosionFactor.val === 0 && !isDancing) {
+        pelvis.position.y = 10 + Math.sin(time * 2) * 0.5;
+        spine.rotation.x = Math.sin(time) * 0.05;
+      }
+      
+      const targetAngle = (time * 0.1) + (scrollProgress * Math.PI);
+      camera.position.x = Math.sin(targetAngle) * 28;
+      camera.position.z = Math.cos(targetAngle) * 28;
+      camera.position.y = 10 - (scrollProgress * 6);
+      camera.lookAt(0, 8, 0);
+      camera.updateMatrixWorld();
+
+      raycaster.setFromCamera(mouse, camera);
+      raycaster.ray.intersectPlane(planeZ, mouse3D);
+
+      shards.forEach(shard => {
+        const mesh = shard.instancedMesh;
+        const orig = mesh.userData.originalMatrices;
+        const rVecs = mesh.userData.randomVectors;
+        const pOffs = mesh.userData.phaseOffsets;
+        
+        const expVal = explosionFactor.val;
+        const scrReact = scrollProgress * 0.5;
+        const expTotal = expVal + scrReact;
+        const t5 = time * 5;
+        const t6 = time * 6;
+        const boneMatrix = shard.group.parent.matrixWorld;
+        
+        for(let i=0; i<shard.count; i++) {
+          tempMat.fromArray(orig, i * 16);
+          tempMat.decompose(pos, rot, scl);
+          
+          if (expTotal > 0) {
+            const rx = rVecs[i*3];
+            const ry = rVecs[i*3+1];
+            const rz = rVecs[i*3+2];
+            pos.x += rx * expTotal;
+            pos.y += ry * expTotal;
+            pos.z += rz * expTotal;
+            rot.x += time * rx * 0.1 * expTotal;
+            rot.y += time * ry * 0.1 * expTotal;
+          } else {
+            pos.x += Math.sin(t5 + pOffs[i*2]) * 0.02;
+            pos.y += Math.cos(t6 + pOffs[i*2+1]) * 0.02;
+          }
+          
+          const globalPos = pos.clone().applyMatrix4(boneMatrix);
+          const dx = globalPos.x - mouse3D.x;
+          const dy = globalPos.y - mouse3D.y;
+          const dz = globalPos.z - mouse3D.z;
+          const distSq = dx*dx + dy*dy + dz*dz;
+          
+          const repulseRadiusSq = 120.0;
+          if (distSq < repulseRadiusSq && mouse.x !== -9999) {
+            const dist = Math.sqrt(distSq) || 0.1;
+            const force = (Math.sqrt(repulseRadiusSq) - dist) / Math.sqrt(repulseRadiusSq);
+            const repelStr = Math.pow(force, 2) * 12.0; 
+            pos.x += (dx / dist) * repelStr;
+            pos.y += (dy / dist) * repelStr;
+            pos.z += (dz / dist) * repelStr;
+            rot.x += force * 5.0;
+            rot.y += force * 5.0;
+            rot.z += force * 5.0;
+          }
+          
+          dummy.position.copy(pos);
+          dummy.quaternion.copy(rot);
+          dummy.scale.copy(scl);
+          dummy.updateMatrix();
+          mesh.setMatrixAt(i, dummy.matrix);
+        }
+        mesh.instanceMatrix.needsUpdate = true;
+      });
+
+      renderer.render(scene, camera);
+    }
+    
+    scene.updateMatrixWorld();
+    animate();
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+  </script>
+</body>
+</html>
