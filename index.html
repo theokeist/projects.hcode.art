@@ -701,6 +701,21 @@
     color: rgba(255, 255, 255, 0.82);
     margin: 0 0 2rem 0;
   }
+  /* Korean Web App Card Custom Styling */
+  .app-card.korean-app-card {
+    background: linear-gradient(145deg, rgba(0, 166, 255, 0.09) 0%, rgba(255, 59, 92, 0.05) 50%, var(--card-bg) 100%);
+    border: 1px solid rgba(var(--accent-rgb), 0.3);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7), 0 0 30px rgba(0, 166, 255, 0.08);
+  }
+  .app-card.korean-app-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-8px);
+    box-shadow: 0 25px 55px rgba(0, 0, 0, 0.85), 0 0 45px var(--accent-glow), 0 0 25px rgba(0, 166, 255, 0.35);
+  }
+  .app-card.korean-app-card:hover .chinese-logo-box {
+    transform: scale(1.06) rotate(1deg);
+    filter: drop-shadow(0 0 26px var(--accent-glow)) drop-shadow(0 0 14px rgba(0, 166, 255, 0.6));
+  }
   /* Future Apps Card Custom Styling - Entire Card Frosted Blur & Status Badge */
   .app-card.future-app-card {
     background: radial-gradient(circle at 50% 50%, rgba(192, 132, 252, 0.18) 0%, rgba(20, 15, 42, 0.58) 55%, rgba(12, 9, 25, 0.75) 100%);
@@ -1405,7 +1420,93 @@
             </div>
           </div>
 
-          <!-- Karta 2: Budoucí aplikace & nástroje (celá karta s frosted blur efektem) -->
+          <!-- Aplikace 2: Korejština -->
+          <div class="app-card korean-app-card">
+            <div>
+              <!-- Korean Logo + Title -->
+              <div class="chinese-logo-header">
+                <div class="chinese-logo-box">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="100%" height="100%">
+                    <defs>
+                      <linearGradient id="hubKorBgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#120c22"/>
+                        <stop offset="50%" stop-color="#0c102b"/>
+                        <stop offset="100%" stop-color="#050714"/>
+                      </linearGradient>
+                      <linearGradient id="hubKorNeonBorder" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#00f0ff"/>
+                        <stop offset="50%" stop-color="#38bdf8"/>
+                        <stop offset="100%" stop-color="#ff2a85"/>
+                      </linearGradient>
+                      <linearGradient id="hubTaegeukRed" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#ff3b5c"/>
+                        <stop offset="100%" stop-color="#c8102e"/>
+                      </linearGradient>
+                      <linearGradient id="hubTaegeukBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#0072ce"/>
+                        <stop offset="100%" stop-color="#003594"/>
+                      </linearGradient>
+                      <linearGradient id="hubKorGoldGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#fde047"/>
+                        <stop offset="50%" stop-color="#f59e0b"/>
+                        <stop offset="100%" stop-color="#d97706"/>
+                      </linearGradient>
+                      <filter id="hubKorGlow" x="-25%" y="-25%" width="150%" height="150%">
+                        <feGaussianBlur stdDeviation="3.5" result="blur"/>
+                        <feMerge>
+                          <feMergeNode in="blur"/>
+                          <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                      </filter>
+                    </defs>
+                    <rect x="10" y="10" width="100" height="100" rx="24" fill="url(#hubKorBgGrad)" stroke="url(#hubKorNeonBorder)" stroke-width="2.5" filter="url(#hubKorGlow)"/>
+                    <rect x="18" y="18" width="84" height="84" rx="16" fill="none" stroke="rgba(0, 240, 255, 0.35)" stroke-width="1.2" stroke-dasharray="6 3"/>
+                    <g stroke="#00f0ff" stroke-width="1.5" stroke-linecap="round" opacity="0.85">
+                      <line x1="22" y1="23" x2="30" y2="23"/><line x1="22" y1="26" x2="30" y2="26"/><line x1="22" y1="29" x2="30" y2="29"/>
+                    </g>
+                    <g stroke="#ff2a85" stroke-width="1.5" stroke-linecap="round" opacity="0.85">
+                      <line x1="90" y1="23" x2="98" y2="23"/><line x1="90" y1="26" x2="93" y2="26"/><line x1="95" y1="26" x2="98" y2="26"/><line x1="90" y1="29" x2="98" y2="29"/>
+                    </g>
+                    <g stroke="#00f0ff" stroke-width="1.5" stroke-linecap="round" opacity="0.85">
+                      <line x1="22" y1="89" x2="25" y2="89"/><line x1="27" y1="89" x2="30" y2="89"/><line x1="22" y1="92" x2="30" y2="92"/><line x1="22" y1="95" x2="25" y2="95"/><line x1="27" y1="95" x2="30" y2="95"/>
+                    </g>
+                    <g stroke="#ff2a85" stroke-width="1.5" stroke-linecap="round" opacity="0.85">
+                      <line x1="90" y1="89" x2="93" y2="89"/><line x1="95" y1="89" x2="98" y2="89"/><line x1="90" y1="92" x2="93" y2="92"/><line x1="95" y1="92" x2="98" y2="92"/><line x1="90" y1="95" x2="93" y2="95"/><line x1="95" y1="95" x2="98" y2="95"/>
+                    </g>
+                    <g transform="translate(60, 54)">
+                      <circle cx="0" cy="0" r="30" fill="#003594"/>
+                      <path d="M 0,-30 A 30,30 0 0,1 0,30 A 15,15 0 0,1 0,0 A 15,15 0 0,0 0,-30 Z" fill="url(#hubTaegeukRed)"/>
+                      <path d="M 0,30 A 30,30 0 0,1 0,-30 A 15,15 0 0,1 0,0 A 15,15 0 0,0 0,30 Z" fill="url(#hubTaegeukBlue)"/>
+                      <circle cx="0" cy="0" r="30" fill="none" stroke="url(#hubKorGoldGrad)" stroke-width="1.5"/>
+                      <circle cx="0" cy="0" r="26" fill="none" stroke="rgba(255, 255, 255, 0.3)" stroke-width="0.8" stroke-dasharray="3 2"/>
+                      <text x="0" y="11" font-family="'Pretendard', 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif" font-size="33" font-weight="900" fill="#ffffff" text-anchor="middle" dominant-baseline="alphabetic" style="filter: drop-shadow(0 2px 6px rgba(0,0,0,0.85));">한</text>
+                    </g>
+                    <g transform="translate(60, 99)">
+                      <rect x="-35" y="-7" width="70" height="13" rx="6.5" fill="#0b0f19" stroke="url(#hubKorNeonBorder)" stroke-width="1"/>
+                      <text x="0" y="2.5" font-family="monospace" font-size="7.5" font-weight="800" fill="#00f0ff" text-anchor="middle" dominant-baseline="middle" letter-spacing="1.8">KOREAN</text>
+                    </g>
+                  </svg>
+                </div>
+                <div class="chinese-title-group">
+                  <h3 class="glitch-hover">Korejština: Kompletní Hangul &amp; Slovník</h3>
+                </div>
+              </div>
+
+              <!-- Description -->
+              <p class="chinese-app-desc">
+                Kompletní interaktivní webová aplikace pro studium korejštiny a Hangulu. Zahrnuje všech 40 hlásek (19 souhlásek, 21 samohlásek), pravidla Batchim a fonetické asimilace, duální číselné systémy s počítadly, konverzační fráze s rozborem po tokenech a 350+ slovník s emoji kotvami a audio výslovností.
+              </p>
+            </div>
+
+            <!-- Open Button -->
+            <div class="app-actions">
+              <a href="korean/index.html" class="app-btn app-btn-open glitch-hover" target="_blank">
+                <span>Otevřít aplikaci</span> <span>➔</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Karta 3: Budoucí aplikace & nástroje (celá karta s frosted blur efektem) -->
           <div class="app-card future-app-card">
             <div>
               <div class="chinese-title-group" style="margin-bottom: 0.8rem;">
@@ -1461,6 +1562,7 @@
             <a href="#apps" class="footer-sitemap-link"><span class="sitemap-num">04</span> Webové aplikace</a>
             <a href="#terminal" class="footer-sitemap-link"><span class="sitemap-num">05</span> Terminál // CTA</a>
             <a href="app/index.html" target="_blank" class="footer-sitemap-link app-link"><span class="sitemap-num">↗</span> Čínština: Vztahová síť</a>
+            <a href="korean/index.html" target="_blank" class="footer-sitemap-link app-link"><span class="sitemap-num">↗</span> Korejština: Hangul &amp; Slovník</a>
           </nav>
         </div>
 

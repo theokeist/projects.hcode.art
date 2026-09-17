@@ -6338,8 +6338,24 @@
     if (!container) return;
     if (document.getElementById('card-rad-1')) return;
 
-    const refNode = document.getElementById('card-l1-1');
+    const refNode = document.getElementById('section-l1') || document.getElementById('card-l1-1');
     const fragment = document.createDocumentFragment();
+
+    const secHeader = document.createElement('div');
+    secHeader.className = 'section-divider-title';
+    secHeader.id = 'section-rad';
+    secHeader.dataset.lesson = 'rad';
+    secHeader.innerHTML = `
+      <div class="section-divider-left">
+        <span class="section-divider-icon">🏮</span>
+        <div class="section-divider-text">
+          <h2 class="section-divider-h2">204 Moderních radikálů (现代汉字部首)</h2>
+          <span class="section-divider-sub">Základní stavební kameny čínských znaků dle normy GF 0011-2009 s etymologií a slovy</span>
+        </div>
+      </div>
+      <span class="section-divider-badge">204 radikálů</span>
+    `;
+    fragment.appendChild(secHeader);
 
     radicalsData.forEach(item => {
       const idx = item[0];

@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="korBgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#120c22"/>
+      <stop offset="50%" stop-color="#0c102b"/>
+      <stop offset="100%" stop-color="#050714"/>
+    </linearGradient>
+
+    <!-- Neon Cyber Border Gradient -->
+    <linearGradient id="korNeonBorder" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00f0ff"/>
+      <stop offset="50%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#ff2a85"/>
+    </linearGradient>
+
+    <!-- Taegeuk Red Yang Gradient -->
+    <linearGradient id="taegeukRed" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff3b5c"/>
+      <stop offset="100%" stop-color="#c8102e"/>
+    </linearGradient>
+
+    <!-- Taegeuk Blue Yin Gradient -->
+    <linearGradient id="taegeukBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0072ce"/>
+      <stop offset="100%" stop-color="#003594"/>
+    </linearGradient>
+
+    <!-- Gold Accent Gradient -->
+    <linearGradient id="korGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fde047"/>
+      <stop offset="50%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+
+    <!-- Glow Filter -->
+    <filter id="korGlow" x="-25%" y="-25%" width="150%" height="150%">
+      <feGaussianBlur stdDeviation="3.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Outer Ambient Glow Backplate -->
+  <rect x="10" y="10" width="100" height="100" rx="24" fill="url(#korBgGrad)" stroke="url(#korNeonBorder)" stroke-width="2.5" filter="url(#korGlow)"/>
+
+  <!-- Inner Cyber Tech Inset -->
+  <rect x="18" y="18" width="84" height="84" rx="16" fill="none" stroke="rgba(0, 240, 255, 0.3)" stroke-width="1.2" stroke-dasharray="6 3"/>
+
+  <!-- Four Korean Trigram Inspired Corner Accents -->
+  <!-- Top-Left (Geon / Heaven ☰) -->
+  <g stroke="#00f0ff" stroke-width="1.5" stroke-linecap="round" opacity="0.85">
+    <line x1="22" y1="23" x2="30" y2="23"/>
+    <line x1="22" y1="26" x2="30" y2="26"/>
+    <line x1="22" y1="29" x2="30" y2="29"/>
+  </g>
+  <!-- Top-Right (Li / Fire ☲) -->
+  <g stroke="#ff2a85" stroke-width="1.5" stroke-linecap="round" opacity="0.85">
+    <line x1="90" y1="23" x2="98" y2="23"/>
+    <line x1="90" y1="26" x2="93" y2="26"/>
+    <line x1="95" y1="26" x2="98" y2="26"/>
+    <line x1="90" y1="29" x2="98" y2="29"/>
+  </g>
+  <!-- Bottom-Left (Gam / Water ☵) -->
+  <g stroke="#00f0ff" stroke-width="1.5" stroke-linecap="round" opacity="0.85">
+    <line x1="22" y1="89" x2="25" y2="89"/>
+    <line x1="27" y1="89" x2="30" y2="89"/>
+    <line x1="22" y1="92" x2="30" y2="92"/>
+    <line x1="22" y1="95" x2="25" y2="95"/>
+    <line x1="27" y1="95" x2="30" y2="95"/>
+  </g>
+  <!-- Bottom-Right (Gon / Earth ☷) -->
+  <g stroke="#ff2a85" stroke-width="1.5" stroke-linecap="round" opacity="0.85">
+    <line x1="90" y1="89" x2="93" y2="89"/>
+    <line x1="95" y1="89" x2="98" y2="89"/>
+    <line x1="90" y1="92" x2="93" y2="92"/>
+    <line x1="95" y1="92" x2="98" y2="92"/>
+    <line x1="90" y1="95" x2="93" y2="95"/>
+    <line x1="95" y1="95" x2="98" y2="95"/>
+  </g>
+
+  <!-- Center Taegeuk (태극) Yin-Yang Disc -->
+  <g transform="translate(60, 54)">
+    <!-- Base Circle with Outer Gold / Cyan Ring -->
+    <circle cx="0" cy="0" r="30" fill="#003594"/>
+    <path d="M 0,-30 A 30,30 0 0,1 0,30 A 15,15 0 0,1 0,0 A 15,15 0 0,0 0,-30 Z" fill="url(#taegeukRed)"/>
+    <path d="M 0,30 A 30,30 0 0,1 0,-30 A 15,15 0 0,1 0,0 A 15,15 0 0,0 0,30 Z" fill="url(#taegeukBlue)"/>
+    
+    <!-- Outer Decorative Orbit Ring -->
+    <circle cx="0" cy="0" r="30" fill="none" stroke="url(#korGoldGrad)" stroke-width="1.6" opacity="0.95"/>
+    <circle cx="0" cy="0" r="26" fill="none" stroke="rgba(255, 255, 255, 0.3)" stroke-width="0.8" stroke-dasharray="3 2"/>
+
+    <!-- Central Hangul Glyph: 한 (Han - Great / Korean / Hangul) -->
+    <text x="0" y="11" 
+          font-family="'Pretendard', 'Noto Sans KR', 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" 
+          font-size="33" 
+          font-weight="900" 
+          fill="#ffffff" 
+          text-anchor="middle" 
+          dominant-baseline="alphabetic"
+          style="filter: drop-shadow(0 2px 6px rgba(0,0,0,0.85)); letter-spacing: -0.5px;">한</text>
+  </g>
+
+  <!-- Bottom Cyber Tagline / Badge -->
+  <g transform="translate(60, 99)">
+    <!-- Pill background -->
+    <rect x="-35" y="-7" width="70" height="13" rx="6.5" fill="#0b0f19" stroke="url(#korNeonBorder)" stroke-width="1"/>
+    <!-- Micro Text -->
+    <text x="0" y="2.5" 
+          font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, monospace" 
+          font-size="7.5" 
+          font-weight="800" 
+          fill="#00f0ff" 
+          text-anchor="middle" 
+          dominant-baseline="middle" 
+          letter-spacing="1.8">KOREAN</text>
+  </g>
+</svg>

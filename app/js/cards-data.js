@@ -27,6 +27,22 @@
     if (!container || document.getElementById('card-num-1')) return;
     var total = numberData.length;
     var fragment = document.createDocumentFragment();
+
+    var secHeader = document.createElement('div');
+    secHeader.className = 'section-divider-title';
+    secHeader.id = 'section-num';
+    secHeader.dataset.lesson = 'num';
+    secHeader.innerHTML =
+      '<div class="section-divider-left">' +
+        '<span class="section-divider-icon">🔢</span>' +
+        '<div class="section-divider-text">' +
+          '<h2 class="section-divider-h2">Čísla a číslice (0 – 100 000 000)</h2>' +
+          '<span class="section-divider-sub">Základní číslice, poziční systém a velké číselné řády (百, 千, 万, 亿)</span>' +
+        '</div>' +
+      '</div>' +
+      '<span class="section-divider-badge">15 karet</span>';
+    fragment.appendChild(secHeader);
+
     for (var i = 0; i < numberData.length; i++) {
       var item = numberData[i];
       var idx = i + 1;
@@ -283,6 +299,23 @@
   const L4_BASE = 853; // Hanzi count after L1–L3
   let l4Index = 0;
   const fragment = document.createDocumentFragment();
+
+  const secHeader = document.createElement('div');
+  secHeader.className = 'section-divider-title';
+  secHeader.id = 'section-l4';
+  secHeader.dataset.lesson = 'l4';
+  secHeader.innerHTML = `
+    <div class="section-divider-left">
+      <span class="section-divider-icon">⚡</span>
+      <div class="section-divider-text">
+        <h2 class="section-divider-h2">Lekce 4: Přídavná jména &amp; Spojky</h2>
+        <span class="section-divider-sub">Základní vlastnosti, párové spojky, podmínková a příčinná souvětí</span>
+      </div>
+    </div>
+    <span class="section-divider-badge">109 karet</span>
+  `;
+  fragment.appendChild(secHeader);
+
   lesson4Data.forEach(function(item) {
     l4Index++;
     const cumulativeCount = L4_BASE + l4Index;

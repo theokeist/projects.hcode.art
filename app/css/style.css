@@ -702,7 +702,7 @@ body[data-theme] .panel-header {
   border-bottom: 1px solid rgba(var(--accent-rgb), 0.18) !important;
 }
 body[data-theme] .panel-header > span:first-child,
-body[data-theme] .panel-header span[style*="color:#334155"] {
+body[data-theme] .panel-title {
   color: var(--text) !important;
 }
 body[data-theme] .card-badge {
@@ -1355,7 +1355,7 @@ body[data-theme] .cards-container.horizontal-scroll-mode::-webkit-scrollbar-thum
       border-bottom-color: #242c3b !important;
     }
     body.dark .panel-header > span:first-child,
-    body.dark .panel-header span[style*="color:#334155"] {
+    body.dark .panel-title {
       color: #f1f5f9 !important;
       font-weight: 700;
     }
@@ -1468,14 +1468,12 @@ body[data-theme] .cards-container.horizontal-scroll-mode::-webkit-scrollbar-thum
     body.dark .course-card.l3 .czech-text[style] {
       color: #e2e8f0 !important;
     }
-    body.dark .course-card.l3 .left-panel div[style*="background:#f8fafc"],
-    body.dark .course-card .left-panel div[style*="background:#f8fafc"] {
+    body.dark .course-card .left-panel .l3-note-box {
       background: #141822 !important;
       border-color: #273040 !important;
       color: #94a3b8 !important;
     }
-    body.dark .course-card.l3 .left-panel div[style*="background:#f8fafc"] b,
-    body.dark .course-card .left-panel div[style*="background:#f8fafc"] b {
+    body.dark .course-card .left-panel .l3-note-box b {
       color: #fbbf24 !important;
     }
 
@@ -1553,7 +1551,7 @@ body[data-theme] .cards-container.horizontal-scroll-mode::-webkit-scrollbar-thum
     }
 
     /* ═══ DECOMPOSITION PANEL (In L1/L2/L3 Cards) ═══ */
-    body.dark .section-label[style*="background:#faf5ff"] {
+    body.dark .decomp-section-label {
       background: #1f1433 !important;
       border-color: #581c87 !important;
       color: #c084fc !important;
@@ -1562,10 +1560,10 @@ body[data-theme] .cards-container.horizontal-scroll-mode::-webkit-scrollbar-thum
       background: #161122 !important;
       border-color: #3b2256 !important;
     }
-    body.dark .decomposition-panel span[style*="color:#6b21a8"] {
+    body.dark .decomposition-panel .decomp-title {
       color: #e9d5ff !important;
     }
-    body.dark .decomposition-panel span[style*="background:#f3e8ff"] {
+    body.dark .decomposition-panel .decomp-tag {
       background: #2c1048 !important;
       border-color: #581c87 !important;
       color: #d8b4fe !important;
@@ -4688,7 +4686,7 @@ body.dark .cards-container.horizontal-scroll-mode::-webkit-scrollbar-thumb {
   min-width: 290px !important;
   scroll-snap-align: center !important;
   scroll-snap-stop: always !important;
-  display: flex !important;
+  display: flex;
   flex-direction: column !important;
   max-height: calc(100vh - 210px) !important;
   overflow-y: auto !important;
@@ -4941,9 +4939,10 @@ body.dark .course-card.mobile-stacked .left-panel {
     font-size: 9px !important;
   }
 
-  /* Cards Layout: Big vertical flashcards */
+  /* Cards Layout: Big vertical flashcards
+     (display must NOT be !important - inline display:none filtering relies on it) */
   .course-card {
-    display: flex !important;
+    display: flex;
     flex-direction: column !important;
     border-radius: 16px !important;
   }
@@ -5699,7 +5698,10 @@ body[data-theme="white"] .bw-split-circle {
 
   .nav-and-search {
     padding: 5px 6px !important;
-    top: 38px !important;
+    top: 41px !important;
+    margin: 0 -6px 12px -6px !important;
+    width: calc(100% + 12px) !important;
+    box-sizing: border-box !important;
   }
 
   .nav-controls-row {
@@ -6234,6 +6236,747 @@ body[data-theme="white"] .mobile-dock-btn:hover {
   background: #2563eb !important;
   color: #ffffff !important;
 }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   7. RENDER PERFORMANCE — skip layout/paint of offscreen cards
+   (1000+ cards stay in DOM for search/stepper, but only visible ones render)
+═══════════════════════════════════════════════════════════════════════ */
+.course-card {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 420px;
+}
+
+.cards-container.horizontal-scroll-mode .course-card {
+  content-visibility: visible;
+  contain-intrinsic-size: auto;
+}
+
+@media print {
+  .course-card {
+    content-visibility: visible !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   8. CLASSES REPLACING REMOVED INLINE STYLES (light-theme values)
+═══════════════════════════════════════════════════════════════════════ */
+.panel-title {
+  font-weight: 700;
+  font-size: 14px;
+  color: #334155;
+}
+
+.char-link-sm {
+  font-size: 10px;
+  margin-top: 2px;
+}
+
+.course-card.l2 .card-badge {
+  color: #1d4ed8;
+  background: #eff6ff;
+  border-color: #bfdbfe;
+}
+
+.course-card.l3 .card-badge {
+  background: #fdf2f8;
+  color: #be185d;
+  border-color: #fbcfe8;
+}
+
+.course-card.l3 .card-time {
+  background: #f8fafc;
+  padding: 3px 8px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  font-size: 11px;
+}
+
+.course-card.l3 .hanzi-text {
+  font-size: 38px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: #0f172a;
+}
+
+.course-card.l3 .pinyin-text {
+  font-size: 20px;
+  font-weight: 700;
+  color: #ec4899;
+}
+
+.course-card.l3 .czech-text {
+  font-size: 18px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.l3-note-box {
+  margin-top: 12px;
+  padding: 8px 12px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 12px;
+  color: #64748b;
+  line-height: 1.4;
+}
+
+.decomposition-panel {
+  margin-top: 8px;
+}
+
+.decomp-section-label {
+  color: #7e22ce;
+  background: #faf5ff;
+  border: 1px solid #e9d5ff;
+  padding: 6px 12px;
+  border-radius: 8px;
+  margin-top: 14px;
+}
+
+.decomp-head-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.decomp-title {
+  font-weight: 800;
+  color: #6b21a8;
+  font-size: 12px;
+}
+
+.decomp-tag {
+  font-size: 11px;
+  color: #4c1d95;
+  background: #f3e8ff;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 700;
+}
+
+.decomp-note {
+  font-size: 11px;
+  color: #581c87;
+  margin-top: 4px;
+  line-height: 1.4;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   9. MOBILE FIT — no horizontal overflow, safe areas, dynamic viewport
+═══════════════════════════════════════════════════════════════════════ */
+html,
+body {
+  overflow-x: clip;
+}
+
+.top-portal-nav > a {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .top-portal-nav .top-portal-title {
+    display: none;
+  }
+
+  .side-stepper:not(.collapsed) {
+    height: 100dvh;
+  }
+
+  .mobile-swipe-dock {
+    bottom: calc(16px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  .stepper-panel {
+    max-width: 100vw !important;
+    box-sizing: border-box !important;
+  }
+
+  .stepper-nav-controls,
+  .stepper-jump-form {
+    flex-wrap: wrap;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   10. STEPPER VISUAL UPGRADE — themed glass panel, glow accents, timeline rail
+═══════════════════════════════════════════════════════════════════════ */
+body[data-theme] .stepper-panel {
+  background: var(--bg-surface) !important;
+  border: 1px solid rgba(var(--accent-rgb), 0.28) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 18px 50px -12px rgba(0, 0, 0, 0.55),
+    0 0 32px -6px var(--accent-glow) !important;
+}
+
+body[data-theme] .stepper-header {
+  padding: 12px 14px !important;
+  background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.16) 0%, rgba(var(--accent-rgb), 0.04) 55%, transparent 100%) !important;
+  border-bottom: 1px solid rgba(var(--accent-rgb), 0.22) !important;
+}
+
+body[data-theme] .stepper-header-title {
+  color: var(--text) !important;
+  letter-spacing: 0.2px;
+}
+
+body[data-theme] .stepper-logo {
+  filter: drop-shadow(0 0 6px var(--accent-glow));
+}
+
+body[data-theme] .stepper-action-btn {
+  border-radius: 10px !important;
+  background: rgba(var(--accent-rgb), 0.08) !important;
+  border-color: rgba(var(--accent-rgb), 0.22) !important;
+  color: var(--accent) !important;
+}
+
+body[data-theme] .stepper-action-btn:hover {
+  background: var(--accent) !important;
+  color: #000000 !important;
+  border-color: var(--accent) !important;
+}
+
+body[data-theme] .stepper-status-box {
+  background: transparent !important;
+  border-bottom-color: rgba(var(--accent-rgb), 0.16) !important;
+}
+
+body[data-theme] .stepper-card-id {
+  color: var(--text) !important;
+  font-size: 18px;
+}
+
+body[data-theme] .stepper-counter-row {
+  color: var(--text) !important;
+  opacity: 0.72;
+}
+
+body[data-theme] .stepper-progress-track {
+  height: 6px !important;
+  background: rgba(var(--accent-rgb), 0.12) !important;
+  border-radius: 999px !important;
+}
+
+body[data-theme] .stepper-progress-bar {
+  background: linear-gradient(90deg, var(--accent-secondary, var(--accent)), var(--accent)) !important;
+  box-shadow: 0 0 10px var(--accent-glow) !important;
+  border-radius: 999px !important;
+}
+
+body[data-theme] .stepper-resume-chip {
+  background: rgba(var(--accent-rgb), 0.1) !important;
+  border: 1px dashed rgba(var(--accent-rgb), 0.45) !important;
+  color: var(--accent) !important;
+  border-radius: 12px !important;
+}
+
+body[data-theme] .stepper-nav-controls {
+  background: rgba(var(--accent-rgb), 0.05) !important;
+  border-bottom-color: rgba(var(--accent-rgb), 0.16) !important;
+}
+
+body[data-theme] .stepper-nav-btn {
+  border-radius: 12px !important;
+  background: rgba(var(--accent-rgb), 0.1) !important;
+  border-color: rgba(var(--accent-rgb), 0.25) !important;
+  color: var(--text) !important;
+}
+
+body[data-theme] .stepper-nav-btn:hover {
+  background: var(--accent) !important;
+  color: #000000 !important;
+  border-color: var(--accent) !important;
+}
+
+body[data-theme] .stepper-nav-btn kbd {
+  background: rgba(0, 0, 0, 0.25) !important;
+  border-color: rgba(var(--accent-rgb), 0.3) !important;
+  color: var(--accent) !important;
+}
+
+body[data-theme] .stepper-nav-btn:hover kbd {
+  background: rgba(0, 0, 0, 0.35) !important;
+  color: #000000 !important;
+}
+
+body[data-theme] .stepper-jump-form {
+  border-bottom-color: rgba(var(--accent-rgb), 0.16) !important;
+}
+
+body[data-theme] .stepper-jump-label {
+  color: var(--text) !important;
+  opacity: 0.7;
+}
+
+body[data-theme] .stepper-jump-input {
+  background: var(--card-bg) !important;
+  border: 1px solid rgba(var(--accent-rgb), 0.3) !important;
+  border-radius: 12px !important;
+  color: var(--text) !important;
+}
+
+body[data-theme] .stepper-jump-input:focus {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 2px rgba(var(--accent-rgb), 0.2) !important;
+}
+
+body[data-theme] .stepper-jump-btn {
+  border-radius: 12px !important;
+  background: rgba(var(--accent-rgb), 0.12) !important;
+  border-color: rgba(var(--accent-rgb), 0.28) !important;
+  color: var(--accent) !important;
+}
+
+body[data-theme] .stepper-jump-btn:hover {
+  background: var(--accent) !important;
+  color: #000000 !important;
+}
+
+body[data-theme] .stepper-rail-toolbar {
+  background: transparent !important;
+  border-bottom-color: rgba(var(--accent-rgb), 0.14) !important;
+  color: var(--accent) !important;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  font-size: 10.5px !important;
+}
+
+body[data-theme] .stepper-rail-toggle-all {
+  background: rgba(var(--accent-rgb), 0.1) !important;
+  border-color: rgba(var(--accent-rgb), 0.25) !important;
+  color: var(--accent) !important;
+  border-radius: 8px !important;
+}
+
+body[data-theme] .stepper-rail-wrapper {
+  padding: 10px !important;
+  max-height: none !important;
+  flex: 1 1 auto !important;
+  min-height: 120px;
+}
+
+body[data-theme] .stepper-rail-wrapper::-webkit-scrollbar-thumb {
+  background: rgba(var(--accent-rgb), 0.35) !important;
+}
+
+body[data-theme] .stepper-lesson-header {
+  border-radius: 12px !important;
+  background: rgba(var(--accent-rgb), 0.07) !important;
+  border-color: rgba(var(--accent-rgb), 0.18) !important;
+  color: var(--text) !important;
+}
+
+body[data-theme] .stepper-lesson-header:hover {
+  background: rgba(var(--accent-rgb), 0.15) !important;
+  border-color: rgba(var(--accent-rgb), 0.35) !important;
+}
+
+body[data-theme] .stepper-lesson-group.active .stepper-lesson-header {
+  background: rgba(var(--accent-rgb), 0.18) !important;
+  border-color: rgba(var(--accent-rgb), 0.5) !important;
+  color: var(--accent) !important;
+  box-shadow: inset 3px 0 0 var(--accent);
+}
+
+body[data-theme] .stepper-lesson-count {
+  background: rgba(0, 0, 0, 0.3) !important;
+  border-color: rgba(var(--accent-rgb), 0.25) !important;
+  color: var(--accent) !important;
+}
+
+body[data-theme] .stepper-chevron {
+  color: var(--accent) !important;
+}
+
+body[data-theme] .stepper-notches-list {
+  border-left: 2px solid rgba(var(--accent-rgb), 0.25) !important;
+  margin-left: 20px !important;
+}
+
+body[data-theme] .stepper-notch-btn {
+  border-radius: 10px !important;
+  color: var(--text) !important;
+  opacity: 0.85;
+}
+
+body[data-theme] .stepper-notch-btn:hover {
+  background: rgba(var(--accent-rgb), 0.12) !important;
+  opacity: 1;
+}
+
+body[data-theme] .stepper-notch-btn.active {
+  background: rgba(var(--accent-rgb), 0.18) !important;
+  border-color: rgba(var(--accent-rgb), 0.45) !important;
+  color: var(--accent) !important;
+  box-shadow: 0 0 12px -2px var(--accent-glow) !important;
+  opacity: 1;
+}
+
+body[data-theme] .stepper-notch-num {
+  background: rgba(0, 0, 0, 0.3) !important;
+  color: var(--text) !important;
+}
+
+body[data-theme] .stepper-notch-btn.active .stepper-notch-num {
+  background: var(--accent) !important;
+  color: #000000 !important;
+}
+
+body[data-theme] .stepper-notch-hanzi {
+  color: var(--accent-secondary, var(--accent)) !important;
+}
+
+body[data-theme] .stepper-notch-gloss {
+  color: var(--text) !important;
+  opacity: 0.6;
+}
+
+body[data-theme] .stepper-footer-hint {
+  background: transparent !important;
+  border-top-color: rgba(var(--accent-rgb), 0.14) !important;
+  color: var(--text) !important;
+  opacity: 0.55;
+}
+
+body[data-theme] .stepper-footer-hint kbd {
+  background: rgba(var(--accent-rgb), 0.1) !important;
+  border-color: rgba(var(--accent-rgb), 0.25) !important;
+  color: var(--accent) !important;
+  border-radius: 6px;
+}
+
+body[data-theme] .stepper-toggle-btn {
+  background: var(--bg-surface) !important;
+  border-color: rgba(var(--accent-rgb), 0.35) !important;
+  color: var(--text) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45), 0 0 18px -4px var(--accent-glow) !important;
+}
+
+body[data-theme] .stepper-mini-pill {
+  color: var(--accent) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   11. QUICK-HIDE TOP BAR + SOLID ACTION BARS + CHINESE LEARNING STYLE
+═══════════════════════════════════════════════════════════════════════ */
+
+/* ── 11a. Solid action bars (calm opaque surface, no blur = cheaper paint) ── */
+body[data-theme] .nav-and-search {
+  background: var(--bg) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+body[data-theme] .top-portal-nav {
+  background: var(--bg) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* ── 11b. Quick-hide top chrome for focused learning ── */
+body.topbar-hidden .top-portal-nav,
+body.topbar-hidden .nav-and-search {
+  display: none !important;
+}
+
+body.topbar-hidden .sentence-strip {
+  top: 8px !important;
+}
+
+.topbar-restore-tab {
+  position: fixed;
+  top: 10px;
+  right: 12px;
+  z-index: 5000;
+  display: none;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #fdf6ec;
+  background: linear-gradient(180deg, #cf3a32, #a31621);
+  border: 1px solid #7d0f1a;
+  border-radius: 8px;
+  box-shadow: inset 0 0 0 1px rgba(253, 246, 236, 0.4), 0 4px 14px rgba(0, 0, 0, 0.45);
+  cursor: pointer;
+}
+
+body.topbar-hidden .topbar-restore-tab {
+  display: inline-flex;
+}
+
+.topbar-restore-tab:hover {
+  filter: brightness(1.12);
+}
+
+/* ── 11c. Chinese-inspired learning style: seal badges + gold scroll rules ── */
+html body[data-theme] .cards-container .course-card .card-badge {
+  background: linear-gradient(180deg, #cf3a32 0%, #a31621 100%) !important;
+  color: #fdf6ec !important;
+  border: 1px solid #7d0f1a !important;
+  border-radius: 6px !important;
+  box-shadow: inset 0 0 0 1px rgba(253, 246, 236, 0.4) !important;
+  font-family: "Kaiti SC", "STKaiti", "KaiTi", "Noto Serif SC", serif;
+  letter-spacing: 1.5px;
+}
+
+body[data-theme] .course-card .left-panel::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 28px;
+  right: 28px;
+  height: 3px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, transparent, #c9a227 22%, #c9a227 78%, transparent);
+  pointer-events: none;
+}
+
+body[data-theme] .course-card .panel-header {
+  border-bottom: 1px solid rgba(201, 162, 39, 0.45) !important;
+}
+
+body[data-theme] .course-card.l4 .adjective-badge-right,
+body[data-theme] .course-card.l4 .conjunction-badge-right {
+  border-radius: 6px !important;
+  font-family: "Kaiti SC", "STKaiti", "KaiTi", "Noto Serif SC", serif;
+  letter-spacing: 1px;
+}
+
+/* ═══════════════════════════════════════════════════════════ */
+/* MODERN MILESTONES & SECTION DIVIDERS (KOREAN-INSPIRED DESIGN) */
+/* ═══════════════════════════════════════════════════════════ */
+
+.main-wrapper {
+  max-width: 1400px;
+  width: 100%;
+  margin: 20px auto;
+  padding: 0 20px;
+  display: flex;
+  gap: 28px;
+  align-items: flex-start;
+  box-sizing: border-box;
+}
+
+.cards-container {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Side Milestones Sidebar */
+.side-stepper-container {
+  width: 270px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 130px;
+  height: fit-content;
+  max-height: calc(100vh - 150px);
+  overflow-y: auto;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  z-index: 100;
+  box-sizing: border-box;
+}
+
+.stepper-header {
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--accent);
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stepper-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.stepper-node {
+  padding: 9px 12px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.2s ease;
+  border-left: 3px solid transparent;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.stepper-node:hover {
+  background: rgba(var(--accent-rgb), 0.1);
+  color: var(--accent);
+  transform: translateX(2px);
+}
+
+.stepper-node.active {
+  background: rgba(var(--accent-rgb), 0.18);
+  color: var(--accent);
+  border-left-color: var(--accent);
+  font-weight: 700;
+  box-shadow: 0 0 12px var(--accent-glow);
+}
+
+.stepper-node-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.stepper-node-icon {
+  font-size: 15px;
+  flex-shrink: 0;
+}
+
+.stepper-node-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.stepper-count {
+  font-family: monospace;
+  font-size: 10px;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 2px 7px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+/* Left-Aligned Section Dividers */
+.section-divider-title {
+  width: 100%;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 20px;
+  margin-top: 24px;
+  margin-bottom: 4px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-left: 5px solid var(--accent);
+  border-radius: 14px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  scroll-margin-top: 130px;
+  box-sizing: border-box;
+}
+
+.section-divider-title:first-child {
+  margin-top: 0;
+}
+
+.section-divider-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-align: left;
+}
+
+.section-divider-icon {
+  font-size: 26px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.section-divider-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.section-divider-h2 {
+  margin: 0;
+  padding: 0;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: 0.3px;
+  font-family: var(--font-section, 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif);
+  text-align: left;
+}
+
+.section-divider-sub {
+  margin: 3px 0 0;
+  padding: 0;
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 500;
+  text-align: left;
+}
+
+.section-divider-badge {
+  font-family: monospace;
+  font-size: 11px;
+  font-weight: 700;
+  background: rgba(var(--accent-rgb), 0.12);
+  color: var(--accent);
+  border: 1px solid var(--border-color);
+  padding: 4px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+@media (max-width: 1080px) {
+  .side-stepper-container {
+    display: none !important;
+  }
+  .main-wrapper {
+    padding: 0 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .section-divider-title {
+    padding: 14px 16px;
+  }
+  .section-divider-h2 {
+    font-size: 16px;
+  }
+  .section-divider-sub {
+    font-size: 11px;
+  }
+  .section-divider-icon {
+    font-size: 22px;
+  }
+}
+
 
 
 

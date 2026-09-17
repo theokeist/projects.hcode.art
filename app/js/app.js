@@ -120,6 +120,12 @@ window.addEventListener('keydown', function(e) {
     return;
   }
 
+  if (e.key === 'h' || e.key === 'H') {
+    e.preventDefault();
+    window.toggleTopBar();
+    return;
+  }
+
   if (e.key === '/' || ((e.ctrlKey || e.metaKey) && (e.key === 'k' || e.key === 'K'))) {
     if (!sInput) return;
     e.preventDefault();
@@ -141,6 +147,35 @@ function toggleCzech() {
     el.style.visibility = el.style.visibility === 'hidden' ? '' : 'hidden';
   });
 }
+
+// Quick-hide the top chrome (portal nav + action bar) for focused learning
+function toggleTopBar(forceShow) {
+  const hide = (forceShow === true) ? false
+    : (forceShow === false) ? true
+    : !document.body.classList.contains('topbar-hidden');
+  document.body.classList.toggle('topbar-hidden', hide);
+  try {
+    localStorage.setItem('chinese_course_topbar', hide ? 'hidden' : 'visible');
+  } catch (e) {}
+  const label = document.getElementById('dropActionTopbarLabel');
+  if (label) label.textContent = hide ? 'Zobrazit horní lištu (H)' : 'Skrýt horní lištu (H)';
+  const icon = document.getElementById('dropActionTopbarIcon');
+  if (icon) icon.textContent = hide ? '🐵' : '🙈';
+}
+window.toggleTopBar = toggleTopBar;
+
+// Apply saved topbar visibility immediately (before first paint)
+(function() {
+  try {
+    if (localStorage.getItem('chinese_course_topbar') === 'hidden') {
+      document.body.classList.add('topbar-hidden');
+      const label = document.getElementById('dropActionTopbarLabel');
+      if (label) label.textContent = 'Zobrazit horní lištu (H)';
+      const icon = document.getElementById('dropActionTopbarIcon');
+      if (icon) icon.textContent = '🐵';
+    }
+  } catch (e) {}
+})();
 
 // ═══════════════════════════════════════════════════════
 // BAREVNÁ TÉMATA & MORPHING THEME CIRCLE CONTROLLER
@@ -172,7 +207,7 @@ function toggleCzech() {
     'rgb', 'sancai', 'synthwave', 'aurora', 'inferno', 'darkforce'
   ];
 
-  let currentThemeId = 'cyber';
+  let currentThemeId = 'ming';
   try {
     const savedTheme = localStorage.getItem(THEME_KEY);
     if (savedTheme && themes[savedTheme]) {
@@ -341,7 +376,7 @@ window.toggleFontStyle = function() {
 };
 
 // Layout Mode: Horizontal Flashcards (Mobile Swiper) vs Vertical List
-window.toggleCardLayoutMode = function(forceMode) {
+window.toggleCardLayoutMode = function(forceMode, skipScroll) {
   const container = document.getElementById('cardsContainer');
   const btn = document.getElementById('layoutModeToggleBtn');
   const icon = document.getElementById('layoutModeIcon');
@@ -371,6 +406,7 @@ window.toggleCardLayoutMode = function(forceMode) {
   localStorage.setItem('chinese_course_layout_mode', targetHorizontal ? 'horizontal' : 'vertical');
 
   // Smooth scroll to current or last card in the new layout
+  if (skipScroll) return;
   setTimeout(() => {
     if (typeof window.scrollToCardId === 'function') {
       const lastId = localStorage.getItem('chinese_course_last_card') || 'card-num-1';
@@ -420,7 +456,7 @@ document.addEventListener('click', function(e) {
     const savedLayout = localStorage.getItem('chinese_course_layout_mode');
     const defaultHorizontal = (window.innerWidth <= 768);
     const isHorizontal = savedLayout ? (savedLayout === 'horizontal') : defaultHorizontal;
-    window.toggleCardLayoutMode(isHorizontal ? 'horizontal' : 'vertical');
+    window.toggleCardLayoutMode(isHorizontal ? 'horizontal' : 'vertical', true);
   }
 
   if (document.readyState === 'loading') {

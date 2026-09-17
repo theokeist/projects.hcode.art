@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="cyber">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Korejština: Kompletní interaktivní průvodce Hangulu & Vztahová síť</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <meta name="theme-color" content="#0b0f19">
+</head>
+<body data-theme="cyber">
+
+  <!-- Top Portal Bar linking back to HCODE Hub -->
+  <div class="top-portal-nav">
+    <a href="../index.html#apps" title="Návrat na hlavní rozcestník">
+      <span>⟵</span> Zpět na portál HCODE (Aplikace)
+    </a>
+    <div class="top-portal-brand">
+      <img src="assets/logo.svg" alt="Korean App Logo" style="width: 24px; height: 24px; filter: drop-shadow(0 0 6px rgba(0,255,204,0.6));" />
+      <span class="top-portal-title">HCODE &bull; KOREAN</span>
+    </div>
+  </div>
+
+  <button type="button" id="topbarRestoreTab" class="topbar-restore-tab" onclick="toggleTopBar(true)" title="Zobrazit lištu (H)">☰ LIŠTA</button>
+
+  <!-- Sticky Controls Navigation & Search -->
+  <div class="nav-and-search" id="mainStickyNav">
+    <div class="nav-controls-row">
+      <!-- Left Dropdown: Lectures Selection -->
+      <div class="dropdown-wrapper" id="lecturesDropdownWrapper">
+        <button type="button" class="dropdown-trigger-btn" onclick="toggleAppDropdown('lecturesDropdownWrapper')" title="Vybrat lekci">
+          <span id="curLectureLabel">📚 Vše</span> <span class="dropdown-caret">▾</span>
+        </button>
+        <div class="dropdown-menu" id="lecturesDropdownMenu">
+          <div class="dropdown-header">
+            <span>Výběr lekce</span>
+            <button type="button" class="dropdown-close-btn" onclick="closeAllDropdowns()" title="Zavřít">✕</button>
+          </div>
+          <button type="button" class="dropdown-item active" onclick="switchLesson('all')">
+            <span>📚 Všechny moduly</span> <span class="dropdown-item-badge">330+</span>
+          </button>
+          <button type="button" class="dropdown-item" onclick="switchLesson('consonant')">
+            <span>🔠 Hangul: Souhlásky</span> <span class="dropdown-item-badge">19</span>
+          </button>
+          <button type="button" class="dropdown-item" onclick="switchLesson('vowel')">
+            <span>🔤 Hangul: Samohlásky</span> <span class="dropdown-item-badge">21</span>
+          </button>
+          <button type="button" class="dropdown-item" onclick="switchLesson('batchim')">
+            <span>🧱 Pravidla Batchim</span> <span class="dropdown-item-badge">7</span>
+          </button>
+          <button type="button" class="dropdown-item" onclick="switchLesson('numbers')">
+            <span>🔢 Čísla &amp; Počítadla</span> <span class="dropdown-item-badge">42</span>
+          </button>
+          <button type="button" class="dropdown-item" onclick="switchLesson('phrases')">
+            <span>📖 L1: 40 Konverzačních frází</span> <span class="dropdown-item-badge">40</span>
+          </button>
+          <button type="button" class="dropdown-item" onclick="switchLesson('vocab')">
+            <span>🎯 L2: 350+ Slovník s Emoji</span> <span class="dropdown-item-badge">160+</span>
+          </button>
+          <button type="button" class="dropdown-item" onclick="switchLesson('grammar')">
+            <span>⚡ L3: Klíčová Gramatika</span> <span class="dropdown-item-badge">32</span>
+          </button>
+          <button type="button" class="dropdown-item" onclick="switchLesson('reading')">
+            <span>🌐 L4: Online texty &amp; Čítanka</span> <span class="dropdown-item-badge">14</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Center: Search Box -->
+      <div class="search-box-wrapper">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="searchInput" class="search-input" placeholder="Hledat korejsky (한글), romanizaci, česky nebo číslo..." oninput="handleSearchInput(this.value)" autocomplete="off" spellcheck="false">
+        <kbd class="search-kbd-hint desktop-only" title="Stiskněte '/' pro hledání">/</kbd>
+        <button type="button" id="searchClearBtn" class="search-clear-btn" onclick="clearSearch()" title="Vymazat hledání" style="display:none;">✕</button>
+      </div>
+
+      <!-- Theme Morphing Circle Switcher -->
+      <button type="button" class="theme-morph-circle" id="themeMorphBtn" onclick="cycleToNextTheme()" title="Barevné motivy (Alt+M)" aria-label="Přepnout motiv">
+        <span class="morph-orbit"></span>
+        <span class="morph-core"></span>
+      </button>
+
+      <!-- Black & White Toggle -->
+      <button type="button" class="theme-bw-switch" onclick="toggleWhiteBlackTheme()" title="Bílý / Černý režim (Alt+T)" aria-label="Přepnout B/W">
+        <span class="bw-split-circle"></span>
+      </button>
+
+      <!-- Right Dropdown: Actions & Toggles -->
+      <div class="dropdown-wrapper" id="actionsDropdownWrapper">
+        <button type="button" class="dropdown-trigger-btn" onclick="toggleAppDropdown('actionsDropdownWrapper')" title="Nastavení zobrazení">
+          <span>⚡ Akce</span> <span class="dropdown-caret">▾</span>
+        </button>
+        <div class="dropdown-menu dropdown-menu-right" id="actionsDropdownMenu">
+          <div class="dropdown-header">
+            <span>Zobrazení &amp; Filtry</span>
+            <button type="button" class="dropdown-close-btn" onclick="closeAllDropdowns()" title="Zavřít">✕</button>
+          </div>
+          <button type="button" class="dropdown-item" onclick="toggleCardLayoutMode(); closeAllDropdowns();">
+            <span>📱 Přepnout zobrazení karet</span>
+          </button>
+          <button type="button" class="dropdown-item" onclick="toggleRomanization(); closeAllDropdowns();">
+            <span>🔤 Skrýt / Zobrazit romanizaci</span>
+          </button>
+          <button type="button" class="dropdown-item" onclick="toggleCzechGloss(); closeAllDropdowns();">
+            <span>🇨🇿 Skrýt / Zobrazit češtinu</span>
+          </button>
+          <button type="button" class="dropdown-item" onclick="toggleTopBar(); closeAllDropdowns();">
+            <span>🙈 Skrýt horní lištu (H)</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Interactive Sentence Stepper Strip with Online Streams -->
+  <div class="sentence-stepper-strip" id="stepperStrip">
+    <div class="strip-inner">
+      <!-- Source Stream Switcher Tabs -->
+      <div class="source-tabs-row">
+        <div class="source-tabs-group">
+          <button type="button" class="source-tab active" data-source="course" onclick="switchSentenceSource('course', this)">📚 Výukový kurz</button>
+          <button type="button" class="source-tab" data-source="news" onclick="switchSentenceSource('news', this)">📰 KBS &amp; Yonhap Zprávy</button>
+          <button type="button" class="source-tab" data-source="culture" onclick="switchSentenceSource('culture', this)">🎎 Korejská kultura (VisitKorea)</button>
+          <button type="button" class="source-tab" data-source="sokdam" onclick="switchSentenceSource('sokdam', this)">📜 Přísloví (속담)</button>
+        </div>
+        <div class="source-meta-group">
+          <span class="source-badge-tag" id="sentenceSourceBadge">Autentický zdroj</span>
+          <span id="stripProgress" style="color:var(--text-muted); font-family:monospace;">1 / 7</span>
+          <button type="button" class="audio-btn" onclick="playCurrentSentenceAudio()" title="Poslechnout celou větu (Alt+S)">🔊 Celá věta</button>
+        </div>
+      </div>
+
+      <!-- Main Interactive Word Tiles Row -->
+      <div class="strip-main-row">
+        <button type="button" class="sentence-nav-btn" onclick="stepSentence(-1)" title="Předchozí věta (Alt+Šipka vlevo)">‹</button>
+        <div class="strip-center-content">
+          <div class="sentence-tiles" id="sentenceTiles">
+            <!-- Injected by sentences.js -->
+          </div>
+          <div class="strip-czech-gloss" id="sentenceCzech"></div>
+        </div>
+        <button type="button" class="sentence-nav-btn" onclick="stepSentence(1)" title="Další věta (Alt+Šipka vpravo)">›</button>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items:center; font-size: 11px; margin-top: 4px;">
+        <span style="color:var(--text-muted);">💡 Klikněte na jakoukoliv dlaždici slova pro samostatnou výslovnost</span>
+        <a id="sentenceOnlineLink" class="source-web-link" href="https://korean.dict.naver.com" target="_blank" rel="noopener noreferrer">🌐 Naver Slovník ↗</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content Layout -->
+  <div class="main-wrapper">
+    <!-- Side Milestones Track -->
+    <aside class="side-stepper-container desktop-only">
+      <div class="stepper-header">
+        <span>Milníky studia</span>
+        <span>🇰🇷</span>
+      </div>
+      <div class="stepper-list" id="stepperMilestonesList">
+        <!-- Injected by stepper.js -->
+      </div>
+    </aside>
+
+    <!-- Cards Container -->
+    <main class="cards-container" id="cardsContainer">
+      <!-- Injected by app.js -->
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <div><strong>HCODE.ART &bull; Kompletní interaktivní korejština</strong> &bull; Sub-milisekundová odezva &bull; Bez instalace &bull; 2026</div>
+    <div style="margin-top: 6px;">
+      <a href="../index.html">Hlavní portál HCODE</a> &bull; 
+      <a href="../app/index.html">Čínština: Vztahová síť znaků</a>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/hangul-data.js"></script>
+  <script src="js/numbers-data.js"></script>
+  <script src="js/phrases-data.js"></script>
+  <script src="js/vocab-data.js"></script>
+  <script src="js/grammar-data.js"></script>
+  <script src="js/sentences-data.js"></script>
+  <script src="js/stepper.js"></script>
+  <script src="js/sentences.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

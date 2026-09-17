@@ -109,6 +109,7 @@
     let allAccordionsOpen = true;
 
     let cachedVisibleCards = null;
+    let lastRailCardId = null;
 
     function invalidateVisibleCache() {
       cachedVisibleCards = null;
@@ -298,7 +299,34 @@
         }
       }
 
-      card.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', block: 'center', inline: 'center' });
+      const scrollContainer = document.getElementById('cardsContainer');
+      const isHoriz = scrollContainer && scrollContainer.classList.contains('horizontal-scroll-mode');
+      const farAway = isHoriz && Math.abs(card.offsetLeft - scrollContainer.scrollLeft) > window.innerWidth * 2;
+      const behavior = (smooth && !farAway) ? 'smooth' : 'auto';
+      card.scrollIntoView({ behavior, block: 'center', inline: 'center' });
+
+      // Offscreen cards render with placeholder sizes (content-visibility),
+      // so re-align until the card truly sits at the target position
+      if (behavior === 'auto') {
+        let passes = 0;
+        const settle = () => {
+          passes++;
+          const rect = card.getBoundingClientRect();
+          const cont = document.getElementById('cardsContainer');
+          const horiz = cont && cont.classList.contains('horizontal-scroll-mode');
+          let delta;
+          if (horiz) {
+            const cr = cont.getBoundingClientRect();
+            delta = (rect.left + rect.width / 2) - (cr.left + cont.clientWidth / 2);
+            if (Math.abs(delta) > 2) cont.scrollBy({ left: delta, behavior: 'auto' });
+          } else {
+            delta = (rect.top + rect.height / 2) - window.innerHeight / 2;
+            if (Math.abs(delta) > 2) window.scrollBy({ top: delta, behavior: 'auto' });
+          }
+          if (Math.abs(delta) > 2 && passes < 6) requestAnimationFrame(settle);
+        };
+        requestAnimationFrame(settle);
+      }
 
       // Trigger highlight glow
       card.classList.remove('stepper-highlight');
@@ -454,6 +482,9 @@
       stepper.classList.add('manually-expanded');
       if (isCollapsed) {
         stepper.classList.remove('manually-expanded');
+      } else {
+        lastRailCardId = null;
+        updateScrollSpy();
       }
       localStorage.setItem('chinese_course_stepper_collapsed', isCollapsed ? '1' : '0');
     };
@@ -463,6 +494,8 @@
       const stepper = document.getElementById('sideStepper');
       if (stepper) {
         stepper.classList.remove('collapsed');
+        lastRailCardId = null;
+        updateScrollSpy();
       }
     };
 
@@ -540,9 +573,30 @@
           g.classList.add('open');
         }
       });
+      let activeNotchBtn = null;
       document.querySelectorAll('.stepper-notch-btn').forEach(nb => {
-        nb.classList.toggle('active', nb.dataset.cardId === activeCard.id);
+        const isExact = nb.dataset.cardId === activeCard.id;
+        nb.classList.toggle('active', isExact);
+        if (isExact) activeNotchBtn = nb;
       });
+      if (!activeNotchBtn) {
+        // Highlight nearest preceding milestone of the current lesson
+        const curNum = parseInt(activeCard.id.split('-').pop(), 10);
+        document.querySelectorAll(`.stepper-notch-btn[data-card-id^="card-${lesson}-"]`).forEach(nb => {
+          if (parseInt(nb.dataset.cardId.split('-').pop(), 10) <= curNum) activeNotchBtn = nb;
+        });
+        if (activeNotchBtn) activeNotchBtn.classList.add('active');
+      }
+
+      // Keep the milestone rail scrolled to the active notch
+      const rail = document.querySelector('.stepper-rail-wrapper');
+      if (rail && rail.clientHeight && activeNotchBtn && activeNotchBtn.dataset.cardId !== lastRailCardId) {
+        lastRailCardId = activeNotchBtn.dataset.cardId;
+        const nr = activeNotchBtn.getBoundingClientRect();
+        const rr = rail.getBoundingClientRect();
+        const target = rail.scrollTop + (nr.top - rr.top) - rail.clientHeight / 2 + nr.height / 2;
+        rail.scrollTo({ top: Math.max(0, target), behavior: 'smooth' });
+      }
     }
 
     // Keyboard Shortcuts (J / K / Arrows / Alt+S / Alt+M / Alt+D / Alt+V)
@@ -647,8 +701,10 @@
       const stepper = document.getElementById('sideStepper');
       if (stepper) {
         // ALWAYS DEFAULT TO EXPANDED / OPEN unless user explicitly saved '1'
+        // (on phones the stepper is a fullscreen drawer -> start collapsed)
         const savedCollapsed = localStorage.getItem('chinese_course_stepper_collapsed');
-        if (savedCollapsed === '1') {
+        const isMobileViewport = window.matchMedia('(max-width: 768px)').matches;
+        if (savedCollapsed === '1' || (savedCollapsed === null && isMobileViewport)) {
           stepper.classList.add('collapsed');
         } else {
           stepper.classList.remove('collapsed');
@@ -696,7 +752,7 @@
             if (container && container.classList.contains('horizontal-scroll-mode')) {
               const firstVis = container.querySelector('.course-card:not([style*="display: none"])');
               if (firstVis) {
-                firstVis.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+                firstVis.scrollIntoView({ behavior: 'auto', block: 'center', inline: 'center' });
               }
             }
             updateScrollSpy();
@@ -714,7 +770,7 @@
             if (container && container.classList.contains('horizontal-scroll-mode')) {
               const firstVis = container.querySelector('.course-card:not([style*="display: none"])');
               if (firstVis) {
-                firstVis.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+                firstVis.scrollIntoView({ behavior: 'auto', block: 'center', inline: 'center' });
               }
             }
             updateScrollSpy();
