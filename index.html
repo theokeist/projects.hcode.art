@@ -508,17 +508,11 @@
   /* Hero Page */
   #hero h1 {
     font-size: clamp(4rem, 15vw, 15rem); font-weight: 900; letter-spacing: -0.06em; 
-    margin: 0; color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,0.15);
-    text-shadow: 0 0 40px var(--accent-glow); position: relative;
+    margin: 0; color: #fff;
+    text-shadow: none; position: relative;
   }
   #hero h1::after {
-    content: 'HCODE'; position: absolute; left: 0; top: 0; color: #fff;
-    clip-path: polygon(0 0, 100% 0, 100% 30%, 0 30%);
-    animation: scanline 4s infinite cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  @keyframes scanline {
-    0%, 100% { clip-path: polygon(0 0, 100% 0, 100% 0, 0 0); }
-    50% { clip-path: polygon(0 100%, 100% 100%, 100% 80%, 0 80%); }
+    display: none;
   }
   #hero .subtitle {
     font-size: 1rem; font-weight: 600; color: var(--accent); letter-spacing: 0.5em; text-transform: uppercase; 
@@ -1414,9 +1408,12 @@
 
             <!-- Open Button -->
             <div class="app-actions">
-              <a href="app/index.html" class="app-btn app-btn-open glitch-hover" target="_blank">
+              <a href="/zh/study/" class="app-btn app-btn-open glitch-hover" target="_blank">
                 <span>Otevřít aplikaci</span> <span>➔</span>
               </a>
+              <button type="button" class="app-btn secondary glitch-hover" onclick="openAppModal('/zh/study/', 'Čínština: Vztahová síť')">
+                <span>Náhled v okně</span> <span>⤢</span>
+              </button>
             </div>
           </div>
 
@@ -1500,9 +1497,12 @@
 
             <!-- Open Button -->
             <div class="app-actions">
-              <a href="korean/index.html" class="app-btn app-btn-open glitch-hover" target="_blank">
+              <a href="/ko/study/" class="app-btn app-btn-open glitch-hover" target="_blank">
                 <span>Otevřít aplikaci</span> <span>➔</span>
               </a>
+              <button type="button" class="app-btn secondary glitch-hover" onclick="openAppModal('/ko/study/', 'Korejština: Kompletní Hangul &amp; Slovník')">
+                <span>Náhled v okně</span> <span>⤢</span>
+              </button>
             </div>
           </div>
 
@@ -1561,8 +1561,8 @@
             <a href="#evolution" class="footer-sitemap-link"><span class="sitemap-num">03</span> Evoluce projektů</a>
             <a href="#apps" class="footer-sitemap-link"><span class="sitemap-num">04</span> Webové aplikace</a>
             <a href="#terminal" class="footer-sitemap-link"><span class="sitemap-num">05</span> Terminál // CTA</a>
-            <a href="app/index.html" target="_blank" class="footer-sitemap-link app-link"><span class="sitemap-num">↗</span> Čínština: Vztahová síť</a>
-            <a href="korean/index.html" target="_blank" class="footer-sitemap-link app-link"><span class="sitemap-num">↗</span> Korejština: Hangul &amp; Slovník</a>
+            <a href="/zh/study/" target="_blank" class="footer-sitemap-link app-link"><span class="sitemap-num">↗</span> Čínština: Vztahová síť</a>
+            <a href="/ko/study/" target="_blank" class="footer-sitemap-link app-link"><span class="sitemap-num">↗</span> Korejština: Hangul &amp; Slovník</a>
           </nav>
         </div>
 
@@ -1571,9 +1571,8 @@
           <div class="footer-col-header">CONNECT</div>
           <div class="footer-social-vertical">
             <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="footer-link glitch-hover">IG</a>
-            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="footer-link glitch-hover">FB</a>
-            <a href="https://mastodon.social" target="_blank" rel="noopener noreferrer" class="footer-link glitch-hover">MASTODON</a>
-            <a href="https://discord.com" target="_blank" rel="noopener noreferrer" class="footer-link glitch-hover">DISCORD</a>
+            <a href="https://github.com/theokeist" target="_blank" rel="noopener noreferrer" class="footer-link glitch-hover">GH</a>
+            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="footer-link glitch-hover">LI</a>
           </div>
         </div>
 
@@ -1591,7 +1590,7 @@
           <span id="modalAppTitle">Aplikace</span>
         </div>
         <div class="cyber-modal-actions">
-          <a id="modalDirectLink" href="app/index.html" target="_blank" class="cyber-modal-btn">
+          <a id="modalDirectLink" href="/zh/study/" target="_blank" class="cyber-modal-btn">
             <span>Otevřít samostatně</span> <span>↗</span>
           </a>
           <button type="button" class="cyber-modal-close" onclick="closeAppModal()" title="Zavřít okno (Esc)">✕ Zavřít</button>
@@ -1885,21 +1884,21 @@
       const titleEl = document.getElementById('modalAppTitle');
       const directLink = document.getElementById('modalDirectLink');
       
-      if (title) titleEl.innerText = title;
+      if (title && titleEl) titleEl.innerText = title;
       if (directLink) directLink.href = url;
-      iframe.src = url;
-      modal.classList.add('active');
+      if (iframe) iframe.src = url;
+      if (modal) modal.classList.add('active');
       document.body.style.overflow = 'hidden';
-      cursor.style.opacity = '0';
+      if (cursor) cursor.style.opacity = '0';
     }
 
     function closeAppModal() {
       const modal = document.getElementById('cyberAppModal');
       const iframe = document.getElementById('appModalIframe');
-      modal.classList.remove('active');
-      iframe.src = '';
+      if (modal) modal.classList.remove('active');
+      if (iframe) iframe.src = '';
       document.body.style.overflow = '';
-      cursor.style.opacity = '1';
+      if (cursor) cursor.style.opacity = '1';
     }
 
     // Zavření modalu klávesou Escape nebo kliknutím mimo okno
@@ -1908,30 +1907,6 @@
     });
     document.getElementById('cyberAppModal').addEventListener('click', (e) => {
       if (e.target.id === 'cyberAppModal') closeAppModal();
-    });
-
-    // --- KRYPTOGRAFICKÝ HOVER EFEKT ---
-    const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*";
-    document.querySelectorAll('.glitch-hover').forEach(el => {
-      let glitchInterval = null;
-      el.addEventListener('mouseover', () => {
-        if (el.children.length > 0) return; // Pouze čisté textové uzly
-        if (!el.dataset.value) el.dataset.value = el.innerText;
-        let iterations = 0;
-        clearInterval(glitchInterval);
-        glitchInterval = setInterval(() => {
-          el.innerText = el.innerText.split("")
-            .map((letter, index) => {
-              if (index < iterations) return el.dataset.value[index];
-              return letters[Math.floor(Math.random() * letters.length)];
-            }).join("");
-          if (iterations >= el.dataset.value.length) {
-            clearInterval(glitchInterval);
-            el.innerText = el.dataset.value;
-          }
-          iterations += 1;
-        }, 25);
-      });
     });
 
     // --- INTERSECTION OBSERVER PRO POSTUPNÉ STMÍVÁNÍ OBSAHU ---
@@ -2010,6 +1985,7 @@
     });
 
     // --- HACKER_5 GOD MODE 3D ENGINE ---
+    if (window.THREE && window.gsap) {
     const container = document.getElementById('canvas-container');
     scene = new THREE.Scene();
     scene.fog = new THREE.FogExp2(0x0b0f19, 0.012);
@@ -2127,8 +2103,40 @@
     const rHip = buildLimb(pelvis, 0.8, 3.8, 35, -1.25, 1.2);
     const rKnee = buildLimb(rHip, 0.6, 3.8, 30, -3.8, 0);
 
-    gridHelper = new THREE.GridHelper(100, 25, 0x00ffcc, 0x111122);
-    gridHelper.position.y = -2;
+    // Full-page volumetric mist field (replacing wireframe floor grid)
+    const mistGeo = new THREE.BufferGeometry();
+    const mistCount = 550;
+    const mistPositions = new Float32Array(mistCount * 3);
+    for (let i = 0; i < mistCount; i++) {
+      mistPositions[i * 3 + 0] = (Math.random() - 0.5) * 90;
+      mistPositions[i * 3 + 1] = (Math.random() - 0.5) * 45 + 5;
+      mistPositions[i * 3 + 2] = (Math.random() - 0.5) * 90;
+    }
+    mistGeo.setAttribute('position', new THREE.BufferAttribute(mistPositions, 3));
+
+    const puffCanvas = document.createElement('canvas');
+    puffCanvas.width = 128;
+    puffCanvas.height = 128;
+    const pctx = puffCanvas.getContext('2d');
+    const pGrad = pctx.createRadialGradient(64, 64, 0, 64, 64, 64);
+    pGrad.addColorStop(0, 'rgba(255, 255, 255, 0.95)');
+    pGrad.addColorStop(0.35, 'rgba(255, 255, 255, 0.45)');
+    pGrad.addColorStop(0.70, 'rgba(255, 255, 255, 0.12)');
+    pGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+    pctx.fillStyle = pGrad;
+    pctx.fillRect(0, 0, 128, 128);
+    const mistTex = new THREE.CanvasTexture(puffCanvas);
+
+    const mistMat = new THREE.PointsMaterial({
+      size: 16,
+      map: mistTex,
+      transparent: true,
+      opacity: 0.22,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+      color: 0x00ffcc
+    });
+    gridHelper = new THREE.Points(mistGeo, mistMat);
     scene.add(gridHelper);
 
     // Synchronizovat 3D scénu podle aktivního tématu
@@ -2195,6 +2203,11 @@
       if (explosionFactor.val === 0 && !isDancing) {
         pelvis.position.y = 10 + Math.sin(time * 2) * 0.5;
         spine.rotation.x = Math.sin(time) * 0.05;
+      }
+      
+      if (gridHelper) {
+        gridHelper.rotation.y = time * 0.025;
+        gridHelper.position.y = Math.sin(time * 0.4) * 0.8;
       }
       
       const targetAngle = (time * 0.1) + (scrollProgress * Math.PI);
@@ -2277,6 +2290,9 @@
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
     });
+    } else {
+      console.warn('The optional 3D background did not load; portal controls remain available.');
+    }
   </script>
 </body>
 </html>

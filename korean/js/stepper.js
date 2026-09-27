@@ -44,8 +44,12 @@
     return str.replace(/'/g, "\\'");
   }
 
-  // Step phrase forward or backward
+  // Step sentence/phrase forward or backward
   window.stepPhrase = function(delta) {
+    if (typeof window.stepSentence === 'function') {
+      window.stepSentence(delta);
+      return;
+    }
     if (!phrasesList || phrasesList.length === 0) return;
     currentPhraseIndex += delta;
     if (currentPhraseIndex < 0) currentPhraseIndex = phrasesList.length - 1;
@@ -78,17 +82,13 @@
     window.speechSynthesis.speak(utterance);
   };
 
-  // Keyboard navigation shortcuts
+  // Keyboard navigation shortcuts (Alt+P for phrase audio if not handled elsewhere)
   window.addEventListener('keydown', function(e) {
-    if (e.altKey && e.key === 'ArrowRight') {
+    if (e.altKey && (e.key === 'p' || e.key === 'P')) {
       e.preventDefault();
-      window.stepPhrase(1);
-    } else if (e.altKey && e.key === 'ArrowLeft') {
-      e.preventDefault();
-      window.stepPhrase(-1);
-    } else if (e.altKey && (e.key === 'p' || e.key === 'P')) {
-      e.preventDefault();
-      if (phrasesList && phrasesList[currentPhraseIndex]) {
+      if (typeof window.playCurrentSentenceAudio === 'function') {
+        window.playCurrentSentenceAudio();
+      } else if (phrasesList && phrasesList[currentPhraseIndex]) {
         window.playKoreanAudio(phrasesList[currentPhraseIndex].hangul);
       }
     }
@@ -111,10 +111,10 @@
     ];
 
     listEl.innerHTML = milestones.map(m => `
-      <div class="stepper-node" onclick="switchLesson('${m.lesson}')" title="Přejít na ${m.title}">
+      <button type="button" class="stepper-node" onclick="switchLesson('${m.lesson}')" title="Přejít na ${m.title}">
         <span>${m.icon} ${m.title}</span>
         <span class="stepper-count">${m.count}</span>
-      </div>
+      </button>
     `).join('');
   }
 

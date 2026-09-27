@@ -7,7 +7,7 @@
   // ========== CISLA: zakladni cislice ==========
   (function() {
     var numberData = [
-      {"hanzi":"零","pinyin":"líng","czech":"nula (0)","decomp":"雨 (dešť) + 令 (příkaz) — kapky deště = nula"},
+      {"hanzi":"零","pinyin":"líng","czech":"nula (0)","decomp":"雨 (déšť) + 令 (příkaz) — kapky deště = nula"},
       {"hanzi":"一","pinyin":"yī","czech":"jedna (1)","decomp":"Jedna vodorovná čára = 1"},
       {"hanzi":"二","pinyin":"èr","czech":"dvě (2)","decomp":"Dvě vodorovné čáry = 2"},
       {"hanzi":"三","pinyin":"sān","czech":"tři (3)","decomp":"Tři vodorovné čáry = 3"},
@@ -18,10 +18,10 @@
       {"hanzi":"八","pinyin":"bā","czech":"osm (8)","decomp":"Dvě čáry se rozcházejí = rozdělení"},
       {"hanzi":"九","pinyin":"jiǔ","czech":"devět (9)","decomp":"乙 + háček — původně symbol ruky"},
       {"hanzi":"十","pinyin":"shí","czech":"deset (10)","decomp":"Kříž: vodorovná + svislá čára = dokonalost"},
-      {"hanzi":"百","pinyin":"bǎi","czech":"sto (100)","decomp":"一 (jedna) + 白 (bílý) — sto jak sněhoblé"},
-      {"hanzi":"千","pinyin":"qiān","czech":"tisíc (1 000)","decomp":"丕 + 十 — deset znásobených"},
-      {"hanzi":"万","pinyin":"wàn","czech":"deset tisíc (10 000)","decomp":"Původně scorpion — nescítané množství"},
-      {"hanzi":"亿","pinyin":"yì","czech":"sto milionů","decomp":"亿 (clověk) + 意 — nepřebné množství"}
+      {"hanzi":"百","pinyin":"bǎi","czech":"sto (100)","decomp":"一 (jedna) + 白 (bílý) — sto jak sněhobílé"},
+      {"hanzi":"千","pinyin":"qiān","czech":"tisíc (1 000)","decomp":"丿 (tah člověka) + 十 (deset) — deset stovek / tisíc"},
+      {"hanzi":"万","pinyin":"wàn","czech":"deset tisíc (10 000)","decomp":"Původně kresba štíra — nesčetné množství (10 000)"},
+      {"hanzi":"亿","pinyin":"yì","czech":"sto milionů (100 000 000)","decomp":"亻 (člověk) + 意 (mysl/představa) — nepřeberné množství"}
     ];
     var container = document.getElementById('cardsContainer');
     if (!container || document.getElementById('card-num-1')) return;
@@ -32,15 +32,13 @@
     secHeader.className = 'section-divider-title';
     secHeader.id = 'section-num';
     secHeader.dataset.lesson = 'num';
+    secHeader.onclick = function() { window.toggleSectionCollapse(this); };
+    secHeader.title = 'Kliknutím složíš / rozbalíš sekci';
     secHeader.innerHTML =
-      '<div class="section-divider-left">' +
-        '<span class="section-divider-icon">🔢</span>' +
-        '<div class="section-divider-text">' +
-          '<h2 class="section-divider-h2">Čísla a číslice (0 – 100 000 000)</h2>' +
-          '<span class="section-divider-sub">Základní číslice, poziční systém a velké číselné řády (百, 千, 万, 亿)</span>' +
-        '</div>' +
-      '</div>' +
-      '<span class="section-divider-badge">15 karet</span>';
+      '<div class="section-divider-text">' +
+        '<h2 class="section-divider-h2">Čísla a číslice (0 – 100 000 000)</h2>' +
+        '<span class="section-divider-sub">Základní číslice, poziční systém a velké číselné řády (百, 千, 万, 亿)</span>' +
+      '</div>';
     fragment.appendChild(secHeader);
 
     for (var i = 0; i < numberData.length; i++) {
@@ -304,15 +302,13 @@
   secHeader.className = 'section-divider-title';
   secHeader.id = 'section-l4';
   secHeader.dataset.lesson = 'l4';
+  secHeader.onclick = function() { window.toggleSectionCollapse(this); };
+  secHeader.title = 'Kliknutím složíš / rozbalíš sekci';
   secHeader.innerHTML = `
-    <div class="section-divider-left">
-      <span class="section-divider-icon">⚡</span>
-      <div class="section-divider-text">
-        <h2 class="section-divider-h2">Lekce 4: Přídavná jména &amp; Spojky</h2>
-        <span class="section-divider-sub">Základní vlastnosti, párové spojky, podmínková a příčinná souvětí</span>
-      </div>
+    <div class="section-divider-text">
+      <h2 class="section-divider-h2">Lekce 4: Přídavná jména &amp; Spojky</h2>
+      <span class="section-divider-sub">Základní vlastnosti, párové spojky, podmínková a příčinná souvětí</span>
     </div>
-    <span class="section-divider-badge">109 karet</span>
   `;
   fragment.appendChild(secHeader);
 
@@ -342,7 +338,7 @@
           <span style="font-weight:700;font-size:14px;color:#334155;">Rozbor znaků &amp; propojení</span>
           <span class="tracker-badge">Znáš celkem: <span>${cumulativeCount}</span> / 1 053 znaků &amp; emoji</span>
         </div>
-        <div class="section-label new" style="font-size:11px;font-weight:700;color:#16a34a;text-transform:uppercase;letter-spacing:0.5px;margin:10px 0 6px;">✨ Nové znaky v této kartě (${l4Index})</div>
+        <div class="section-label new" style="font-size:11px;font-weight:700;color:#16a34a;text-transform:uppercase;letter-spacing:0.5px;margin:10px 0 6px;">✨ Rozbor položky (${Array.from(item.hanzi).length === 1 ? '1 znak' : Array.from(item.hanzi).length + ' znaky'})</div>
         <div class="char-grid">
           <div class="char-item new-item" style="${isAdj ? 'border:2px solid #ff9500;background:linear-gradient(180deg,#fff 0%,#fff7ed 100%);' : 'border:2px solid #bfdbfe;background:linear-gradient(180deg,#fff 0%,#eff6ff 100%);'}">
             <div class="char-symbol" style="${isAdj ? 'color:#ff9500;' : 'color:#2563eb;'}">${item.hanzi}</div>

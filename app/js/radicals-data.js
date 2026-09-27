@@ -6345,15 +6345,13 @@
     secHeader.className = 'section-divider-title';
     secHeader.id = 'section-rad';
     secHeader.dataset.lesson = 'rad';
+    secHeader.onclick = function() { window.toggleSectionCollapse(this); };
+    secHeader.title = 'Kliknutím složíš / rozbalíš sekci';
     secHeader.innerHTML = `
-      <div class="section-divider-left">
-        <span class="section-divider-icon">🏮</span>
-        <div class="section-divider-text">
-          <h2 class="section-divider-h2">204 Moderních radikálů (现代汉字部首)</h2>
-          <span class="section-divider-sub">Základní stavební kameny čínských znaků dle normy GF 0011-2009 s etymologií a slovy</span>
-        </div>
+      <div class="section-divider-text">
+        <h2 class="section-divider-h2">204 Moderních radikálů (现代汉字部首)</h2>
+        <span class="section-divider-sub">Základní stavební kameny čínských znaků dle normy GF 0011-2009 s etymologií a slovy</span>
       </div>
-      <span class="section-divider-badge">204 radikálů</span>
     `;
     fragment.appendChild(secHeader);
 

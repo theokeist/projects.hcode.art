@@ -32,7 +32,7 @@
     let html = '';
 
     // A. Consonants
-    if (window.KOREAN_HANGUL_DATA && window.KOREAN_HANGUL_DATA.consonants) {
+    if (window.KOREAN_HANGUL_DATA && window.KOREAN_HANGUL_DATA.consonants) { html += `<h1 class="big-section-title" onclick="toggleSectionCollapse(this)" title="Kliknutím složíš / rozbalíš sekci" data-lesson="consonant">Hangul: Souhlásky</h1>`;
       window.KOREAN_HANGUL_DATA.consonants.forEach((c, idx) => {
         html += `
           <div class="course-card" id="card-${c.id}" data-lesson="consonant" data-search="${c.letter} ${c.name} ${c.roman} ${c.desc}">
@@ -70,7 +70,7 @@
     }
 
     // B. Vowels
-    if (window.KOREAN_HANGUL_DATA && window.KOREAN_HANGUL_DATA.vowels) {
+    if (window.KOREAN_HANGUL_DATA && window.KOREAN_HANGUL_DATA.vowels) { html += `<h1 class="big-section-title" onclick="toggleSectionCollapse(this)" title="Kliknutím složíš / rozbalíš sekci" data-lesson="vowel">Hangul: Samohlásky</h1>`;
       window.KOREAN_HANGUL_DATA.vowels.forEach((v, idx) => {
         html += `
           <div class="course-card" id="card-${v.id}" data-lesson="vowel" data-search="${v.letter} ${v.roman} ${v.desc}">
@@ -108,7 +108,7 @@
     }
 
     // C. Batchim
-    if (window.KOREAN_HANGUL_DATA && window.KOREAN_HANGUL_DATA.batchimRules) {
+    if (window.KOREAN_HANGUL_DATA && window.KOREAN_HANGUL_DATA.batchimRules) { html += `<h1 class="big-section-title" onclick="toggleSectionCollapse(this)" title="Kliknutím složíš / rozbalíš sekci" data-lesson="batchim">Pravidla Batchim</h1>`;
       window.KOREAN_HANGUL_DATA.batchimRules.forEach((b, idx) => {
         html += `
           <div class="course-card" id="card-${b.id}" data-lesson="batchim" data-search="${b.target} ${b.representative} ${b.sound} ${b.rule}">
@@ -148,7 +148,7 @@
     // D. Numbers & Counters
     if (window.KOREAN_NUMBERS_DATA) {
       // Sino-Korean
-      if (window.KOREAN_NUMBERS_DATA.sinoKorean) {
+      if (window.KOREAN_NUMBERS_DATA.sinoKorean) { html += `<h1 class="big-section-title" onclick="toggleSectionCollapse(this)" title="Kliknutím složíš / rozbalíš sekci" data-lesson="numbers">Sino-Korejská čísla</h1>`;
         window.KOREAN_NUMBERS_DATA.sinoKorean.forEach(n => {
           html += `
             <div class="course-card" data-lesson="numbers" data-search="${n.hangul} ${n.num} ${n.roman} ${n.cz} ${n.note} sino">
@@ -176,7 +176,7 @@
       }
 
       // Native Korean
-      if (window.KOREAN_NUMBERS_DATA.nativeKorean) {
+      if (window.KOREAN_NUMBERS_DATA.nativeKorean) { html += `<h1 class="big-section-title" onclick="toggleSectionCollapse(this)" title="Kliknutím složíš / rozbalíš sekci" data-lesson="numbers">Rodilá korejská čísla</h1>`;
         window.KOREAN_NUMBERS_DATA.nativeKorean.forEach(n => {
           html += `
             <div class="course-card" data-lesson="numbers" data-search="${n.hangul} ${n.num} ${n.roman} ${n.cz} ${n.note} rodilé native">
@@ -204,7 +204,7 @@
       }
 
       // Counters
-      if (window.KOREAN_NUMBERS_DATA.counters) {
+      if (window.KOREAN_NUMBERS_DATA.counters) { html += `<h1 class="big-section-title" onclick="toggleSectionCollapse(this)" title="Kliknutím složíš / rozbalíš sekci" data-lesson="numbers">Počítadla</h1>`;
         window.KOREAN_NUMBERS_DATA.counters.forEach((c, idx) => {
           html += `
             <div class="course-card" data-lesson="numbers" data-search="${c.hangul} ${c.target} ${c.examples} počítadlo classifier">
@@ -234,7 +234,7 @@
     }
 
     // E. Phrases (L1)
-    if (window.KOREAN_PHRASES_DATA) {
+    if (window.KOREAN_PHRASES_DATA) { html += `<h1 class="big-section-title" onclick="toggleSectionCollapse(this)" title="Kliknutím složíš / rozbalíš sekci" data-lesson="phrases">L1: Konverzační fráze</h1>`;
       window.KOREAN_PHRASES_DATA.forEach((p, idx) => {
         html += `
           <div class="course-card" id="card-phrase-${p.id}" data-lesson="phrases" data-search="${p.hangul} ${p.roman} ${p.cz} ${p.note}">
@@ -271,7 +271,7 @@
     }
 
     // F. Vocabulary (L2)
-    if (window.KOREAN_VOCAB_DATA) {
+    if (window.KOREAN_VOCAB_DATA) { html += `<h1 class="big-section-title" onclick="toggleSectionCollapse(this)" title="Kliknutím složíš / rozbalíš sekci" data-lesson="vocab">L2: Slovní zásoba</h1>`;
       window.KOREAN_VOCAB_DATA.forEach((w, idx) => {
         html += `
           <div class="course-card" data-lesson="vocab" data-search="${w.hangul} ${w.roman} ${w.cz} ${w.ex} ${w.decomp} ${w.hanja || ''}">
@@ -307,7 +307,7 @@
     }
 
     // G. Grammar (L3)
-    if (window.KOREAN_GRAMMAR_DATA) {
+    if (window.KOREAN_GRAMMAR_DATA) { html += `<h1 class="big-section-title" onclick="toggleSectionCollapse(this)" title="Kliknutím složíš / rozbalíš sekci" data-lesson="grammar">L3: Gramatika</h1>`;
       window.KOREAN_GRAMMAR_DATA.forEach((g, idx) => {
         html += `
           <div class="course-card" data-lesson="grammar" data-search="${g.title} ${g.korean} ${g.summary} ${g.formula} ${g.tip}">
@@ -346,7 +346,7 @@
     }
 
     // H. Online Texts & Reading Collections (L4)
-    if (window.KOREAN_SENTENCE_COLLECTIONS) {
+    if (window.KOREAN_SENTENCE_COLLECTIONS) { html += `<h1 class="big-section-title" onclick="toggleSectionCollapse(this)" title="Kliknutím složíš / rozbalíš sekci" data-lesson="reading">L4: Online texty &amp; Čítanka</h1>`;
       const streams = ['news', 'culture', 'sokdam'];
       streams.forEach(streamKey => {
         const streamList = window.KOREAN_SENTENCE_COLLECTIONS[streamKey] || [];
@@ -388,6 +388,27 @@
     }
 
     container.innerHTML = html;
+    container.querySelectorAll('.big-section-title').forEach(title => {
+      title.setAttribute('role', 'button');
+      title.tabIndex = 0;
+      title.setAttribute('aria-expanded', 'true');
+      title.addEventListener('keydown', event => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          window.toggleSectionCollapse(title);
+        }
+      });
+    });
+    container.querySelectorAll('.word-pill, .example-box').forEach(el => {
+      if (!el.getAttribute('role')) el.setAttribute('role', 'button');
+      if (el.tabIndex < 0) el.tabIndex = 0;
+      el.addEventListener('keydown', event => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          el.click();
+        }
+      });
+    });
   }
 
   function escapeQuotes(str) {
@@ -405,6 +426,13 @@
         card.style.display = 'none';
       }
     });
+
+    // Update section titles visibility based on active lesson
+    document.querySelectorAll('.big-section-title').forEach(h => {
+      const titleLesson = h.getAttribute('data-lesson');
+      h.style.display = (lessonId === 'all' || titleLesson === lessonId) ? '' : 'none';
+    });
+    hideCollapsedSections();
 
     // Update active dropdown items
     document.querySelectorAll('#lecturesDropdownMenu .dropdown-item').forEach(item => {
@@ -463,6 +491,48 @@
         card.style.display = 'none';
       }
     });
+
+    // Update section titles visibility based on matching cards
+    document.querySelectorAll('.big-section-title').forEach(h => {
+      const titleLesson = h.getAttribute('data-lesson');
+      if (currentLesson !== 'all' && titleLesson !== currentLesson) {
+        h.style.display = 'none';
+        return;
+      }
+      const cards = getSectionCards(h);
+      const hasVisible = cards.some(c => c.style.display !== 'none');
+      h.style.display = hasVisible ? '' : 'none';
+    });
+
+    hideCollapsedSections();
+  };
+
+  // ── Collapsible Section Titles ───────────────────────────────────────────
+  // Clicking a pure-text section heading hides/shows cards up to the next
+  // heading (sub-sections like Sino/Rodilá/Počítadla collapse independently).
+  function getSectionCards(heading) {
+    const cards = [];
+    let el = heading.nextElementSibling;
+    while (el && !el.classList.contains('big-section-title')) {
+      if (el.classList.contains('course-card')) cards.push(el);
+      el = el.nextElementSibling;
+    }
+    return cards;
+  }
+
+  function hideCollapsedSections() {
+    document.querySelectorAll('.big-section-title.collapsed').forEach(h => {
+      getSectionCards(h).forEach(c => c.style.display = 'none');
+    });
+  }
+
+  window.toggleSectionCollapse = function(heading) {
+    const isCollapsed = heading.classList.toggle('collapsed');
+    heading.setAttribute('aria-expanded', String(!isCollapsed));
+    // Re-apply the current view (search + active lesson) so expanded cards
+    // respect the current filter, collapsed stay hidden.
+    const input = document.getElementById('searchInput');
+    window.handleSearchInput(input ? input.value : '');
   };
 
   window.clearSearch = function() {
@@ -591,3 +661,4 @@
 
   setTimeout(buildAllCards, 150);
 })();
+

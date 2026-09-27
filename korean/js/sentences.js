@@ -7,6 +7,28 @@
   let activeSource = localStorage.getItem('korean_course_sentence_source') || 'course';
   let currentIndex = 0;
 
+  function initReaderPin() {
+    const panel = document.getElementById('stepperStrip');
+    const button = document.getElementById('readerPinBtn');
+    if (!panel || !button) return;
+
+    const applyPinState = function(pinned) {
+      panel.classList.toggle('is-pinned', pinned);
+      button.setAttribute('aria-pressed', String(pinned));
+      button.textContent = pinned ? '\u{1F4CC} P\u0159ipnuto' : '\u{1F4CD} P\u0159ipnout';
+      button.title = pinned ? 'Odepnout \u010dte\u010dku' : 'P\u0159ipnout \u010dte\u010dku';
+      try { localStorage.setItem('korean_course_reader_pin', pinned ? 'pinned' : 'free'); } catch (e) {}
+    };
+
+    window.toggleReaderPin = function() {
+      applyPinState(!panel.classList.contains('is-pinned'));
+    };
+
+    try {
+      if (localStorage.getItem('korean_course_reader_pin') === 'free') applyPinState(false);
+    } catch (e) {}
+  }
+
   function getActiveSentences() {
     if (!window.KOREAN_SENTENCE_COLLECTIONS) return [];
     return window.KOREAN_SENTENCE_COLLECTIONS[activeSource] || window.KOREAN_SENTENCE_COLLECTIONS.course || [];
@@ -44,9 +66,19 @@
           ${t.c ? `<div class="t-cz">${t.c}</div>` : ''}
         `;
         if (!isPunct) {
-          div.setAttribute('title', `Klikněte pro poslech: ${t.h} (${t.c})`);
-          div.onclick = function() {
+          div.tabIndex = 0;
+          div.setAttribute('role', 'button');
+          div.setAttribute('aria-label', `Poslechnout ${t.h}${t.r ? `, ${t.r}` : ''}${t.c ? `, ${t.c}` : ''}`);
+          div.setAttribute('title', `Klikněte pro poslech: ${t.h} (${t.c || ''})`);
+          const playTile = function() {
             if (window.playKoreanAudio) window.playKoreanAudio(t.h);
+          };
+          div.onclick = playTile;
+          div.onkeydown = function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              playTile();
+            }
           };
         }
         tilesEl.appendChild(div);
@@ -104,6 +136,7 @@
 
   // Initialize
   function initSentences() {
+    initReaderPin();
     const saved = localStorage.getItem('korean_course_sentence_source') || 'course';
     activeSource = saved;
     const targetTab = document.querySelector(`.source-tab[data-source="${saved}"]`);

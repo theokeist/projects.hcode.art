@@ -4,6 +4,20 @@
   (function() {
     const MILESTONES = [
       {
+        id: 'basic',
+        label: 'Basic characters & reading',
+        icon: '🌱',
+        firstCardId: 'card-basic-1',
+        count: 43,
+        notches: [
+          { num: 1, cardId: 'card-basic-1', hanzi: '我 / 你 / 他', label: 'People & pronouns' },
+          { num: 9, cardId: 'card-basic-9', hanzi: '是 / 不 / 有 / 在', label: 'Core verbs' },
+          { num: 17, cardId: 'card-basic-17', hanzi: '中 / 国 / 学 / 生', label: 'Study & China' },
+          { num: 25, cardId: 'card-basic-25', hanzi: '你好 / 我们 / 中国', label: 'Useful words' },
+          { num: 41, cardId: 'card-basic-41', hanzi: '短文', label: 'Three graded readings' }
+        ]
+      },
+      {
         id: 'num',
         label: 'Čísla',
         icon: '🔢',
@@ -297,6 +311,11 @@
         if (typeof window.switchLesson === 'function') {
           window.switchLesson(lesson, targetTab);
         }
+      }
+
+      // If still hidden because its section is collapsed, expand that section
+      if (card.style.display === 'none' && lesson && typeof window.ensureSectionExpanded === 'function') {
+        window.ensureSectionExpanded(lesson);
       }
 
       const scrollContainer = document.getElementById('cardsContainer');

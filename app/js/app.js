@@ -3,23 +3,33 @@
 // Filters, search, lesson tabs, dark theme, and typography
 // ═══════════════════════════════════════════════════════
 
-// Switch between lesson views ('all', 'num', 'rad', 'l1', 'l2', 'l3', 'l4')
+let currentLesson = 'all';
+
+// Switch between lesson views ('all', 'num', 'rad', 'l1', 'l2', 'l3', 'l4', 'basic')
 function switchLesson(lessonId, btn) {
+  currentLesson = lessonId || 'all';
   document.querySelectorAll('.nav-tab').forEach(b => b.classList.toggle('active', b === btn));
-  document.querySelectorAll('.course-card').forEach(c => c.style.display = 'none');
-  if (lessonId === 'all') {
-    document.querySelectorAll('.course-card').forEach(c => c.style.display = '');
-  } else {
-    document.querySelectorAll(`.course-card[data-lesson="${lessonId}"]`).forEach(c => c.style.display = '');
-  }
+  
+  document.querySelectorAll('.course-card').forEach(c => {
+    const match = (currentLesson === 'all' || c.getAttribute('data-lesson') === currentLesson);
+    c.style.display = match ? '' : 'none';
+  });
+
+  // Filter section divider titles so only relevant lesson dividers are visible
+  document.querySelectorAll('.section-divider-title').forEach(d => {
+    const dividerLesson = d.getAttribute('data-lesson');
+    d.style.display = (currentLesson === 'all' || dividerLesson === currentLesson) ? '' : 'none';
+  });
+
   const radBtn = document.getElementById('radToggleBtn');
   if (radBtn) {
-    radBtn.classList.toggle('active-filter', lessonId === 'rad');
+    radBtn.classList.toggle('active-filter', currentLesson === 'rad');
   }
 
   // Update lectures dropdown trigger & active state
   const lessonLabelsMap = {
     'all': { icon: '📚', label: 'Vše' },
+    'basic': { icon: '🌱', label: 'Basic characters' },
     'num': { icon: '🔢', label: 'Čísla' },
     'rad': { icon: '🏮', label: 'Radikály' },
     'l1':  { icon: '📖', label: 'L1: 200 vět' },
@@ -27,7 +37,7 @@ function switchLesson(lessonId, btn) {
     'l3':  { icon: '🎯', label: 'L3: 400 slov' },
     'l4':  { icon: '⚡', label: 'L4: Příd. jména' }
   };
-  const info = lessonLabelsMap[lessonId];
+  const info = lessonLabelsMap[currentLesson];
   if (info) {
     const iconEl = document.getElementById('curLectureIcon');
     const labelEl = document.getElementById('curLectureLabel');
@@ -35,10 +45,12 @@ function switchLesson(lessonId, btn) {
     if (labelEl) labelEl.textContent = info.label;
   }
   document.querySelectorAll('#lecturesDropdownMenu .dropdown-item').forEach(item => {
-    const isMatch = item.getAttribute('onclick') && item.getAttribute('onclick').includes(`'${lessonId}'`);
+    const isMatch = item.getAttribute('onclick') && item.getAttribute('onclick').includes(`'${currentLesson}'`);
     item.classList.toggle('active', !!isMatch);
   });
+  hideCollapsedSections();
 }
+window.switchLesson = switchLesson;
 
 // Toggle or switch directly to the Radicals lesson (204 modern radicals)
 window.toggleRadicalLesson = function(btn) {
@@ -57,12 +69,23 @@ function filterCards(query) {
   const rawQ = (query || '').toLowerCase().trim();
   if (!rawQ) {
     document.querySelectorAll('.course-card').forEach(card => {
-      card.style.display = '';
+      const matchLesson = (currentLesson === 'all' || card.getAttribute('data-lesson') === currentLesson);
+      card.style.display = matchLesson ? '' : 'none';
     });
+    document.querySelectorAll('.section-divider-title').forEach(d => {
+      const dividerLesson = d.getAttribute('data-lesson');
+      d.style.display = (currentLesson === 'all' || dividerLesson === currentLesson) ? '' : 'none';
+    });
+    hideCollapsedSections();
     return;
   }
   const normQ = rawQ.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
   document.querySelectorAll('.course-card').forEach(card => {
+    const matchLesson = (currentLesson === 'all' || card.getAttribute('data-lesson') === currentLesson);
+    if (!matchLesson) {
+      card.style.display = 'none';
+      return;
+    }
     const rawTxt = card.textContent.toLowerCase();
     const dataTxt = (card.getAttribute('data-text') || '').toLowerCase();
     const matchesRaw = rawTxt.includes(rawQ) || dataTxt.includes(rawQ);
@@ -73,6 +96,76 @@ function filterCards(query) {
     const normTxt = rawTxt.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
     card.style.display = normTxt.includes(normQ) ? '' : 'none';
   });
+
+  // Hide section dividers that have 0 visible matching cards
+  document.querySelectorAll('.section-divider-title').forEach(d => {
+    const dividerLesson = d.getAttribute('data-lesson');
+    if (currentLesson !== 'all' && dividerLesson !== currentLesson) {
+      d.style.display = 'none';
+      return;
+    }
+    const hasVisible = document.querySelector(`.course-card[data-lesson="${dividerLesson}"]:not([style*="display: none"])`);
+    d.style.display = hasVisible ? '' : 'none';
+  });
+  hideCollapsedSections();
+}
+window.filterCards = filterCards;
+
+// ── Collapsible Section Dividers ─────────────────────────────────────────
+// Clicking a pure-text section heading hides/shows all cards of that lesson.
+const collapsedSections = new Set();
+
+function hideCollapsedSections() {
+  collapsedSections.forEach(lesson => {
+    document.querySelectorAll(`.course-card[data-lesson="${lesson}"]`).forEach(c => c.style.display = 'none');
+  });
+}
+
+window.toggleSectionCollapse = function(divider) {
+  const lesson = divider.dataset.lesson;
+  if (!lesson) return;
+  const isCollapsed = divider.classList.toggle('collapsed');
+  divider.setAttribute('aria-expanded', String(!isCollapsed));
+  if (isCollapsed) {
+    collapsedSections.add(lesson);
+    hideCollapsedSections();
+  } else {
+    collapsedSections.delete(lesson);
+    // Re-apply the current view so expanded cards respect active search / lesson tab
+    const input = document.getElementById('searchInput');
+    const q = input ? input.value.trim() : '';
+    if (q) {
+      filterCards(q);
+    } else {
+      switchLesson(currentLesson);
+    }
+  }
+};
+
+// Expand a collapsed section when a navigation jump targets one of its cards
+window.ensureSectionExpanded = function(lesson) {
+  if (!collapsedSections.has(lesson)) return;
+  const divider = document.querySelector(`.section-divider-title[data-lesson="${lesson}"]`);
+  if (divider) window.toggleSectionCollapse(divider);
+};
+
+function initSectionDividersAccessibility() {
+  document.querySelectorAll('.section-divider-title').forEach(d => {
+    d.setAttribute('role', 'button');
+    d.setAttribute('tabindex', '0');
+    d.setAttribute('aria-expanded', String(!d.classList.contains('collapsed')));
+    d.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        window.toggleSectionCollapse(d);
+      }
+    });
+  });
+}
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initSectionDividersAccessibility);
+} else {
+  initSectionDividersAccessibility();
 }
 
 function handleSearchInput(query) {
@@ -86,6 +179,7 @@ function handleSearchInput(query) {
   }
   filterCards(query);
 }
+window.handleSearchInput = handleSearchInput;
 
 function clearSearch() {
   const input = document.getElementById('searchInput');
@@ -95,6 +189,7 @@ function clearSearch() {
     input.focus();
   }
 }
+window.clearSearch = clearSearch;
 
 // Global search keyboard shortcuts ('/' or Ctrl+K / Cmd+K to focus, Escape to blur/clear)
 window.addEventListener('keydown', function(e) {
@@ -438,8 +533,7 @@ window.closeAllDropdowns = function() {
 };
 
 window.selectDropdownLesson = function(lessonId, labelText) {
-  const navTab = document.querySelector(`.nav-tab[onclick*="'${lessonId}'"]`);
-  switchLesson(lessonId, navTab);
+  switchLesson(lessonId);
   window.closeAllDropdowns();
 };
 

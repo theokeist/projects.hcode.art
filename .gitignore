@@ -2,6 +2,12 @@
 *.bak
 *.tmp
 *.log
+*proof*.png
+.*probe*
+node_modules/
+.next/
+out/
+web/public/legacy/
 
 # OS generated files
 Thumbs.db

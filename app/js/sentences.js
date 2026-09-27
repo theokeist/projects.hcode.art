@@ -8,6 +8,28 @@
   let seenCount = 0;
   let totalCards = 0;
 
+  function initReaderPin() {
+    const panel = document.getElementById('sentenceStrip');
+    const button = document.getElementById('readerPinBtn');
+    if (!panel || !button) return;
+
+    const applyPinState = function(pinned) {
+      panel.classList.toggle('is-pinned', pinned);
+      button.setAttribute('aria-pressed', String(pinned));
+      button.textContent = pinned ? '\u{1F4CC} P\u0159ipnuto' : '\u{1F4CD} P\u0159ipnout';
+      button.title = pinned ? 'Odepnout \u010dte\u010dku' : 'P\u0159ipnout \u010dte\u010dku';
+      try { localStorage.setItem('chinese_course_reader_pin', pinned ? 'pinned' : 'free'); } catch (e) {}
+    };
+
+    window.toggleReaderPin = function() {
+      applyPinState(!panel.classList.contains('is-pinned'));
+    };
+
+    try {
+      if (localStorage.getItem('chinese_course_reader_pin') === 'free') applyPinState(false);
+    } catch (e) {}
+  }
+
   function getActiveSentences() {
     if (!window.SENTENCE_COLLECTIONS) return [];
     return window.SENTENCE_COLLECTIONS[activeSource] || window.SENTENCE_COLLECTIONS.course || [];
@@ -27,6 +49,7 @@
     const tilesEl = document.getElementById('sentenceTiles');
     const czechEl = document.getElementById('sentenceCzech');
     const progEl = document.getElementById('stripProgress');
+    const sourceLabelEl = document.getElementById('sentenceSourceLabel');
     const originWrapper = document.getElementById('sentenceOriginWrapper');
     const box = document.querySelector('.sentence-inner-box');
     if (!tilesEl) return;
@@ -45,11 +68,26 @@
         s.tiles.forEach(t => {
           const div = document.createElement('div');
           const isPunct = /^[，。！？、：；“”‘’—… ]+$/.test((t.h || '').trim());
+          const pinyin = t.p || (window.getPinyinForText ? window.getPinyinForText(t.h) : '');
           div.className = 'sent-tile' + (isPunct ? ' punct' : '') + (t.cls ? ' ' + t.cls : '');
           div.innerHTML = `
             <div class="t-hanzi">${t.h || ''}</div>
-            ${t.p ? `<div class="t-pinyin">${t.p}</div>` : ''}
+            ${pinyin ? `<div class="t-pinyin">${pinyin}</div>` : ''}
           `;
+          if (!isPunct) {
+            div.tabIndex = 0;
+            div.setAttribute('role', 'button');
+            div.setAttribute('aria-label', `Přehrát ${t.h || ''}${t.p ? `, ${t.p}` : ''}`);
+            div.onclick = function() { window.findChineseCharacter(t.h || ''); };
+            div.setAttribute('aria-label', `Find exact character ${t.h || ''}${pinyin ? `, ${pinyin}` : ''}`);
+            div.title = `Find exact character: ${t.h || ''}${pinyin ? ` (${pinyin})` : ''}`;
+            div.onkeydown = function(event) {
+              if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                window.findChineseCharacter(t.h || '');
+              }
+            };
+          }
           tilesEl.appendChild(div);
         });
       }
@@ -74,6 +112,10 @@
       // Progress counter
       if (progEl) {
         progEl.textContent = `${currentIndex + 1} / ${list.length}`;
+      }
+
+      if (sourceLabelEl) {
+        sourceLabelEl.textContent = s.sourceName || s.topic || (activeSource === 'course' ? 'Výukový kurz' : 'Online zdroj');
       }
 
       // Origin & Live Web Link (if wrapper exists)
@@ -111,6 +153,24 @@
   // Step sentence manually (+1 or -1)
   window.stepSentence = function(delta) {
     window.renderSentence(currentIndex + delta);
+  };
+
+  window.playChineseAudio = function(text) {
+    if (!text || !('speechSynthesis' in window)) return;
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'zh-CN';
+    utterance.rate = 0.82;
+    const voice = window.speechSynthesis.getVoices().find(v => v.lang === 'zh-CN' || v.lang.startsWith('zh'));
+    if (voice) utterance.voice = voice;
+    window.speechSynthesis.speak(utterance);
+  };
+
+  window.playCurrentSentenceAudio = function() {
+    const list = getActiveSentences();
+    const sentence = list[currentIndex];
+    if (!sentence || !Array.isArray(sentence.tiles)) return;
+    window.playChineseAudio(sentence.tiles.map(t => t.h || '').join(''));
   };
 
   // Switch between sources ('course', 'news', 'culture', 'chengyu', 'all')
@@ -166,6 +226,7 @@
 
   // Init when DOM is loaded or already ready
   function initSentences() {
+    initReaderPin();
     // Restore saved source tab
     const savedSource = localStorage.getItem('chinese_course_sentence_source') || 'course';
     const targetTab = document.querySelector(`.source-tab[data-source="${savedSource}"]`);
@@ -201,4 +262,21 @@
   } else {
     setTimeout(initSentences, 50);
   }
+
+  window.addEventListener('keydown', function(event) {
+    if (event.altKey && event.key === 'ArrowRight') {
+      event.preventDefault();
+      window.stepSentence(1);
+    } else if (event.altKey && event.key === 'ArrowLeft') {
+      event.preventDefault();
+      window.stepSentence(-1);
+    } else if (event.altKey && (event.key === 's' || event.key === 'S')) {
+      event.preventDefault();
+      window.playCurrentSentenceAudio();
+    }
+  });
+
+  window.addEventListener('pinyin-ready', function() {
+    window.renderSentence(currentIndex);
+  });
 })();

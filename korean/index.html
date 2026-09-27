@@ -7,7 +7,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=20260924">
+  <link rel="stylesheet" href="../shared/ui.css?v=20260924">
   <meta name="theme-color" content="#0b0f19">
 </head>
 <body data-theme="cyber">
@@ -115,19 +116,15 @@
   </div>
 
   <!-- Interactive Sentence Stepper Strip with Online Streams -->
-  <div class="sentence-stepper-strip" id="stepperStrip">
+  <div class="sentence-stepper-strip is-pinned" id="stepperStrip">
     <div class="strip-inner">
       <!-- Source Stream Switcher Tabs -->
       <div class="source-tabs-row">
-        <div class="source-tabs-group">
-          <button type="button" class="source-tab active" data-source="course" onclick="switchSentenceSource('course', this)">📚 Výukový kurz</button>
-          <button type="button" class="source-tab" data-source="news" onclick="switchSentenceSource('news', this)">📰 KBS &amp; Yonhap Zprávy</button>
-          <button type="button" class="source-tab" data-source="culture" onclick="switchSentenceSource('culture', this)">🎎 Korejská kultura (VisitKorea)</button>
-          <button type="button" class="source-tab" data-source="sokdam" onclick="switchSentenceSource('sokdam', this)">📜 Přísloví (속담)</button>
-        </div>
+        <div class="source-tabs-group" data-ui-component="reader-tabs" data-ui-locale="ko"></div>
         <div class="source-meta-group">
           <span class="source-badge-tag" id="sentenceSourceBadge">Autentický zdroj</span>
           <span id="stripProgress" style="color:var(--text-muted); font-family:monospace;">1 / 7</span>
+          <button type="button" class="reader-pin-btn" id="readerPinBtn" onclick="toggleReaderPin()" aria-pressed="true" title="Odepnout &#269;te&#269;ku">&#128204; P&#345;ipnuto</button>
           <button type="button" class="audio-btn" onclick="playCurrentSentenceAudio()" title="Poslechnout celou větu (Alt+S)">🔊 Celá věta</button>
         </div>
       </div>
@@ -144,7 +141,7 @@
         <button type="button" class="sentence-nav-btn" onclick="stepSentence(1)" title="Další věta (Alt+Šipka vpravo)">›</button>
       </div>
 
-      <div style="display: flex; justify-content: space-between; align-items:center; font-size: 11px; margin-top: 4px;">
+      <div class="reader-footer-row">
         <span style="color:var(--text-muted);">💡 Klikněte na jakoukoliv dlaždici slova pro samostatnou výslovnost</span>
         <a id="sentenceOnlineLink" class="source-web-link" href="https://korean.dict.naver.com" target="_blank" rel="noopener noreferrer">🌐 Naver Slovník ↗</a>
       </div>
@@ -180,14 +177,15 @@
   </footer>
 
   <!-- Scripts -->
-  <script src="js/hangul-data.js"></script>
-  <script src="js/numbers-data.js"></script>
-  <script src="js/phrases-data.js"></script>
-  <script src="js/vocab-data.js"></script>
-  <script src="js/grammar-data.js"></script>
-  <script src="js/sentences-data.js"></script>
-  <script src="js/stepper.js"></script>
-  <script src="js/sentences.js"></script>
-  <script src="js/app.js"></script>
+<script src="js/hangul-data.js?v=20260924"></script>
+<script src="js/numbers-data.js?v=20260924"></script>
+<script src="js/phrases-data.js?v=20260924"></script>
+<script src="js/vocab-data.js?v=20260924"></script>
+<script src="js/grammar-data.js?v=20260924"></script>
+<script src="js/sentences-data.js?v=20260924"></script>
+<script src="js/stepper.js?v=20260924"></script>
+<script src="js/sentences.js?v=20260924"></script>
+<script src="js/app.js?v=20260924"></script>
+<script src="../shared/ui.js?v=20260924"></script>
 </body>
 </html>

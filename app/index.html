@@ -9,11 +9,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
   <noscript><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet"></noscript>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=20260924">
+  <link rel="stylesheet" href="../shared/ui.css?v=20260924">
   <meta name="theme-color" content="#0b0f19">
 </head>
 <body data-theme="cyber" class="dark">
-<div class="top-portal-nav" style="background:rgba(11, 15, 25, 0.95); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border-bottom:1px solid rgba(0,255,204,0.3); padding:10px 24px; display:flex; justify-content:space-between; align-items:center; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; font-size:14px; z-index:99999; position:sticky; top:0; box-shadow:0 2px 10px rgba(0,0,0,0.5);">
+<div class="top-portal-nav">
   <a href="../index.html#apps" style="color:#00ffcc; text-decoration:none; font-weight:700; letter-spacing:1px; display:inline-flex; align-items:center; gap:8px; font-size:14px; text-transform:uppercase;">
     <span style="font-size:16px;">⟵</span> Zpět na portál HCODE (Aplikace)
   </a>
@@ -42,6 +43,9 @@
           </button>
           <button type="button" class="dropdown-item" onclick="selectDropdownLesson('num', '🔢 Čísla')">
             <span>🔢 Čísla (číslice)</span> <span class="dropdown-item-badge">15</span>
+          </button>
+          <button type="button" class="dropdown-item" onclick="selectDropdownLesson('basic', '🌱 Základní znaky & čtení')">
+            <span>🌱 Základní znaky &amp; čtení</span> <span class="dropdown-item-meta">43 items</span>
           </button>
           <button type="button" class="dropdown-item" onclick="selectDropdownLesson('rad', '🏮 204 Radikálů')">
             <span>🏮 204 Moderních radikálů</span> <span class="dropdown-item-badge">204</span>
@@ -127,8 +131,8 @@
             <span id="dropActionTopbarIcon">🙈</span> <span id="dropActionTopbarLabel">Skrýt horní lištu (H)</span>
           </button>
           
-          <button type="button" class="dropdown-item" onclick="toggleMilestonesSidebar(); closeAllDropdowns();">
-            <span>🧭</span> <span id="dropActionDockLabel">Milníky studia</span>
+          <button type="button" class="dropdown-item" onclick="toggleSideStepper(); closeAllDropdowns();">
+            <span>🧭</span> <span>Krokový průvodce (Alt+S)</span>
           </button>
 
           <button type="button" class="dropdown-item" onclick="window.print(); closeAllDropdowns();">
@@ -140,11 +144,27 @@
   </div>
 
   <!-- ══ VĚTNÝ TRENAŽÉR / ČTENÍ (SIMPLE READING STYLE) ════════════════════ -->
-  <div class="sentence-strip" id="sentenceStrip">
+  <div class="sentence-strip is-pinned" id="sentenceStrip">
     <div class="sentence-inner-box">
       <!-- Main Sentence Tiles Row: Pure colorful letters in black frame -->
+      <div class="source-tabs-row" role="tablist" aria-label="Zdroj v&#283;t">
+        <div class="source-tabs-group" data-ui-component="reader-tabs" data-ui-locale="zh"></div>
+        <div class="source-meta-group">
+          <span class="reader-source-label" id="sentenceSourceLabel">V&#253;ukov&#253; kurz</span>
+          <span class="reader-character-lookup" id="characterLookup">Klikn&#283;te na znak</span>
+          <span class="strip-progress" id="stripProgress" aria-live="polite">1 / 1</span>
+          <button type="button" class="reader-pin-btn" id="readerPinBtn" onclick="toggleReaderPin()" aria-pressed="true" title="Odepnout &#269;te&#269;ku">&#128204; P&#345;ipnuto</button>
+          <button type="button" class="audio-btn" onclick="playCurrentSentenceAudio()" title="P&#345;ehr&#225;t celou v&#283;tu (Alt+S)">&#128266; Cel&#225; v&#283;ta</button>
+        </div>
+      </div>
+      <div class="strip-main-row">
+        <button type="button" class="sentence-nav-btn reader-prev" onclick="stepSentence(-1)" aria-label="P&#345;edchoz&#237; v&#283;ta">&#8249;</button>
+        <div class="strip-center-content">
       <div class="sentence-tiles-row">
         <div class="sentence-tiles" id="sentenceTiles"></div>
+      </div>
+        </div>
+        <button type="button" class="sentence-nav-btn reader-next" onclick="stepSentence(1)" aria-label="Dal&#353;&#237; v&#283;ta">&#8250;</button>
       </div>
 
       <!-- Bottom Translation Row with simple online link -->
@@ -158,31 +178,23 @@
   </div>
   <!-- ════════════════════════════════════════════════════════════════════ -->
 
-  <!-- Main Content Layout with Sticky Milestones -->
+  <!-- Main Content Layout -->
   <div class="main-wrapper">
-    <!-- Side Milestones Track (Clean modern Korean-inspired design) -->
-    <aside class="side-stepper-container desktop-only" id="milestonesSidebar">
-      <div class="stepper-header">
-        <span>Milníky studia</span>
-        <span>🇨🇳</span>
-      </div>
-      <div class="stepper-list" id="stepperMilestonesList">
-        <!-- Injected by stepper.js -->
-      </div>
-    </aside>
-
     <!-- Cards Container -->
     <main class="cards-container" id="cardsContainer">
 
-<div class="section-divider-title" id="section-l1" data-lesson="l1">
-  <div class="section-divider-left">
-    <span class="section-divider-icon">📖</span>
-    <div class="section-divider-text">
-      <h2 class="section-divider-h2">Lekce 1: 200 vět &amp; Gramatický rozbor</h2>
-      <span class="section-divider-sub">Základní větné vzorce, časové určení, otázky a dekompozice nových znaků</span>
-    </div>
+<div class="section-divider-title" id="section-basic" data-lesson="basic" onclick="toggleSectionCollapse(this)" title="Kliknutím složíš nebo rozbalíš sekci">
+  <div class="section-divider-text">
+    <h2 class="section-divider-h2">Start here: basic characters &amp; reading</h2>
+    <span class="section-divider-sub">24 essential characters, useful combinations, and a short reading path. Learn the character, then meet it in words and sentences.</span>
   </div>
-  <span class="section-divider-badge">199 karet</span>
+</div>
+
+<div class="section-divider-title" id="section-l1" data-lesson="l1" onclick="toggleSectionCollapse(this)" title="Kliknutím složíš / rozbalíš sekci">
+  <div class="section-divider-text">
+    <h2 class="section-divider-h2">Lekce 1: 200 vět &amp; Gramatický rozbor</h2>
+    <span class="section-divider-sub">Základní větné vzorce, časové určení, otázky a dekompozice nových znaků</span>
+  </div>
 </div>
 
 <div class="course-card l1" id="card-l1-1" data-lesson="l1" data-text="l1 1 你好！ Nǐ hǎo! ni hao! Ahoj!">
@@ -16186,15 +16198,11 @@ způsobem děj probíhá (跑得很快 = běhá velmi rychle; 做得好 = uděl�
 </div>
 </div>
 
-<div class="section-divider-title" id="section-l2" data-lesson="l2">
-  <div class="section-divider-left">
-    <span class="section-divider-icon">💬</span>
-    <div class="section-divider-text">
-      <h2 class="section-divider-h2">Lekce 2: 100 frází &amp; Komplimenty</h2>
-      <span class="section-divider-sub">Společenské fráze, komplimenty, vyjádření pocitů a praktická konverzace</span>
-    </div>
+<div class="section-divider-title" id="section-l2" data-lesson="l2" onclick="toggleSectionCollapse(this)" title="Kliknutím složíš / rozbalíš sekci">
+  <div class="section-divider-text">
+    <h2 class="section-divider-h2">Lekce 2: 100 frází &amp; Komplimenty</h2>
+    <span class="section-divider-sub">Společenské fráze, komplimenty, vyjádření pocitů a praktická konverzace</span>
   </div>
-  <span class="section-divider-badge">100 karet</span>
 </div>
 
 <div class="course-card l2" id="card-l2-1" data-lesson="l2"
@@ -25967,6 +25975,13 @@ krásná dívka).</div>
 </div>
 </div>
 </div>
+</div>
+
+<div class="section-divider-title" id="section-l3" data-lesson="l3" onclick="toggleSectionCollapse(this)" title="Kliknutím složíš / rozbalíš sekci">
+  <div class="section-divider-text">
+    <h2 class="section-divider-h2">Lekce 3: 400 slov &amp; Emoji kotvy</h2>
+    <span class="section-divider-sub">Tematická slovní zásoba s vizuálními paměťovými kotvami – lidé, jídlo, doprava, příroda, oblečení, domov a zvířata</span>
+  </div>
 </div>
 
 <div class="course-card l3" id="card-l3-1" data-lesson="l3" data-text="l3 1 孩子 háizi dítě 👤 Lidé a rodina">
@@ -52265,11 +52280,14 @@ končetina)</div>
   </div>
 
   <!-- Modular Scripts -->
-  <script src="js/cards-data.js"></script>
-  <script src="js/radicals-data.js"></script>
-  <script src="js/sentences-data.js"></script>
-  <script src="js/sentences.js"></script>
-  <script src="js/stepper.js"></script>
-  <script src="js/app.js"></script>
+<script src="js/cards-data.js?v=20260924"></script>
+<script src="js/basics-data.js?v=20260924"></script>
+<script src="js/radicals-data.js?v=20260924"></script>
+<script src="js/sentences-data.js?v=20260924"></script>
+<script src="js/sentences.js?v=20260924"></script>
+<script src="js/stepper.js?v=20260924"></script>
+<script src="js/app.js?v=20260924"></script>
+<script src="js/pinyin.js?v=20260924"></script>
+<script src="../shared/ui.js?v=20260924"></script>
 </body>
 </html>

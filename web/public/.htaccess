@@ -1,0 +1,10 @@
+<IfModule mod_headers.c>
+  <FilesMatch "\.(html|htm|json|css|js)$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+</IfModule>
+<IfModule mod_mime.c>
+  AddType text/css .css
+  AddType application/javascript .js .mjs
+  AddType application/json .json
+</IfModule>
